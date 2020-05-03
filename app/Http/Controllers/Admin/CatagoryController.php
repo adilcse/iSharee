@@ -44,9 +44,13 @@ class CatagoryController extends Controller
 
     public function insert(Request $request)
     {
-        $name=$request->input('catagory');
-        Catagory::insert(['name'=>$name]);
-        return redirect('/admin/catagory/add');
+        $this->validate($request,[
+            'catagory'=>'required'
+        ]);
+        $catagory= new Catagory;
+        $catagory->name=$request->input('catagory');
+        $catagory->save();
+        return redirect('/admin/catagory/add')->with('response','Catagory successfully added');
     }
     public function update(Request $request)
     {

@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,18 +19,33 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/email/verify','Auth\VerifyEmailController@email')->name('emailVerify');
-Route::get('/guest','Auth\LoginController@GuestLogin')->name('guest');
-Route::post('/email/verify/otp','Auth\VerifyEmailController@otp')->name('emailotp');
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/newArticle','AddArticle@index')->name('newArticle');
+Route::prefix('/admin')->name('admin.')->namespace('Admin')->group(function(){
+    Route::namespace('Auth')->group(function(){
+        Route::get('/login','LoginController@showLoginForm')->name('login');
+        Route::post('/login','LoginController@login');
+        Route::get('/register','RegisterController@showRegisterForm')->name('register');
+        Route::post('/register','RegisterController@register');
+        Route::post('/logout','LoginController@logout')->name('logout');
+    });
+    Route::get('/','AdminController@index')->name('home');
+    Route::get('/catagory/add','CatagoryController@add');
+    Route::get('/catagory/edit/{id}','CatagoryController@edit');
+    Route::get('/catagory/delete/{id}','CatagoryController@delete');
 
-Route::post('/password/reset/send','Auth\ForgotPasswordController@send');
-Route::post('/password/reset/verify','Auth\ForgotPasswordController@verify');
+Route::post('/catagory/add','CatagoryController@insert');
+Route::post('/catagory/edit','CatagoryController@update');
+  });
 
-Route::get('/admin/catagory/add','Admin\CatagoryController@add');
-Route::get('/admin/catagory/edit/{id}','Admin\CatagoryController@edit');
-Route::get('/admin/catagory/delete/{id}','Admin\CatagoryController@delete');
+  Route::get('/home', 'HomeController@index')->name('home');
+  Route::get('/newArticle','AddArticle@index')->name('newArticle');
 
-Route::post('/admin/catagory/add','Admin\CatagoryController@insert');
-Route::post('/admin/catagory/edit','Admin\CatagoryController@update');
+  Route::namespace('Auth')->group(function () {
+    Route::get('/email/verify','VerifyEmailController@email')->name('emailVerify');
+    Route::get('/guest','LoginController@GuestLogin')->name('guest');
+    Route::post('/email/verify/otp','VerifyEmailController@otp')->name('emailotp');
+
+    Route::post('/password/reset/send','ForgotPasswordController@send');
+    Route::post('/password/reset/verify','ForgotPasswordController@verify');      
+});
+
+

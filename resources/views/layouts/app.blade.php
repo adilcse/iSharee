@@ -54,7 +54,9 @@
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
-                        
+                            <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.login') }}">Admin Login</a>
+                                </li>
                         @else
                             <li class="nav-item md-form active-cyan-2 my-0 ml-2 mr-5">
                                 <input class="form-control" type="text" placeholder="Search" aria-label="Search">

@@ -4,9 +4,18 @@
  <div class="container">
     <div class="row justify-content-center"> 
     <div class="card col-md-6">
-
+    @php
+    $action=route('login');
+    $register_route=route('register');
+    if(isset($admin)){
+      $action=route('admin.login');
+      $register_route=route('admin.register');
+    }
+    else
+      $admin=false;
+@endphp
   <h5 class="card-header info-color white-text text-center py-4">
-    <strong>{{ __('Login') }}</strong>
+    <strong>{{$admin? 'Admin '.__('Login'):__('Login') }}</strong>
   </h5>
   <br>
   @if(isset($verify))
@@ -14,11 +23,13 @@
     verification success. Please login
 </div>
 @endif
+
+
   <!--Card content-->
   <div class="card-body px-lg-5 pt-0">
 
     <!-- Form -->
-    <form method='POST' class="text-center" style="color: #757575;" action="{{ route('login') }}">
+    <form method='POST' class="text-center" style="color: #757575;" action="{{ $action }}">
     @csrf
       <!-- Email -->
       <div class="md-form">
@@ -56,7 +67,7 @@
         </div>
         <div>
           <!-- Forgot password -->
-          @if (Route::has('password.request'))
+          @if (Route::has('password.request') && !$admin)
           <a href="{{ route('password.request') }}">Forgot password?</a>
           @endif
         </div>
@@ -68,11 +79,12 @@
         </button>
 
       <!-- Register -->
-      <p>Not a member?
-        <a href="">Register</a>
-      </p>
+      <h5>Not a member?
+        <a href="{{$register_route}}">Register</a>
+  </h5>
 
       <!-- Social login -->
+      @if(!$admin)
       <h4>sign in with:
       <a type="button" class="btn-floating btn-fb btn-sm">
         <img src='https://image.flaticon.com/teams/slug/google.jpg' width="50px" height="50px">
@@ -84,7 +96,7 @@
     <button class="btn btn-rounded btn-block wave-effect z-depth-0 btn-outline-warning text-black">
         <a href="/guest">Login as guest</a>
 </button>
-
+    @endif
     </form>
     <!-- Form -->
 
