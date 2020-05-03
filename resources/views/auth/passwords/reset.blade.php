@@ -1,64 +1,77 @@
 @extends('layouts.app')
 
 @section('content')
+@push('head')
+<!-- Scripts -->
+<script src="{{ asset('js/password/reset.js') }}" defer></script>
+
+@endpush
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+        <div class="card">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
-                        @csrf
+<h5 class="card-header info-color white-text text-center py-4">
+    <strong>Reset password</strong>
+</h5>
 
-                        <input type="hidden" name="token" value="{{ $token }}">
+<!--Card content-->
+<div class="card-body px-lg-5 pt-0">
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+    <!-- Form -->
+    <form class="text-center" style="color: #757575;" action="/email/verify/otp" method="post">
+    @csrf
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
+    @php
+        if(isset($email))
+            $email=urldecode($email);
+        else
+            $email='';
+    @endphp
+        <div id='status' class="alert">
+        </div>
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+        <!-- E-mai -->
+        <div class="md-form">
+            <div class="row">
+            <div class="col-md-8">
+                <input type="email" id="email" name="email" class="form-control" value="{{$email ?? ''}}" placeholder="{{__('Email')}}">
+                <input type="email" id="mail" name="mail" hidden>
             </div>
+            <div class="col-md-4">
+                <button class="btn btn-outline-info btn-rounded z-depth-0 btn-block waves-effect" type="button" id="sendbtn">
+                    Send
+                </button>
+            </div>
+            </div>
+        </div>
+        <!-- OTP -->
+        <div class="md-form mt-3">
+            <input type="text" id="otp" name="otp" class="form-control" placeholder="OTP">
+            @if(isset($error))
+            <div class="alert alert-danger" role="alert">
+                invalid {{$error}}
+                </div>
+                @endif
+        </div>
+        <div class="md-form mt-3">
+            <input type="password" id="password" name="password" class="form-control" placeholder="password" required>
+        </div>
+        <div class="md-form mt-3">
+            <input type="text" id="cpassword" name="cpassword" class="form-control" placeholder="confirm password" >
+        </div>
+
+        <!-- Sign in button -->
+        <button class="btn btn-outline-info btn-rounded btn-block z-depth-0 my-4 waves-effect" id="verify" type="button" >
+            Verify
+        </button>
+
+    </form>
+    <!-- Form -->
+
+</div>
+
         </div>
     </div>
 </div>

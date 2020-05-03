@@ -33,7 +33,7 @@
             <div class="col">
                 <!-- Last name -->
                 <div class="md-form">
-                    <input type="text" id="mobile" class="form-control @error('mobile') is-invalid @enderror" requirded autocomolete="number" placeholder="{{ __('Mobile') }}">
+                    <input type="text" id="mobile" class="form-control @error('mobile') is-invalid @enderror" name="mobile" requirded autocomolete="number" placeholder="{{ __('Mobile') }}">
                 </div>
             </div>
         </div>

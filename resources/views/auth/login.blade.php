@@ -8,7 +8,12 @@
   <h5 class="card-header info-color white-text text-center py-4">
     <strong>{{ __('Login') }}</strong>
   </h5>
-
+  <br>
+  @if(isset($verify))
+  <div class="alert alert-success">
+    verification success. Please login
+</div>
+@endif
   <!--Card content-->
   <div class="card-body px-lg-5 pt-0">
 
@@ -17,7 +22,7 @@
     @csrf
       <!-- Email -->
       <div class="md-form">
-        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="{{ __('E-Mail Address') }}">
+        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{$email??old('email')}}" required autocomplete="email" autofocus placeholder="{{ __('E-Mail Address') }}">
 
         @error('email')
         <span class="invalid-feedback" role="alert">
@@ -35,7 +40,11 @@
             </span>
         @enderror
       </div>
-
+      @if(isset($error))
+      <div class="alert alert-danger" role="alert">
+                invalid {{$error}}
+                </div>
+      @endif
       <div class="d-flex justify-content-around">
         <div>
           <!-- Remember me -->
@@ -73,7 +82,7 @@
         OR 
     </h4>
     <button class="btn btn-rounded btn-block wave-effect z-depth-0 btn-outline-warning text-black">
-        Login as guest
+        <a href="/guest">Login as guest</a>
 </button>
 
     </form>
