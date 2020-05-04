@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Catagory;
-use App\Model\Article;
+use App\Model\Article as ArticleModel;
 use App\Traits\ImageUpload;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
-class AddArticle extends Controller
+class ArticleController extends Controller
 {
     use ImageUpload;
 
@@ -41,7 +41,7 @@ class AddArticle extends Controller
             'body' => ['string','required'],
         
         ]);
-        $data = new Article;        
+        $data = new ArticleModel;        
         if( $request->image){
             try {
             $filePath = $this->UserImageUpload($request->image); //Passing $data->image as parameter to our created method

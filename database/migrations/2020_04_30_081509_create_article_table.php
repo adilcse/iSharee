@@ -18,6 +18,7 @@ class CreateArticleTable extends Migration
             $table->string('title');
             $table->string('image_url')->nullable();
             $table->longtext('body');
+            $table->bigInteger('views')->default(0);
             $table->foreignId('catagory_id_fk');
             $table->foreignid('user_id_fk');
             $table->boolean('is_published')->default(0);

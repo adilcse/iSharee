@@ -21,11 +21,11 @@ Route::get('/error', function () {
 })->name('error');
 Auth::routes();
 
-Route::prefix('/admin')->name('admin.')->namespace('Admin')->group(function(){
+Route::prefix('/admin')->namespace('Admin')->group(function(){
     Route::group(['middleware' => 'isAdmin'], function () {
-        Route::get('/','AdminController@index')->name('home');
-        Route::get('/','AdminController@profile')->name('profile');
-        Route::get('/catagory/add','CatagoryController@add')->name('catagory');
+        Route::get('/','AdminController@index')->name('admin.home');
+        Route::get('/','AdminController@profile')->name('admin.profile');
+        Route::get('/catagory/add','CatagoryController@add')->name('admin.catagory');
         Route::get('/catagory/edit/{id}','CatagoryController@edit');
         Route::get('/catagory/delete/{id}','CatagoryController@delete');
         Route::post('/catagory/add','CatagoryController@insert');
@@ -36,18 +36,18 @@ Route::prefix('/admin')->name('admin.')->namespace('Admin')->group(function(){
         Route::post('/login','LoginController@login');
         Route::post('/logout','LoginController@logout')->name('logout');
     });
-
+  });
+  Route::group(['middleware' => 'auth'], function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::post('/newArticle', 'ArticleController@addPost')->name('postArticle');
+    Route::get('/newArticle','ArticleController@getAddForm')->name('newArticle');
+  
   });
 
-  Route::get('/home', 'HomeController@index')->name('home');
-  Route::post('/newArticle', 'AddArticle@addPost')->name('postArticle');
-  Route::get('/newArticle','AddArticle@getAddForm')->name('newArticle');
-
-  Route::namespace('Auth')->group(function () {
+Route::namespace('Auth')->group(function () {
     Route::get('/email/verify','VerifyEmailController@email')->name('emailVerify');
     Route::get('/guest','LoginController@GuestLogin')->name('guest');
     Route::post('/email/verify/otp','VerifyEmailController@otp')->name('emailotp');
-
     Route::post('/password/reset/send','ForgotPasswordController@send');
     Route::post('/password/reset/verify','ForgotPasswordController@verify');      
 });
