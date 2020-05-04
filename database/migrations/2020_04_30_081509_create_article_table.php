@@ -19,6 +19,7 @@ class CreateArticleTable extends Migration
             $table->string('image_url')->nullable();
             $table->longtext('body');
             $table->foreignid('user_id_fk');
+            $table->boolean('is_published')->default(0);
             $table->timestamps();
         });
 

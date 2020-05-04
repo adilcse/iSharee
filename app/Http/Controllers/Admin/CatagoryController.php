@@ -6,15 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\Catagory;
 class CatagoryController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-       // $this->middleware('auth');
-    }
+
 
     /**
      * Show the application dashboard.
@@ -26,9 +18,9 @@ class CatagoryController extends Controller
         $catagoryAll=Catagory::all();
         $catagory=Catagory::find($id);
         if(is_null($catagory)){
-            return view('catagory.Catagory',['mode'=>'Edit','invalid'=>'id','catagories'=>$catagoryAll]);
+            return view('admin.catagory.Catagory',['mode'=>'Edit','invalid'=>'id','catagories'=>$catagoryAll]);
         }else{
-            return view('catagory.Catagory',['mode'=>'Edit','id'=>$id,'value'=>$catagory->name,'catagories'=>$catagoryAll]);
+            return view('admin.catagory.Catagory',['mode'=>'Edit','id'=>$id,'value'=>$catagory->name,'catagories'=>$catagoryAll]);
         }
     }
         /**
@@ -39,7 +31,7 @@ class CatagoryController extends Controller
     public function add()
     {
         $catagory=Catagory::all();
-            return view('catagory.Catagory',['mode'=>'Add','catagories'=>$catagory]);
+            return view('admin.catagory.Catagory',['mode'=>'Add','catagories'=>$catagory]);
     }
 
     public function insert(Request $request)

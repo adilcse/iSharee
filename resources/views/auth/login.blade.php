@@ -27,7 +27,11 @@
 
   <!--Card content-->
   <div class="card-body px-lg-5 pt-0">
-
+    @if(session('error'))
+      <div class="alert alert-danger">
+        {{session('error')}}
+      </div>  
+      @endif
     <!-- Form -->
     <form method='POST' class="text-center" style="color: #757575;" action="{{ $action }}">
     @csrf

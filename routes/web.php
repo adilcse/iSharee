@@ -16,10 +16,21 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/error', function () {
+    return view('error');
+})->name('error');
 Auth::routes();
 
 Route::prefix('/admin')->name('admin.')->namespace('Admin')->group(function(){
+    Route::group(['middleware' => 'auth:admin'], function () {
+        Route::get('/','AdminController@index')->name('home');
+        Route::get('/','AdminController@profile')->name('profile');
+        Route::get('/catagory/add','CatagoryController@add')->name('catagory');
+        Route::get('/catagory/edit/{id}','CatagoryController@edit');
+        Route::get('/catagory/delete/{id}','CatagoryController@delete');
+        Route::post('/catagory/add','CatagoryController@insert');
+        Route::post('/catagory/edit','CatagoryController@update');
+    });
     Route::namespace('Auth')->group(function(){
         Route::get('/login','LoginController@showLoginForm')->name('login');
         Route::post('/login','LoginController@login');
@@ -27,17 +38,12 @@ Route::prefix('/admin')->name('admin.')->namespace('Admin')->group(function(){
         Route::post('/register','RegisterController@register');
         Route::post('/logout','LoginController@logout')->name('logout');
     });
-    Route::get('/','AdminController@index')->name('home');
-    Route::get('/catagory/add','CatagoryController@add');
-    Route::get('/catagory/edit/{id}','CatagoryController@edit');
-    Route::get('/catagory/delete/{id}','CatagoryController@delete');
 
-Route::post('/catagory/add','CatagoryController@insert');
-Route::post('/catagory/edit','CatagoryController@update');
   });
 
   Route::get('/home', 'HomeController@index')->name('home');
-  Route::get('/newArticle','AddArticle@index')->name('newArticle');
+  Route::post('/newArticle', 'AddArticle@addPost')->name('postArticle');
+  Route::get('/newArticle','AddArticle@getAddForm')->name('newArticle');
 
   Route::namespace('Auth')->group(function () {
     Route::get('/email/verify','VerifyEmailController@email')->name('emailVerify');

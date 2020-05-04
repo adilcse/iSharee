@@ -13,6 +13,10 @@ use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+    }
     protected $redirect= RouteServiceProvider::ADMIN;
 
     public function showRegisterForm(Request $request)
@@ -50,7 +54,7 @@ class RegisterController extends Controller
 
         try{
             $this->create($request->all());
-        return redirect($this->redirect);
+            return redirect(route('admin.login'));
     }catch(Exception $e){
         return redirect()->back();
     }

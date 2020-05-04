@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+    }
     public function showLoginForm(Request $request)
     {
 
@@ -28,13 +33,16 @@ class LoginController extends Controller
 
         if (Auth::guard('admin')->attempt($credentials,$request->filled('remember'))) {
             // Authentication passed...
-            $user=Auth::user();
+            $user=Auth::guard('admin')->user();
             if(1 === $user->is_active){
-                return redirect()->intended(route('admin.home'));  
-          //  return redirect()->intended('dashboard');
+                return redirect(route('admin.home'));  
+
+            }else{
+                $this->logout();
+                return redirect()->back()->with('error','admin is not active');
             }
         }
-            return loginFailed();
+            return $this->loginFailed();
         
     }
     private function validator(Request $request)
