@@ -22,7 +22,7 @@ Route::get('/error', function () {
 Auth::routes();
 
 Route::prefix('/admin')->name('admin.')->namespace('Admin')->group(function(){
-    Route::group(['middleware' => 'auth:admin'], function () {
+    Route::group(['middleware' => 'isAdmin'], function () {
         Route::get('/','AdminController@index')->name('home');
         Route::get('/','AdminController@profile')->name('profile');
         Route::get('/catagory/add','CatagoryController@add')->name('catagory');
@@ -34,8 +34,6 @@ Route::prefix('/admin')->name('admin.')->namespace('Admin')->group(function(){
     Route::namespace('Auth')->group(function(){
         Route::get('/login','LoginController@showLoginForm')->name('login');
         Route::post('/login','LoginController@login');
-        Route::get('/register','RegisterController@showRegisterForm')->name('register');
-        Route::post('/register','RegisterController@register');
         Route::post('/logout','LoginController@logout')->name('logout');
     });
 

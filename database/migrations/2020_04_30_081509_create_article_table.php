@@ -18,6 +18,7 @@ class CreateArticleTable extends Migration
             $table->string('title');
             $table->string('image_url')->nullable();
             $table->longtext('body');
+            $table->foreignId('catagory_id_fk');
             $table->foreignid('user_id_fk');
             $table->boolean('is_published')->default(0);
             $table->timestamps();
@@ -25,6 +26,7 @@ class CreateArticleTable extends Migration
 
         Schema::table('articles', function (Blueprint $table) {
             $table->foreign('user_id_fk')->references('id')->on('users');
+            $table->foreign('catagory_id_fk')->references('id')->on('catagories');
         });
     
     }

@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('mobile')->unique();
             $table->boolean('is_email_verified')->default('0');
             $table->boolean('is_mobile_verified')->default('0');
+            $table->boolean('is_admin')->default('0');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
 <div class="container">
@@ -65,7 +65,7 @@ $action=$mode=='Add'?'/admin/catagory/add':'/admin/catagory/edit';
         Catagories:
 </h2>
 <br/>
-<div class="col-md-4">
+<div class="col-md-6">
 <ul>
 @foreach($catagories as $catagory)
     <li>

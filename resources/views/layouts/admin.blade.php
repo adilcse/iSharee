@@ -33,7 +33,7 @@
             
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    @if (Auth::guard('admin')->check())
+                    @if (Auth::user() && Auth::user()->is)
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('newArticle') }}">Publish new Article</a>

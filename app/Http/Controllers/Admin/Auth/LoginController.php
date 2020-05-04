@@ -31,14 +31,13 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
         $this->validator($request);
 
-        if (Auth::guard('admin')->attempt($credentials,$request->filled('remember'))) {
+        if (Auth::attempt($credentials,$request->filled('remember'))) {
             // Authentication passed...
-            $user=Auth::guard('admin')->user();
-            if(1 === $user->is_active){
-                return redirect(route('admin.home'));  
-
+            $user=Auth::user();
+            if(1 === $user->is_admin){
+                return redirect(url('admin/'));  
             }else{
-                $this->logout();
+                Auth::logout();
                 return redirect()->back()->with('error','admin is not active');
             }
         }
@@ -70,7 +69,7 @@ class LoginController extends Controller
 
     public function logout()
 {
-    Auth::guard('admin')->logout();
+    Auth::logout();
     return redirect()
         ->route('admin.login')
         ->with('status','Admin has been logged out!');

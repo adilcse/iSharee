@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+@push('head')
+<!-- Scripts -->
+<script src="{{ asset('js/post/add.js') }}" defer></script>
+
+@endpush
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -13,10 +18,19 @@
 
 <!--Card content-->
 <div class="card-body px-lg-5 pt-0">
-
+    @if(session('status'))
+    <div class="alert alert-success">
+        {{session('status')}}
+    </div>
+    @endif
+    @foreach($errors->all() as $error)
+    <div class="alert alert-danger">
+        {{$error}}
+    </div>
+    @endforeach
     <!-- Form -->
-    <form class="text-center" style="color: #757575;" action="{{rourte('postArticle')}}">
-
+    <form class="text-center" style="color: #757575;" action="{{route('postArticle')}}" method="post" enctype="multipart/form-data">
+        @csrf
         <!-- Name -->
         <div class="md-form mt-3">
             <input type="text" id="title" name="title" class="form-control" placeholder="Title">
@@ -26,17 +40,26 @@
         <!-- Catagory -->
         <div class="    ">
         <span>Catagory</span>
-        <select class="mdb-select custom-select">
+        <select class="mdb-select custom-select" name='catagory'>
             <option value="" disabled>Choose option</option>
             @foreach($catagory as $cat)
             <option value="{{$cat->id}}">{{$cat->name}}</option>
             @endforeach
         </select>
         <div>
-
+        <!-- image upload -->
+        <br/>
+        <div class="row justify-content-center">
+            <div class="file-field">
+            <div class="btn  btn-sm float-left inline">
+                <span> Image Upload   </span>
+                <input type="file" name="image" accept="image/*">
+                </div>
+            </div>
+        </div>
         <!--Message-->
         <div class="md-form row">
-            <textarea id="materialContactFormMessage" class="form-control md-textarea" rows="3" placeholder="Description"></textarea>
+            <textarea id="body" name="body" class="form-control md-textarea" rows="3" placeholder="Description"></textarea>
         </div>
 
         <!-- Send button -->

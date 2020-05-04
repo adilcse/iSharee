@@ -9,7 +9,6 @@
     $register_route=route('register');
     if(isset($admin)){
       $action=route('admin.login');
-      $register_route=route('admin.register');
     }
     else
       $admin=false;
@@ -81,14 +80,14 @@
       <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">
       {{ __('Login') }}
         </button>
-
+        @if(!$admin)
       <!-- Register -->
       <h5>Not a member?
         <a href="{{$register_route}}">Register</a>
   </h5>
 
       <!-- Social login -->
-      @if(!$admin)
+     
       <h4>sign in with:
       <a type="button" class="btn-floating btn-fb btn-sm">
         <img src='https://image.flaticon.com/teams/slug/google.jpg' width="50px" height="50px">

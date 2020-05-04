@@ -22,6 +22,11 @@
 </head>
 <body>
     <div id="app">
+        @php
+            $isAdmin=Auth::user() && Auth::user()->is_admin===1?true :false;
+            $isUser=Auth::user() && Auth::user()->id != 0;
+            $isGuest=Auth::user() && Auth::id()==0?true:false;
+        @endphp
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
@@ -33,17 +38,21 @@
               
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    @if (Auth::check())
+                    @if ($isUser)
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('newArticle') }}">Publish new Article</a>
                         </li>
+                        @if($isAdmin)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.catagory') }}">manage catagory</a>
+                        </li>
+                        @endif
                     </ul>
                     @endif
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-                      
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -56,11 +65,11 @@
                             <li class="nav-item">
                                     <a class="nav-link" href="{{ route('admin.login') }}">Admin Login</a>
                                 </li>
-                        @else
+                        @endguest
+                        @if($isGuest)
                             <li class="nav-item md-form active-cyan-2 my-0 ml-2 mr-5">
                                 <input class="form-control" type="text" placeholder="Search" aria-label="Search">
                             </li>
-                            @if(Auth::id()===0)
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
@@ -71,7 +80,10 @@
                                     <a class="nav-link" href="{{ route('admin.login') }}">Admin Login</a>
                                 </li>
                             @endif
-                            @if(Auth::id()!=0)
+                            @if($isUser || $isAdmin)
+                            <li class="nav-item md-form active-cyan-2 my-0 ml-2 mr-5">
+                                <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -94,7 +106,7 @@
                                 </div>
                             </li>
                         @endif
-                        @endguest
+                        
                     </ul>
                 </div>
             </div>
