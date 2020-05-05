@@ -10,15 +10,18 @@
     <title>{{ config('app.name', 'iShare') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+  
     @stack('head')
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="{{ asset('fontawesome/css/all.css') }}" rel="stylesheet">
-    <!-- <script src="https://kit.fontawesome.com/113e9fd65e.js" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://kit.fontawesome.com/113e9fd65e.js" crossorigin="anonymous"></script>  -->
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-multiselect.css') }}" rel="stylesheet">
+  
+
 </head>
 <body>
     <div id="app">
@@ -119,5 +122,11 @@
             @yield('content')
         </main>
     </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('fontawesome/js/all.js') }}" defer></script>
+    <script src="{{ asset('fontawesome/js/bootstrap-multiselect.js') }}" defer></script>
+    @stack('script')
 </body>
 </html>

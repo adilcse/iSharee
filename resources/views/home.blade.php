@@ -11,11 +11,6 @@
                 @php
                 $in=$article->body;
                 $article->body= strlen($in) > 200 ? substr($in,0,200)."..." : $in;
-                $catagory='';
-                foreach($catagories as $cat){
-                    if($cat->id == $article->catagory_id_fk)
-                        $catagory.=$cat->name;
-                }
 
                 @endphp
             <!-- Card image -->
@@ -34,16 +29,19 @@
             <!-- Title -->
             <h4 class="card-title">{{$article->title}}</h4>
             <!-- Text -->
-            <h5 class="">
-                {{$catagory}}
-            </h5>
+           
             <div class="card-text">
+            <div class="row">
+                @foreach($article->catagories as $cat)
+                <span class="btn btn-outline-secondary btn-sm"> <strong>{{$cat->name}}</strong> </span>
+                @endforeach
+            </div>
                 <span class="text">
                 {{$article->body}}
                 </span>
             </div>
             <!-- Button -->
-            <a href="#" class="btn btn-primary activator waves-effect mr-4">Read full article</a>
+            <a href="{{url('/article/'.$article->id)}}" class="btn btn-primary activator waves-effect mr-4">Read full article</a>
             </div>
             </div>
         @endforeach

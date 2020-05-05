@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@push('head')
+@push('script')
 <!-- Scripts -->
 <script src="{{ asset('js/post/add.js') }}" defer></script>
 
@@ -36,17 +36,15 @@
             <input type="text" id="title" name="title" class="form-control" placeholder="Title">
         </div>
 
-
-        <!-- Catagory -->
         <div class="    ">
         <span>Catagory</span>
-        <select class="mdb-select custom-select" name='catagory'>
-            <option value="" disabled>Choose option</option>
-            @foreach($catagory as $cat)
+
+        <div>
+        <select id="multiple-selected" class="custom-select mdb-select" name='catagory[]' multiple="multiple">
+        @foreach($catagory as $cat)
             <option value="{{$cat->id}}">{{$cat->name}}</option>
             @endforeach
-        </select>
-        <div>
+</select>
         <!-- image upload -->
         <br/>
         <div class="row justify-content-center">

@@ -10,4 +10,9 @@ class Article extends Model
     protected $fillable = [
         'title', 'image_url', 'body','is_published'
     ];
+
+    public function catagories()
+    {
+        return $this->belongsToMany('App\Model\Catagory', 'article_catagory', 'article_id', 'catagory_id');
+    }
 }

@@ -32,13 +32,14 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         Route::post('/catagory/edit','CatagoryController@update');
     });
     Route::namespace('Auth')->group(function(){
-        Route::get('/login','LoginController@showLoginForm')->name('login');
+        Route::get('/login','LoginController@showLoginForm')->name('admin.login');
         Route::post('/login','LoginController@login');
-        Route::post('/logout','LoginController@logout')->name('logout');
+        Route::post('/logout','LoginController@logout')->name('admin.logout');
     });
   });
   Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/article/{id}', 'ArticleController@index')->name('article');
     Route::post('/newArticle', 'ArticleController@addPost')->name('postArticle');
     Route::get('/newArticle','ArticleController@getAddForm')->name('newArticle');
   
