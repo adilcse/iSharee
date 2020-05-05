@@ -39,7 +39,10 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
   });
   Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home/catagory/{id}', 'HomeController@catagory')->name('catagory');
     Route::get('/article/{id}', 'ArticleController@index')->name('article');
+    Route::get('/article/edit/{id}', 'ArticleController@editForm');
+    Route::post('/article/edit', 'ArticleController@edit')->name('editArticle');
     Route::post('/newArticle', 'ArticleController@addPost')->name('postArticle');
     Route::get('/newArticle','ArticleController@getAddForm')->name('newArticle');
   

@@ -9,25 +9,46 @@ use App\Model\ArticleCatagory;
 use App\Traits\ImageUpload;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Gate;
 class ArticleController  extends Controller
 {
     use ImageUpload;
 
     public function index($id)
     {
+        
         $article=ArticleModel::find($id);
+        $article->timestamps=false;
+        $article->increment('views');
         if($article){
-            return view('article.full');
+            return view('post.full',['article'=>$article]);
         }
         return view('error');
     }
+    /**
+     * get add article form
+     */
     public function getAddForm()
     {
         $catagory=Catagory::all();
         return view('post.add',['catagory'=>$catagory]);
     }
-
+    /**
+     * Edit an article
+     */
+    public function editForm($id)
+    {
+        $article=ArticleModel::find($id);
+        if(is_null($article)){
+            return view('error',['message'=>'invalid article']);
+        }
+        $catagory=Catagory::all();
+        if(Gate::allows('update-post', $article)){
+                return view('post.edit',['article'=>$article,'catagory'=>$catagory]);
+        }else{
+            return view('error',['message'=>'you are not autherorized']);
+        }
+    }
     protected function validator(array $data)
     {
         return Validator::make($data, [

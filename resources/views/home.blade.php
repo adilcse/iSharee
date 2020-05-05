@@ -33,7 +33,9 @@
             <div class="card-text">
             <div class="row">
                 @foreach($article->catagories as $cat)
+                <a href='/home/catagory/{{$cat->id}}'>
                 <span class="btn btn-outline-secondary btn-sm"> <strong>{{$cat->name}}</strong> </span>
+                </a>
                 @endforeach
             </div>
                 <span class="text">
@@ -42,11 +44,20 @@
             </div>
             <!-- Button -->
             <a href="{{url('/article/'.$article->id)}}" class="btn btn-primary activator waves-effect mr-4">Read full article</a>
+            @if (Gate::forUser(Auth::user())->allows('update-post', $article)) 
+           <a class="btn btn-warning mr-2" href="{{url('/article/edit/'.$article->id)}}"> Edit</a>
+           <a class="btn btn-danger"> Delete</a>
+        @endif
+        <div class="card">
             </div>
             </div>
         @endforeach
 <!-- Card -->
-  
+<nav aria-label="Page navigation text-center">
+  <ul class="pagination pg-blue justify-content-center">
+   {{$articles->links()}}
+  </ul>
+</nav>
     </div>
 </div>
 @endsection

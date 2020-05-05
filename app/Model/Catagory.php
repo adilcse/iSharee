@@ -9,6 +9,6 @@ class Catagory extends Model
     protected $table='catagories';
 
     public function articles(){
-        return $this->belongsToMany('App\Model\Articles');
+        return $this->belongsToMany('App\Model\Article');
     }
 }
