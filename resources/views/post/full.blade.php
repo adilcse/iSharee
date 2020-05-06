@@ -11,8 +11,8 @@
         <div class="col-md-10">
         @if (Gate::forUser(Auth::user())->allows('update-post', $article)) 
         <div class="row">
-           <a class="btn btn-warning mr-2" > Edit</a>
-           <a class="btn btn-danger"> Delete</a>
+           @include('post.deleteModal')
+           @yield('deleteModal')
         </div>
         @endif
         <div class="card">

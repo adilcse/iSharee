@@ -36,11 +36,12 @@ class HomeController extends Controller
     public function catagory($id)
     {
         # code...
-        $articles=Catagory::find($id)->articles()
+        $catagory=Catagory::find($id);
+        $articles=$catagory->articles()
         ->where('articles.is_published',1)
         ->orderby('views','desc')
         ->paginate($this->per_page);
 
-        return view('home',['articles'=>$articles]);
+        return view('home',['articles'=>$articles,'catagory'=>$catagory]);
     }
 }
