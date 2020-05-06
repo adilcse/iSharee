@@ -15,14 +15,15 @@ class CreateCommentTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->foreignid('user_id_fk');
-            $table->foreignid('article_id_fk');
+            $table->foreignid('user_id');
+            $table->foreignid('article_id');
             $table->text('body');
+            $table->boolean('is_published')->default(1);
             $table->timestamps();
         });
         Schema::table('comments', function (Blueprint $table) {
-            $table->foreign('user_id_fk')->references('id')->on('users');
-            $table->foreign('article_id_fk')->references('id')->on('articles');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('article_id')->references('id')->on('articles');
         });
     }
 

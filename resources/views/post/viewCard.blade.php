@@ -1,10 +1,8 @@
-@section('viewCard')
-<div class="card mb-3">
-                @php
-                $in=$article->body;
-                $article->body= strlen($in) > 200 ? substr($in,0,200)."..." : $in;
-
-                @endphp
+<div class="card mb-3" id="card-{{$article->id}}">
+    @php
+    $in=$article->body;
+    $article->body= strlen($in) > 200 ? substr($in,0,200)."..." : $in;
+    @endphp
             <!-- Card image -->
             @if($article->image_url)
             <div class="view overlay">
@@ -21,7 +19,6 @@
             <!-- Title -->
             <h4 class="card-title">{{$article->title}}</h4>
             <!-- Text -->
-           
             <div class="card-text">
             <div class="row">
                 @foreach($article->catagories as $cat)
@@ -35,11 +32,13 @@
                 </span>
             </div>
             <!-- Button -->
-            <a href="{{url('/article/'.$article->id)}}" class="btn btn-primary activator waves-effect mr-4">Read full article</a>
-            @if (Gate::forUser(Auth::user())->allows('update-post', $article)) 
-           @include('post.deleteModal')
-           @yield('deleteModal')
-        @endif
+            <div class="row">
+                <a href="{{route('article',$article->id)}}" class="btn btn-primary activator waves-effect mr-4">Read full article</a>
+                @if (Gate::forUser(Auth::user())->allows('update-post', $article)) 
+                        @include('post.deleteModal')
+                        @yield('deleteModal')
+                @endif
+            </div>
+            @include('post.likeComment')
         </div>
     </div>
-    @endsection

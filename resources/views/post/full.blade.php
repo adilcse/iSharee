@@ -4,7 +4,7 @@
 @push('script')
 <!-- Scripts -->
 <script src="{{ asset('js/post/add.js') }}" defer></script>
-
+    <script src="{{ asset('js/post/like.js') }}" defer></script>
 @endpush
 <div class="container">
     <div class="row justify-content-center">
@@ -32,15 +32,14 @@
                 <span class="btn btn-outline-secondary btn-sm"> <strong>{{$cat->name}}</strong> </span>
                 @endforeach
     </div>
+    @include('post.likeComment')
   <!--Text-->
   <p style="font-size:20px">{{$article->body}}</p>
-</div>
-
-</div>
-<!--/.Card-->
-
-<!-- Material form contact -->
-        </div>
+  <br><hr>
+  <div class="container mr-auto" id="viewComments">
+      <div class='row'>
+       <h3> Comments :</h3>   
     </div>
+      @include('post.comments')
 </div>
 @endsection

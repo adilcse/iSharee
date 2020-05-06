@@ -40,12 +40,17 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
   Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/home/catagory/{id}', 'HomeController@catagory')->name('catagory');
-    Route::get('/article/{id}', 'ArticleController@index')->name('article');
-    Route::get('/article/edit/{id}', 'ArticleController@editForm');
-    Route::get('/article/delete/{id}', 'ArticleController@delete');
-    Route::post('/article/edit', 'ArticleController@edit')->name('editArticle');
-    Route::post('/newArticle', 'ArticleController@addPost')->name('postArticle');
-    Route::get('/newArticle','ArticleController@getAddForm')->name('newArticle');
+    
+    Route::prefix('/article')->namespace('Article')->group(function(){
+        Route::get('/get/{id}', 'ArticleController@index')->name('article');
+        Route::get('/edit/{id}', 'ArticleController@editForm');
+        Route::get('/delete/{id}', 'ArticleController@delete');
+        Route::get('/like/{id}', 'ArticleController@like');
+        Route::post('/comment', 'ArticleController@comment');
+        Route::post('/edit', 'ArticleController@edit')->name('editArticle');
+        Route::post('/new', 'ArticleController@addPost')->name('postArticle');
+        Route::get('/new','ArticleController@getAddForm')->name('newArticle');
+    });
   
   });
 

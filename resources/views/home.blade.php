@@ -2,6 +2,9 @@
 
 @section('content')
 <div class="container">
+@push('script')
+    <script src="{{ asset('js/post/like.js') }}" defer></script>
+    @endpush
 @if(session('success'))
             <div class="row alert alert-success">
                 {{session('success')}}
@@ -17,7 +20,7 @@
             <!-- Card -->
             @foreach($articles as $article)
                 @include('post.viewCard')
-                @yield('viewCard')
+                
             @endforeach 
 <!-- Card -->
 <nav aria-label="Page navigation text-center">

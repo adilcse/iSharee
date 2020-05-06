@@ -19,14 +19,13 @@ class CreateArticleTable extends Migration
             $table->string('image_url')->nullable();
             $table->longtext('body');
             $table->bigInteger('views')->default(0);
-            $table->foreignid('user_id_fk');
+            $table->foreignid('user_id');
             $table->boolean('is_published')->default(0);
             $table->timestamps();
         });
 
         Schema::table('articles', function (Blueprint $table) {
-            $table->foreign('user_id_fk')->references('id')->on('users');
-            $table->foreign('catagory_id_fk')->references('id')->on('catagories');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     
     }

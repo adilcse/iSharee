@@ -31,6 +31,7 @@ class HomeController extends Controller
         $articles=Article::where('articles.is_published',1)
                             ->orderby('views','desc')
                             ->paginate($this->per_page);
+        
         return view('home',['articles'=>$articles]);
     }
     public function catagory($id)

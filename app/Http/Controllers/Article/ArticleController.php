@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Article;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Catagory;
 use App\Model\Article as ArticleModel;
@@ -10,13 +10,13 @@ use App\Traits\ImageUpload;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+
 class ArticleController  extends Controller
 {
     use ImageUpload;
 
     public function index($id)
     {
-        
         $article=ArticleModel::find($id);
         $article->timestamps=false;
         $article->increment('views');
@@ -96,6 +96,57 @@ class ArticleController  extends Controller
             return view('error',['message'=>'you are not autherorized']);
         }
     }
+/**
+ * like or dislike an article by its id
+ */
+    public function like($id)
+    {
+        # code...
+        if(!Auth::check() || Auth::id() === 0){
+            return ['error'=>true,'message'=>'please login first'];
+        }
+        $article=ArticleModel::find($id);
+        if(is_null($article)){
+            return ['error'=>true,'message'=>'invalid article id'];  
+        }
+        $iliked=$article->likes()->where('user_id',Auth::id())->get();
+        if(count($iliked)>0){
+            $article->likes()->detach(Auth::id());
+            return ['error'=>false,'liked'=>false];
+        }
+        try{
+
+            $article->likes()->attach(Auth::id(),['react'=>'LIKE']);
+            return ['error'=>false,'liked'=>true];
+        }catch(Exception $e){
+            return ['error'=>true,'message'=>'already liked'];
+        }
+        
+    }
+
+    public function comment(Request $request)
+    {
+        # code...
+        $request->validate([
+            'id'=>['required','string'],
+            'comment'=>['required','string']
+        ]);
+        $article= ArticleModel::find($request->id);
+        if(is_null($article)){
+            return view('error')->with(['message'=>'invalid article']);
+        }   
+        if(Auth::check()){
+            if(Auth::id()==0){
+                $article->comments()->attach(Auth::id(),['is_published'=>0,'body'=>$request->comment]);
+                return redirect()->back()->with(['comment'=>'pending for admin approval']);
+            }else{
+                $article->comments()->attach(Auth::id(),['body'=>$request->comment]);
+            }
+            return redirect()->back()->with(['status'=>'success']);
+        }else{
+            return view('error')->with(['message'=>'article']);
+        }
+    }
     /**
      * validate inpu request 
      */
@@ -126,7 +177,7 @@ class ArticleController  extends Controller
         $id=Auth::user()->id;
         $data->title = $request->title;
         $data->body = $request->body;
-        $data->user_id_fk=$id;
+        $data->user_id=$id;
         if($id != 0 ){
             $data->is_published=1;
         }
