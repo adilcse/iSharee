@@ -25,7 +25,7 @@
         <td><span class="badge {{$user->is_active ? 'badge-success' : 'badge-danger'}}">
         <select class="custom-select" id="admin-article-status" onChange="userStatusChanged({{$user->id}},this)">
             <option value="1"   {{$user->is_active ? 'selected' : ''}}>Active</option>
-            <option value="2" {{!$user->is_active ? 'selected' : ''}}>Inactive</option>
+            <option value="0" {{!$user->is_active ? 'selected' : ''}}>Inactive</option>
         </select>
         </span></td>
       </tr>

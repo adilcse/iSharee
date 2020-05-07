@@ -40,5 +40,15 @@ const userStatusChanged=(id,element)=>{
     }else{
         changeBadge(element,true);
     }
-  
+    $.ajax({
+        url:`/admin/user/update/${id}?status=${element.value}`,
+        error:(xhr,status,error)=>{
+            console.log(xhr,status,error);
+        },
+        success:(res)=>{
+        console.log(res);
+        },
+        
+        
+    })
 }

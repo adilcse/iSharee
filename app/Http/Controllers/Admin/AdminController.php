@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Article;
 use App\User;
-
+use Auth;
 class AdminController extends Controller
 {
         /**
@@ -90,6 +90,24 @@ class AdminController extends Controller
                     ->orderby('created_at','desc');
         }
         return $users->withCount('articles')->paginate($this->per_page)->withPath($url."/users");
+    }
+
+    public function userUpdate(Request $request)
+    {
+        $user=Auth::user();
+        if($user->is_admin){
+            $status=intval($request->input('status'));
+            if(1 === $status || 0 === $status){
+                $user->is_active=$status;
+                $user->save();
+                return response(['error'=>false,'message'=>'update successfull'],200);
+            }else{
+                return response(['error'=>true,'message'=>'invalid status'],403);
+            }
+        }
+        else{
+            return response(['error'=>true,'message'=>'you are not admin'],403);
+        }
     }
 /**
  * update article status and return status of article

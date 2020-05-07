@@ -31,7 +31,7 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         Route::get('/catagory/delete/{id}','CatagoryController@delete');
         Route::post('/catagory/add','CatagoryController@insert');
         Route::post('/catagory/edit','CatagoryController@update');
-
+        Route::get('/user/update/{id}','AdminController@userUpdate');
         Route::get('/article/update/{id}','AdminController@articleUpdate')->name('admin.article.status');
     });
     Route::namespace('Auth')->group(function(){

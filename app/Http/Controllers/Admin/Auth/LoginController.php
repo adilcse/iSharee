@@ -35,7 +35,7 @@ class LoginController extends Controller
             // Authentication passed...
             $user=Auth::user();
             if(1 === $user->is_admin){
-                return redirect(url('admin/'));  
+                return redirect(route('admin.home'));  
             }else{
                 Auth::logout();
                 return redirect()->back()->with('error','admin is not active');
