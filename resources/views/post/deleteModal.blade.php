@@ -1,7 +1,26 @@
 @section('deleteModal')
-<a class="btn btn-warning mr-2" href="{{url('/article/edit/'.$article->id)}}"> Edit</a>
-<buttun class="btn btn-danger" data-toggle="modal" data-target="#confirmation-{{$article->id}}"> Delete</button>
 
+<div class="col">
+	<div class="row">
+<a class="btn btn-warning mr-2" href="{{url('/article/edit/'.$article->id)}}"> Edit</a>
+<button class="btn btn-danger" data-toggle="modal" data-target="#confirmation-{{$article->id}}"> Delete</button>
+@if(isset($status) && !Auth::user()->is_admin)
+<div class="h3 bg-warning align-self-center">Status : {{$status}}
+</div>
+@endif
+
+@if(Auth::user()->is_admin)
+<div class="ml-auto h4">
+	Change Status:
+<span class="d-inline-block">
+                        <select class="custom-select" id="admin-article-status" onChange="articleStatusChanged({{$article->id}},this)">
+                            <option value="0"  {{$article->is_published === 0 ? 'selected' : ''}}>Pending</option>
+                            <option value="1" {{$article->is_published ? 'selected' : ''}}>Published</option>
+                        </select>
+							</span>
+</div>
+@endif
+</div>
 <!-- Modal -->
 <div class="modal fade" id="confirmation-{{$article->id}}" tabindex="-1" role="dialog" aria-labelledby="header-{{$article->id}}" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -21,5 +40,6 @@
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 @endsection

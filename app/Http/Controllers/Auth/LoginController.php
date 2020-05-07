@@ -52,7 +52,11 @@ class LoginController extends Controller
         if (Auth::attempt($credentials,$request->filled('remember'))) {
             // Authentication passed...
             $user=Auth::user();
-            if(1 === $user->is_email_verified){
+            if(1 === $user->is_admin){
+                Auth::logout();
+                return view('auth.login',['error'=>'please login through admin pannel']);
+            }
+            if($user->is_email_verified && $user->is_active){
                 return redirect(route('home'));  
             }else{
                 $email=urlencode($user->email);

@@ -4,6 +4,7 @@
 <div class="container">
 @push('script')
     <script src="{{ asset('js/post/like.js') }}" defer></script>
+    <script src="{{ asset('js/admin/articleTable.js') }}" defer></script>
     @endpush
 @if(session('success'))
             <div class="row alert alert-success">

@@ -21,9 +21,15 @@ class ArticleController  extends Controller
         $article->timestamps=false;
         $article->increment('views');
         if($article){
-            return view('post.full',['article'=>$article]);
+            if($article->is_published){
+                return view('post.full',['article'=>$article]);
+            }else if(Gate::allows('update-post', $article)){
+                return view('post.full',['article'=>$article,'status'=>'unpublished']);
+            }else{
+                return view('error',['message'=>'article is not published yet']);
+            }
         }
-        return view('error');
+        return view('error',['message'=>'article does not exist']);
     }
     /**
      * get add article form

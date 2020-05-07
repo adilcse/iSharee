@@ -52,7 +52,7 @@
                             <a class="nav-link" href="{{ route('admin.catagory') }}">manage catagory</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/admin') }}">Dashboard</a>
+                            <a class="nav-link" href="{{ route('admin.home') }}">Dashboard</a>
                         </li>
                         @endif
                     </ul>

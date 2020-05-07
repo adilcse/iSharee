@@ -3,8 +3,9 @@
 @section('content')
 @push('script')
 <!-- Scripts -->
-<script src="{{ asset('js/post/add.js') }}" defer></script>
+    <script src="{{ asset('js/post/add.js') }}" defer></script>
     <script src="{{ asset('js/post/like.js') }}" defer></script>
+    <script src="{{ asset('js/admin/articleTable.js') }}" defer></script>
 @endpush
 <div class="container">
     <div class="row justify-content-center">

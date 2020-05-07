@@ -13,7 +13,8 @@ class Article extends Model
 
     public function catagories()
     {
-        return $this->belongsToMany('App\Model\Catagory', 'article_catagory', 'article_id', 'catagory_id');
+        return $this->belongsToMany('App\Model\Catagory', 'article_catagory', 'article_id', 'catagory_id')
+                ->withTimestamps();
     }
     public function comments()
     {
@@ -26,5 +27,10 @@ class Article extends Model
     {
         # code...
         return $this->belongsToMany('App\User', 'likes', 'article_id', 'user_id')->withTimestamps();
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id');
     }
 }

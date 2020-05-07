@@ -16,6 +16,7 @@ class CreateArticleCatagoryTable extends Migration
         Schema::create('article_catagory', function (Blueprint $table) {
             $table->foreignId('article_id');
             $table->foreignId('catagory_id');
+            $table->timestamps();
         });
         Schema::table('article_catagory', function (Blueprint $table) {
             $table->primary(['article_id','catagory_id']);

@@ -23,13 +23,16 @@ Auth::routes();
 
 Route::prefix('/admin')->namespace('Admin')->group(function(){
     Route::group(['middleware' => 'isAdmin'], function () {
-        Route::get('/','AdminController@index')->name('admin.home');
-        Route::get('/','AdminController@profile')->name('admin.profile');
+        Route::get('/dashboard','AdminController@index')->name('admin.home');
+        Route::get('/dashboard/{table}','AdminController@index')->name('admin.tables');
+        Route::get('/profile','AdminController@profile')->name('admin.profile');
         Route::get('/catagory/add','CatagoryController@add')->name('admin.catagory');
         Route::get('/catagory/edit/{id}','CatagoryController@edit');
         Route::get('/catagory/delete/{id}','CatagoryController@delete');
         Route::post('/catagory/add','CatagoryController@insert');
         Route::post('/catagory/edit','CatagoryController@update');
+
+        Route::get('/article/update/{id}','AdminController@articleUpdate')->name('admin.article.status');
     });
     Route::namespace('Auth')->group(function(){
         Route::get('/login','LoginController@showLoginForm')->name('admin.login');
