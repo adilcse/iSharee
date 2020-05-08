@@ -31,7 +31,8 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         Route::get('/catagory/delete/{id}','CatagoryController@delete');
         Route::post('/catagory/add','CatagoryController@insert');
         Route::post('/catagory/edit','CatagoryController@update');
-        Route::get('/user/update/{id}','AdminController@userUpdate');
+        Route::get('/user/update/{id}','AdminController@userStatusUpdate');
+        Route::post('/user/update','AdminController@userUpdate');
         Route::get('/user/view/{id}','AdminController@userView')->name('admin.userView');
         Route::get('/article/update/{id}','AdminController@articleUpdate')->name('admin.article.status');
     });
@@ -45,6 +46,7 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/home/catagory/{id}', 'HomeController@catagory')->name('catagory');
     Route::get('/myArticle','HomeController@myArticle')->name('myArticle');
+    Route::get('/user/{id}/articles','HomeController@userArticles')->name('userArticles');
     Route::prefix('/article')->namespace('Article')->group(function(){
         Route::get('/get/{id}', 'ArticleController@index')->name('article');
         Route::get('/edit/{id}', 'ArticleController@editForm');

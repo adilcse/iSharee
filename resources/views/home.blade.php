@@ -17,7 +17,10 @@
         <div class="col-md-9">
             @if(isset($catagory))
                 <h3>Catagory:{{$catagory->name}}</h3>
+            @elseif(isset($name))
+            <h3>User name :{{$name}}</h3>
             @endif
+            @if(!is_null($articles))
             <!-- Card -->
             @foreach($articles as $article)
                 @include('post.viewCard')
@@ -29,6 +32,11 @@
    {{$articles->links()}}
   </ul>
 </nav>
+@else
+<div class="container text-center h3">
+    No article to display
+</div>
+@endif
     </div>
 </div>
 @endsection

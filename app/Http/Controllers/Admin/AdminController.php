@@ -140,10 +140,10 @@ class AdminController extends Controller
             return redirect()->back()->withErrors(['user not found']);
         }
         $articles=$user->articles()->paginate($this->per_page);
-        return view('user.profile',['profile'=>$user,'articles'=>$articles]);
+        return view('admin.profile',['profile'=>$user,'articles'=>$articles]);
     }
 
-    public function userUpdate(Request $request)
+    public function userStatusUpdate(Request $request)
     {
         $user=Auth::user();
         if($user->is_admin){
@@ -159,6 +159,29 @@ class AdminController extends Controller
         else{
             return response(['error'=>true,'message'=>'you are not admin'],403);
         }
+    }
+
+    public function userUpdate(Request $request)
+    {
+        $request->validate([
+            'name'=>['string','required','min:4'],
+            'mobile'=>['required','digits:10'],
+            'email'=>['email','required'],
+            'id'=>['string','required'],
+            'mobileVerify'=>['boolean','required'],
+            'emailVerify'=>['boolean','required']
+        ]);
+        $user=User::find($request->input('id'));
+        if(is_null($user)){
+            return redirect()->back()->withErrors(['invalid user id']);
+        }
+        $user->name=$request->input('name');
+        $user->email=$request->input('email');
+        $user->mobile=$request->input('mobile');
+        $user->is_mobile_verified=$request->input('mobileVerify');
+        $user->is_email_verified=$request->input('emailVerify');
+        $user->save();
+        return redirect()->back()->with(['status'=>'success']);
     }
 /**
  * update article status and return status of article

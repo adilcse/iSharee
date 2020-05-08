@@ -29,7 +29,7 @@
         <tbody>
             @foreach($users as $user)
         <tr>
-            <td>{{$user->name}}</td>
+        <th scope="row"><a class="text-primary" href="{{route('admin.userView',$user->id)}}">{{$user->name}}</a></th>
             <td>{{$user->articles_count}}</td>
             <td scope="row">{{$user->articles()->sum('views')}}</td>
             <td><span class="badge {{$user->is_active ? 'badge-success' : 'badge-danger'}}">

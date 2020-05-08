@@ -67,7 +67,7 @@ class VerifyEmailController extends Controller
         $data=ModelVerify::where('email',$mail)->first();
         if($data){
             if($otp == $data->otp){
-                User::where('email',$mail)->update(['is_email_verified'=>1]);
+                User::where('email',$mail)->update(['is_email_verified'=>1,'is_active'=>1]);
                 $email=urlencode($mail);
                 return redirect(route('login')."?verify=success&email=".$email);
             }else{

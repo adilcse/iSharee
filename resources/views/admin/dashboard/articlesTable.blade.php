@@ -30,7 +30,7 @@
                         <th scope="row"><a class="text-primary" href="{{route('article',$article->id)}}">
                           {{strlen($article->title)>30?substr($article->title,0,30)."..." :$article->title }}</a></th>
                         <td>{{$article->likes_count}}</a></td>
-                        <td >{{$article->user->name}}</td>
+                        <td ><a href="{{route('admin.userView',$article->user->id)}}" class="text-primary">{{$article->user->name}}</a></td>
                         <td >{{$article->views}}</td>
                         <td><span class="badge {{$article->is_published ? 'badge-success' : 'badge-warning'}}">
                             <select class="custom-select" id="admin-article-status" onChange="articleStatusChanged({{$article->id}},this)">

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\Article;
 use App\Model\Catagory;
 use App\Model\ArticleCatagory;
+use App\User;
 class HomeController extends Controller
 {
     /**
@@ -50,7 +51,7 @@ class HomeController extends Controller
     {
         $userId=$request->user()->id;
         if(!is_null($userId)){
-            
+
             $articles=Article::where('articles.is_published',1)
                         ->where('user_id',$userId)
                         ->orderby('views','desc')
@@ -59,5 +60,20 @@ class HomeController extends Controller
             return view('home',['articles'=>$articles]);
         }
         return view('error',['message'=>'user not logged in']);
+    }
+
+    public function userArticles(Request $request,$id)
+    {
+        $user=User::find($id);
+        if(is_null($user)){
+            return redirect()->back()->withErrors(['user does not exist']);
+        }
+        $articles=$user->articles;
+        if(is_null($articles)){
+            return view('home',['articles'=>null]);
+        }
+        $articles=$user->articles()->where('is_published',1)
+                        ->paginate($this->per_page);
+        return view('home',['articles'=>$articles,'name'=>$user->name]);
     }
 }

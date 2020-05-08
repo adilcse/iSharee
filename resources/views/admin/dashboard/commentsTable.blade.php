@@ -24,10 +24,10 @@
         <tbody>
             @foreach($comments as $comment)
         <tr>
-            <td><a class="text-primary" href="{{route('article',$comment->article->id)}}">
+            <th scope="row"><a class="text-primary" href="{{route('article',$comment->article->id)}}">
             {{strlen($comment->article->title)>30?substr($comment->article->title,0,30)."..." :$comment->article->title }}
-            </a></td>
-            <th scope="row"><a class="text-primary">{{$comment->article->user->name}}</a></th>
+            </a></th>
+            <td><a class="text-primary" href="{{route('admin.userView',$comment->user->id)}}">{{$comment->user->name}}</a></td>
             <td>{{strlen($comment->body)>30?substr($comment->body,0,30)."..." :$comment->body }}</td>
             <td>
                 <button type="button" class="btn btn-success wave-effect"> Approve</button>
