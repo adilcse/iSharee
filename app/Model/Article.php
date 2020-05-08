@@ -21,7 +21,7 @@ class Article extends Model
         # code...
         return $this->belongsToMany('App\User', 'comments', 'article_id', 'user_id')
                     ->withTimestamps()
-                    ->withPivot('is_published','body');
+                    ->withPivot('is_published','body','id');
     }
     public function likes()
     {

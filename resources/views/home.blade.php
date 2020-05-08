@@ -20,7 +20,7 @@
             @elseif(isset($name))
             <h3>User name :{{$name}}</h3>
             @endif
-            @if(!is_null($articles))
+            @if(!is_null($articles) && !$articles->isEmpty())
             <!-- Card -->
             @foreach($articles as $article)
                 @include('post.viewCard')

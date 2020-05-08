@@ -30,8 +30,8 @@
             <td><a class="text-primary" href="{{route('admin.userView',$comment->user->id)}}">{{$comment->user->name}}</a></td>
             <td>{{strlen($comment->body)>30?substr($comment->body,0,30)."..." :$comment->body }}</td>
             <td>
-                <button type="button" class="btn btn-success wave-effect"> Approve</button>
-                <button type="button" class="btn btn-danger wave-effect"> Reject</button>
+                <button type="button" class="btn btn-success wave-effect" onClick="updateCommentStatus(this,'{{$comment->id}}',1)"> Approve</button>
+                <button type="button" class="btn btn-danger wave-effect" onClick="updateCommentStatus(this,'{{$comment->id}}',0)"> Reject</button>
             </td>
         </tr>
         @endforeach

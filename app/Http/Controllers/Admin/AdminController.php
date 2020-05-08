@@ -143,12 +143,15 @@ class AdminController extends Controller
         return view('admin.profile',['profile'=>$user,'articles'=>$articles]);
     }
 
-    public function userStatusUpdate(Request $request)
+    public function userStatusUpdate(Request $request,$id)
     {
-        $user=Auth::user();
-        if($user->is_admin){
+        if($request->user()->is_admin){
             $status=intval($request->input('status'));
             if(1 === $status || 0 === $status){
+                $user=User::find($id);
+                if(is_null($user)){
+                    return response(['error'=>true,'message'=>'invalid user input'],403);
+                }
                 $user->is_active=$status;
                 $user->save();
                 return response(['error'=>false,'message'=>'update successfull'],200);

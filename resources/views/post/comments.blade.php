@@ -3,7 +3,8 @@
 			   @if(session('comment'))
 			   {{session('comment')}}
 			   @endif
-	   @if(count($article->comments) <1)
+			   
+	   @if(count($article->comments()->where('is_published',1)->get()) <1)
 			Be the first to comment
 	   @else
 	   @foreach($article->comments as $com)
@@ -15,7 +16,15 @@
 		<!-- Card content -->
 		<div class="card-body card-body-cascade text-left">
 		<!-- Title -->
-		<h4 class="font-weight-bold card-title">{{$com->name}}</h4>
+		<div class=" card-title row">
+			<h4 class="font-weight-bold">{{$com->name}} </h4>
+			@if(Gate::allows('update-comment',$com))
+			<span class="ml-auto">
+				<a href="/article/comment/update/{{$com->pivot->id}}?status=0&from=article"><i class="fas fa-trash-alt"></i></a>
+			</span>
+			@endif
+		</div>
+		
 		<!-- Text -->
 		<p class="card-text">{{$com->pivot->body}}</p>
 		</div>
@@ -48,6 +57,8 @@
 </div>
 <!--/.Card-->
 
-<!-- Material form contact -->
 		</div>
 	</div>
+
+	<!-- delete modal -->
+	

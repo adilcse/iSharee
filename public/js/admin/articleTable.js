@@ -39,6 +39,7 @@ const changeUserView=(element)=>{
 }
 
 const userStatusChanged=(id,element)=>{
+    console.log(element.value)
     if(element.value==1){
         changeBadge(element,false);    
     }else{
@@ -51,6 +52,26 @@ const userStatusChanged=(id,element)=>{
         },
         success:(res)=>{
         console.log(res);
+        },
+        
+        
+    })
+}
+
+const updateCommentStatus=(element,id,status)=>{
+    const row=element.parentNode.parentNode;
+    $.ajax({
+        url:`/article/comment/update/${id}?status=${status}`,
+        error:(xhr,status,error)=>{
+            console.log(xhr,status,error);
+        },
+        success:(res)=>{
+            if(!res.error){
+                row.parentNode.removeChild(row);
+            }
+            else{
+                
+            }
         },
         
         

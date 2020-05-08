@@ -30,8 +30,8 @@
             @foreach($users as $user)
         <tr>
         <th scope="row"><a class="text-primary" href="{{route('admin.userView',$user->id)}}">{{$user->name}}</a></th>
-            <td>{{$user->articles_count}}</td>
-            <td scope="row">{{$user->articles()->sum('views')}}</td>
+            <td><a class="text-primary" href="{{route('userArticles',$user->id)}}">{{$user->articles_count}}</a></td>
+            <td >{{$user->articles()->sum('views')}}</td>
             <td><span class="badge {{$user->is_active ? 'badge-success' : 'badge-danger'}}">
             <select class="custom-select" id="admin-article-status" onChange="userStatusChanged({{$user->id}},this)">
                 <option value="1"   {{$user->is_active ? 'selected' : ''}}>Active</option>

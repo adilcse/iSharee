@@ -33,6 +33,7 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         Route::post('/catagory/edit','CatagoryController@update');
         Route::get('/user/update/{id}','AdminController@userStatusUpdate');
         Route::post('/user/update','AdminController@userUpdate');
+        
         Route::get('/user/view/{id}','AdminController@userView')->name('admin.userView');
         Route::get('/article/update/{id}','AdminController@articleUpdate')->name('admin.article.status');
     });
@@ -53,6 +54,7 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         Route::get('/delete/{id}', 'ArticleController@delete');
         Route::get('/like/{id}', 'ArticleController@like');
         Route::post('/comment', 'ArticleController@comment');
+        Route::get('/comment/update/{id}','CommentController@updateStatus');
         Route::post('/edit', 'ArticleController@edit')->name('editArticle');
         Route::post('/new', 'ArticleController@addPost')->name('postArticle');
         Route::get('/new','ArticleController@getAddForm')->name('newArticle');
