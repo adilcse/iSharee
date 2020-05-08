@@ -20,11 +20,11 @@
       <div class="col-lg-12 col-md-12 mb-12">
 
         <!-- Panel -->
-     @include('admin.dashboard.articleTable')
+     @include('admin.dashboard.articlesTable')
       <!-- Grid column -->
 
   @include('admin.dashboard.usersTable')
- 
+  @include('admin.dashboard.commentsTable')
 
     </div>
 

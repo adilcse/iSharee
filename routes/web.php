@@ -32,6 +32,7 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         Route::post('/catagory/add','CatagoryController@insert');
         Route::post('/catagory/edit','CatagoryController@update');
         Route::get('/user/update/{id}','AdminController@userUpdate');
+        Route::get('/user/view/{id}','AdminController@userView')->name('admin.userView');
         Route::get('/article/update/{id}','AdminController@articleUpdate')->name('admin.article.status');
     });
     Route::namespace('Auth')->group(function(){
@@ -43,7 +44,7 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
   Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/home/catagory/{id}', 'HomeController@catagory')->name('catagory');
-    
+    Route::get('/myArticle','HomeController@myArticle')->name('myArticle');
     Route::prefix('/article')->namespace('Article')->group(function(){
         Route::get('/get/{id}', 'ArticleController@index')->name('article');
         Route::get('/edit/{id}', 'ArticleController@editForm');
@@ -56,6 +57,7 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
     });
   
   });
+
 
 Route::namespace('Auth')->group(function () {
     Route::get('/email/verify','VerifyEmailController@email')->name('emailVerify');

@@ -45,4 +45,19 @@ class HomeController extends Controller
 
         return view('home',['articles'=>$articles,'catagory'=>$catagory]);
     }
+
+    public function myArticle(Request $request)
+    {
+        $userId=$request->user()->id;
+        if(!is_null($userId)){
+            
+            $articles=Article::where('articles.is_published',1)
+                        ->where('user_id',$userId)
+                        ->orderby('views','desc')
+                        ->paginate($this->per_page);
+
+            return view('home',['articles'=>$articles]);
+        }
+        return view('error',['message'=>'user not logged in']);
+    }
 }

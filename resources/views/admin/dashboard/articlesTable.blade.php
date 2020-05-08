@@ -13,30 +13,31 @@
                 </select>
             </ul>
           </div>
-          <div class="card-body">
-            <table class="table">
+          <div class="card-body table-responsive text-nowrap">
+            <table class="table table-hover">
               <thead>
                 <tr>
-                  <th scope="col">Article ID</th>
                   <th scope="col">Title</th>
-                  <th scope="col">Status</th>
+                  <th scope="col">Likes</th>
                   <th scope="col">Published By</th>
                   <th scope="col">Total Views</th>
+                  <th scope="col">Status</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach ($articles as $article)
                     <tr>
-                        <th scope="row"><a class="text-primary" href="{{route('article',$article->id)}}">{{$article->id}}</a></th>
-                        <td>{{strlen($article->title)>30?substr($article->title,0,30)."..." :$article->title }}</td>
+                        <th scope="row"><a class="text-primary" href="{{route('article',$article->id)}}">
+                          {{strlen($article->title)>30?substr($article->title,0,30)."..." :$article->title }}</a></th>
+                        <td>{{$article->likes_count}}</a></td>
+                        <td >{{$article->user->name}}</td>
+                        <td >{{$article->views}}</td>
                         <td><span class="badge {{$article->is_published ? 'badge-success' : 'badge-warning'}}">
                             <select class="custom-select" id="admin-article-status" onChange="articleStatusChanged({{$article->id}},this)">
                             <option value="0"  {{$article->is_published === 0 ? 'selected' : ''}}>Pending</option>
                             <option value="1" {{$article->is_published ? 'selected' : ''}}>Published</option>
                             </select>
                             </span></td>
-                        <td >{{$article->user->name}}</td>
-                        <td >{{$article->views}}</td>
                     <tr>
                 @endforeach
                 </tbody>

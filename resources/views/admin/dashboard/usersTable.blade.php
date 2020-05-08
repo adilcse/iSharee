@@ -16,22 +16,22 @@
 
 
     <div class="card-body text-center px-4">
-    <div class="list-group list-group-flush">
+    <div class="list-group list-group-flush table-responsive text-nowrap">
             <table class="table">
             <thead>
             <tr>
-                <th scope="col">User ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Articles</th>
+                <th scope="col">Total views</th>
                 <th scope="col">Status</th>
             </tr>
         </thead>
         <tbody>
             @foreach($users as $user)
         <tr>
-            <th scope="row"><a class="text-primary">{{$user->id}}</a></th>
             <td>{{$user->name}}</td>
             <td>{{$user->articles_count}}</td>
+            <td scope="row">{{$user->articles()->sum('views')}}</td>
             <td><span class="badge {{$user->is_active ? 'badge-success' : 'badge-danger'}}">
             <select class="custom-select" id="admin-article-status" onChange="userStatusChanged({{$user->id}},this)">
                 <option value="1"   {{$user->is_active ? 'selected' : ''}}>Active</option>

@@ -12,11 +12,11 @@ class Comments extends Model
     public function article()
     {
         # code...
-        return $this->belongsToMany('App\Model\Article');
+        return $this->belongsTo('App\Model\Article');
     }
     public function user()
     {
         # code...
-        return $this->belongsToMany('App\Users','users','user_id');
+        return $this->belongsTo('App\User');
     }
 }
