@@ -1,5 +1,5 @@
 
-<div class="row">
+<div class="row" id="article-table">
       <div class="col-12">
       	<div class="card card-list">
           <div class="card-header white d-flex justify-content-between align-items-center py-1">

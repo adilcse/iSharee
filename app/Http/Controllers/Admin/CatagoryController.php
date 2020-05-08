@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Catagory;
+use Illuminate\Database\QueryException;
 class CatagoryController extends Controller
 {
 
@@ -30,8 +31,13 @@ class CatagoryController extends Controller
      */
     public function add()
     {
+        try{
         $catagory=Catagory::all();
             return view('admin.catagory.Catagory',['mode'=>'Add','catagories'=>$catagory]);
+        }
+        catch(Exception $e){
+            return view('admin.catagory.Catagory',['mode'=>'Add'])->withErrors(['something went wrong']);
+        }
     }
 
     public function insert(Request $request)
@@ -42,7 +48,7 @@ class CatagoryController extends Controller
         $catagory= new Catagory;
         $catagory->name=$request->input('catagory');
         $catagory->save();
-        return redirect('/admin/catagory/add')->with('response','Catagory successfully added');
+        return redirect('/admin/catagory/add')->with('success','Catagory successfully added');
     }
     public function update(Request $request)
     {
@@ -54,7 +60,15 @@ class CatagoryController extends Controller
 
     public function delete($id)
     {
-        Catagory::where('id',intval($id))->delete();  
-        return redirect('/admin/catagory/add');
+        try{
+        $catagory=Catagory::find(intval($id));
+        if(is_null($catagory)){
+            return redirect('/admin/catagory/add')->withErrors(['invalid catagory']);    
+        }
+        $catagory->delete(); 
+        }catch(QueryException $e){  
+            return redirect('/admin/catagory/add')->withErrors(['can not delete catagory']);    
+        } 
+        return redirect('/admin/catagory/add')->with('success','deleted');
     }
 }

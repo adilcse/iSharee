@@ -47,7 +47,7 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
-        $credentials = ['email'=>$request->input('email'), 'password'=>$request->input('email'),'is_active' => 1];
+        $credentials = ['email'=>$request->input('email'), 'password'=>$request->input('password')];
         if (Auth::attempt($credentials,$request->filled('remember'))) {
             // Authentication passed...
             $user=Auth::user();
@@ -55,8 +55,11 @@ class LoginController extends Controller
                 Auth::logout();
                 return view('auth.login',['error'=>'please login through admin pannel']);
             }
-            if($user->is_email_verified){
+            if($user->is_email_verified && $user->is_active){
                 return redirect(route('home'));  
+            }else if(!$user->is_active){
+                Auth::logout();
+                return view('auth.login',['error'=>'user, your account is blocked.']);
             }
             else{
                 $email=urlencode($user->email);

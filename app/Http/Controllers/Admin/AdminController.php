@@ -25,10 +25,12 @@ class AdminController extends Controller
     {
         # code...
         $view=$request->input('view');
+        $userview=$request->input('userview');
         if(is_null($table)){
             $articles=$this->getArticles($request);
             $users=$this->getUsers($request);
         }else if('article' === $table){
+
             if(isset($view)){
                 switch($view){
                     case "2":
@@ -44,14 +46,14 @@ class AdminController extends Controller
                 $articles=$this->getArticles($request);
             }
             $users=$this->getUsers($request);
-        }else if('users' === $table){
-            if(isset($view)){
-                switch($view){
+        }else if('user' === $table){
+            if(isset($userview)){
+                switch($userview){
                     case "2":
-                        $users=$this->getUsers($request,0);
+                        $users=$this->getUsers($request,1);
                     break;
                     case "3":
-                        $users=$this->getUsers($request,1);
+                        $users=$this->getUsers($request,0);
                     break;
                     default:
                     $users=$this->getUsers($request);
@@ -61,12 +63,14 @@ class AdminController extends Controller
             }
             $articles=$this->getArticles($request);
         }
-        return view('admin.dashboard',['users'=>$users,'articles'=>$articles,'view'=>$view]);
+        return view('admin.dashboard',['users'=>$users,'articles'=>$articles,'view'=>$view,'userview'=>$userview]);
     }
 
-    private function getArticles($request,$view=null){
+    private function getArticles($request,$view=null)
+    {
         $url=$request->url();
         $url=rtrim($url,"/article");
+        $url=rtrim($url,"/user");
         if(is_null($view)){
             $article=Article::orderby('created_at','desc');
         }else{
@@ -80,16 +84,17 @@ class AdminController extends Controller
     {
         # code...
         $url=$request->url();
-        $url=rtrim($url,"/users");
+        $url=rtrim($url,"/article");
+        $url=rtrim($url,"/user");
         if(is_null($active)){
             $users=User::where('is_admin',0)
                     ->orderby('created_at','desc');
         }else{
-            $users=Article::where('is_admin',0)
+            $users=User::where('is_admin',0)
                     ->where('is_active',$active)
                     ->orderby('created_at','desc');
         }
-        return $users->withCount('articles')->paginate($this->per_page)->withPath($url."/users");
+        return $users->withCount('articles')->paginate($this->per_page)->withPath($url."/user");
     }
 
     public function userUpdate(Request $request)

@@ -1,9 +1,9 @@
 
 const articleStatusChanged=(id,element)=>{
     if(element.value == 0){
-        changeBadge(element,false);
-    }else{
         changeBadge(element,true);
+    }else{
+        changeBadge(element,false);
     }
   
     $.ajax({
@@ -32,6 +32,10 @@ const changeBadge=(element,status)=>{
 const changeArticeView=(element)=>{
     console.log(element.value)
     window.location.href = "/admin/dashboard/article?view="+element.value;
+}
+
+const changeUserView=(element)=>{
+    window.location.href = "/admin/dashboard/user?userview="+element.value;
 }
 
 const userStatusChanged=(id,element)=>{

@@ -12,6 +12,7 @@
 
     <strong>{{$mode}} Catagory</strong>
 </h5>
+
 @if($mode=='Edit')
     <h6 class='col-md-4 text-left'>
     <a href='/admin/catagory/add'>Add Items</a>
@@ -35,15 +36,15 @@ $action=$mode=='Add'?'/admin/catagory/add':'/admin/catagory/edit';
             </div>
         @endif
         @if(count($errors)>0)
-            @foreach($errors->all() as $error)
+            @foreach($errors as $error)
                 <div class="alert alert-danger">
                 {{$error}}
                 </div>
             @endforeach
         @endif
-        @if(session('response'))
+        @if(session('success'))
         <div class="alert alert-success">
-            {{session('response')}}
+            {{session('success')}}
             </div>
         @endif
         <!-- Name -->

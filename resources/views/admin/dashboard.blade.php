@@ -23,20 +23,8 @@
      @include('admin.dashboard.articleTable')
       <!-- Grid column -->
 
-      <!-- Grid column -->
-      <div class="container my-5">
-
-  
-  <!-- Section: Block Content -->
-  <section>
   @include('admin.dashboard.usersTable')
  
-
-  </section>
-  <!-- Section: Block Content -->
-
-  
-</div>
 
     </div>
 
