@@ -45,9 +45,16 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
   });
   Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/profile', function(){
+        return view('user.profile',['profile'=>Auth::user()]);
+    })->name('profile');
+    Route::get('/profile', function(){
+        return view('user.profile',['profile'=>Auth::user()]);
+    })->name('profile');
     Route::get('/home/catagory/{id}', 'HomeController@catagory')->name('catagory');
     Route::get('/myArticle','HomeController@myArticle')->name('myArticle');
     Route::get('/user/{id}/articles','HomeController@userArticles')->name('userArticles');
+    Route::post('/user/update','HomeController@userUpdate');
     Route::prefix('/article')->namespace('Article')->group(function(){
         Route::get('/get/{id}', 'ArticleController@index')->name('article');
         Route::get('/edit/{id}', 'ArticleController@editForm');
@@ -65,6 +72,7 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
 
 Route::namespace('Auth')->group(function () {
     Route::get('/email/verify','VerifyEmailController@email')->name('emailVerify');
+    Route::get('/mobile/verify','VerifyMobileController@index')->name('mobileVerify');
     Route::get('/guest','LoginController@GuestLogin')->name('guest');
     Route::post('/email/verify/otp','VerifyEmailController@otp')->name('emailotp');
     Route::post('/password/reset/send','ForgotPasswordController@send');

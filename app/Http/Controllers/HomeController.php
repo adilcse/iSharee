@@ -7,6 +7,7 @@ use App\Model\Article;
 use App\Model\Catagory;
 use App\Model\ArticleCatagory;
 use App\User;
+use Auth;
 class HomeController extends Controller
 {
     /**
@@ -34,6 +35,11 @@ class HomeController extends Controller
                             ->paginate($this->per_page);
         
         return view('home',['articles'=>$articles]);
+    }
+
+    public function userProfile(Request $request)
+    {
+        
     }
     public function catagory($id)
     {
@@ -75,5 +81,17 @@ class HomeController extends Controller
         $articles=$user->articles()->where('is_published',1)
                         ->paginate($this->per_page);
         return view('home',['articles'=>$articles,'name'=>$user->name]);
+    }
+
+    public function userUpdate(Request $request)
+    {
+        $request->validate([
+            'name'=>'required|string|max:50|min:3',
+            'id'=>'numeric|required'
+        ]);
+        $user=Auth::user();
+        $user->name=$request->input('name');
+        $user->save();
+        return redirect()->back()->with(['status'=>'success']);
     }
 }

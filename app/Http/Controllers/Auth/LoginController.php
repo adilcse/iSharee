@@ -87,9 +87,8 @@ class LoginController extends Controller
     }
     public function GuestLogin(Request $request)
     {
-        $email='guest@mail.com';
-        $password='iamguest';
-        if(Auth::attempt(['email' => $email, 'password' => $password])){
+        
+        if(Auth::loginUsingId(0)){
 
             return redirect(route('home'));  
         }
