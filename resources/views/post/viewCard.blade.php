@@ -39,7 +39,6 @@
                 <a href="{{route('article',$article->id)}}" class="btn btn-primary activator waves-effect mr-4">Read full article</a>
                 @if (Gate::forUser(Auth::user())->allows('update-post', $article)) 
                         @include('post.deleteModal')
-                        @yield('deleteModal')
                 @endif
             </div>
             @include('post.likeComment')

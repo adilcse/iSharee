@@ -1,5 +1,3 @@
-@section('deleteModal')
-
 <div class="col">
 	<div class="row">
 <a class="btn btn-warning mr-2" href="{{url('/article/edit/'.$article->id)}}"> Edit</a>
@@ -15,13 +13,13 @@
 	Change Status:
 <span class="d-inline-block">
 	<select class="custom-select" id="admin-article-status" onChange="articleStatusChanged({{$article->id}},this)">
-		<option value="0"  {{$article->is_published === 0 ? 'selected' : ''}}>Pending</option>
+		<option value="0"  {{0 == $article->is_published  ? 'selected' : ''}}>Pending</option>
 		<option value="1" {{$article->is_published ? 'selected' : ''}}>Published</option>
 	</select>
 </span>
 @elseif(isset($myArticle))
 <div>
-Status : <span> {{$article->is_published === 1 ? 'Published' : 'Pending'}}</span>
+Status : <span>{{$article->is_published ? 'Published' : 'Pending'}}</span>
 </div>
 @endif
 </div>
@@ -48,4 +46,3 @@ Status : <span> {{$article->is_published === 1 ? 'Published' : 'Pending'}}</span
 	</div>
 </div>
 </div>
-@endsection
