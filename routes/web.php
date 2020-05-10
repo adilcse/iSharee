@@ -60,7 +60,7 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         Route::get('/edit/{id}', 'ArticleController@editForm');
         Route::get('/delete/{id}', 'ArticleController@delete');
         Route::get('/like/{id}', 'ArticleController@like');
-        Route::post('/comment', 'ArticleController@comment');
+        Route::post('/comment', 'CommentController@articleComment');
         Route::get('/comment/update/{id}','CommentController@updateStatus');
         Route::post('/edit', 'ArticleController@edit')->name('editArticle');
         Route::post('/new', 'ArticleController@addPost')->name('postArticle');

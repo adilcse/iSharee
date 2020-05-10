@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EmailVerify;
 use App\User;
-use App\Model\EmailVerify as ModelVerify;
 use Illuminate\Support\Facades\Hash;
+use Helper\Otp;
 
 class ForgotPasswordController extends Controller
 {
@@ -32,16 +32,10 @@ class ForgotPasswordController extends Controller
     public function send(Request $request)
     {
         $email=$request->input('email');
-        $otp=rand(1000,9999);
         $user=User::where('email',$email)->first();
         if($user){
-            if($user->is_email_verified === 1){
-                if(is_null(ModelVerify::where('email',$email)->first())){
-                    ModelVerify::insert(['email'=>$email,'otp'=>$otp]);     
-                }
-                else{
-                    ModelVerify::where('email',$email)->update(['otp'=>$otp]);
-                }
+            $otp=Otp::emailOtp($email);
+            if($user->is_email_verified === 1 && $otp){
                 Mail::to($email)->send(new EmailVerify($otp));
                 return json_encode(['data'=>'otp sent success','success'=>true]);
             }
@@ -53,31 +47,32 @@ class ForgotPasswordController extends Controller
             return json_encode(['data'=>'user not exist','success'=>false]);
         }
     }
+
+    /**
+     * verifies user input otp and reset password if otp verifies
+     * @param request object
+     */
     public function verify(Request $request)
     {
-        # code...
+        $request->validate([
+            'email'=>'email|required',
+            'password'=>'string|required|min:6',
+            'otp'=>'numeric|required|digits:4'
+        ]);
         $email=$request->input('email');
         $password=$request->input('password');
         $otp=$request->input('otp');
-        $user=ModelVerify::where('email',$email)->first();
-        if($user){
-            if($user->otp == $otp){
-                $data=User::where('email',$email)
-                        ->update(['password'=>Hash::make($password)]);
-                        if($data === 1){
-                        return json_encode(['data'=>'password set successfull','success'=>true]);
-                    }else{
-                        return json_encode(['data'=>'password not set','success'=>false]);
-                    }
+        //verify otp from already generaed table
+        if(Otp::verifyEmailOtp($email,$otp)){
+            $data=User::where('email',$email)->update(['password'=>Hash::make($password)]);
+            if(1 === $data){
+                return json_encode(['data'=>'password set successfull','success'=>true]);
             }else{
-                return json_encode(['data'=>'invalid otp','success'=>false]);
+                return json_encode(['data'=>'password not set','success'=>false]);
             }
-
-        }else{
-            return json_encode(['data'=>'invalid email. please resend otp','success'=>false]);
         }
-        
-
-
+        else{
+                return json_encode(['data'=>'invalid otp','success'=>false]);
+        }     
     }
 }
