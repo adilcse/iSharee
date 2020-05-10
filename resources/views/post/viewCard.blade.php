@@ -4,13 +4,9 @@
     $article->body= strlen($in) > 200 ? substr($in,0,200)."..." : $in;
     @endphp
             <!-- Card image -->
-            @if($article->image_url)
-            <div class="view overlay">
-                
-            <img class="card-img-top" src="{{$article->image_url}}" width='400px' height="500px" alt="Card image cap">
-            <a href="#">
-                <div class="mask rgba-white-slight"></div>
-            </a>
+            @if($article->image_url && $article->allow_image_as_slider)
+            <div class="view overlay ">
+            <img class="card-img-top" src="{{$article->image_url}}" width='300px' height="500px" alt="{{$article->title.'-image'}}">
             </div>
             @endif
             <!-- Card content -->

@@ -18,6 +18,7 @@ class CreateArticleTable extends Migration
             $table->string('slug')->unique();
             $table->string('title');
             $table->string('image_url')->nullable();
+            $table->boolean('allow_image_as_slider')->default(1);
             $table->longtext('body');
             $table->bigInteger('views')->default(0);
             $table->foreignid('user_id');

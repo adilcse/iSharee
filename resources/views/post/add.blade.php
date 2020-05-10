@@ -55,6 +55,10 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-check">
+                    <input type="checkbox" name="sliderCheck" checked class="form-check-input" id="allow-slider-check">
+                    <label class="form-check-label" for="allow-slider-check">Allow image to view as slider?</label>
+                </div>
                 <!--Message-->
                 <div class="md-form row">
                     <textarea id="body" name="body" class="form-control md-textarea" rows="3" placeholder="Description"></textarea>

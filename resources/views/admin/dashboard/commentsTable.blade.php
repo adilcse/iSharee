@@ -24,7 +24,7 @@
         <tbody>
             @foreach($comments as $comment)
         <tr>
-            <th scope="row"><a class="text-primary" href="{{route('article',$comment->article->id)}}">
+            <th scope="row"><a class="text-primary" href="{{route('article',$comment->article->slug)}}">
             {{strlen($comment->article->title)>30?substr($comment->article->title,0,30)."..." :$comment->article->title }}
             </a></th>
             <td><a class="text-primary" href="{{route('admin.userView',$comment->user->id)}}">{{$comment->user->name}}</a></td>

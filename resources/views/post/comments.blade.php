@@ -1,7 +1,9 @@
 <div class = 'row'>
 		   <div class="col">
 			   @if(session('comment'))
+			   <h4>
 			   {{session('comment')}}
+			   </h4>
 			   @endif
 			   
 	   @if(count($article->comments()->where('is_published',1)->get()) <1)

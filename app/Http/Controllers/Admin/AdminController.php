@@ -140,7 +140,7 @@ class AdminController extends Controller
                         ->where('is_active',$active)
                         ->orderby('created_at','desc');
             }
-            return $users->withCount('articles')->paginate($this->per_page)->withPath($url."/user");
+            return $users->withCount('articles')->withCount('likes')->paginate($this->per_page)->withPath($url."/user");
         }catch(Exception $e){
             return null;
         }

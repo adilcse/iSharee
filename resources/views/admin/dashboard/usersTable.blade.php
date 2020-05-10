@@ -25,7 +25,7 @@
             <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Articles</th>
-                <th scope="col">Total views</th>
+                <th scope="col">Total Likes</th>
                 <th scope="col">Status</th>
             </tr>
         </thead>
@@ -34,7 +34,7 @@
         <tr>
         <th scope="row"><a class="text-primary" href="{{route('admin.userView',$user->id)}}">{{$user->name}}</a></th>
             <td><a class="text-primary" href="{{route('userArticles',$user->id)}}">{{$user->articles_count}}</a></td>
-            <td >{{$user->articles()->sum('views')}}</td>
+            <td >{{$user->likes_count}}</td>
             <td><span class="badge {{$user->is_active ? 'badge-success' : 'badge-danger'}}">
             <select class="custom-select" id="admin-article-status" onChange="userStatusChanged({{$user->id}},this)">
                 <option value="1"   {{$user->is_active ? 'selected' : ''}}>Active</option>

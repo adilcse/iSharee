@@ -1,6 +1,6 @@
 <div class="col">
 	<div class="row">
-<a class="btn btn-warning mr-2" href="{{url('/article/edit/'.$article->id)}}"> Edit</a>
+<a class="btn btn-warning mr-2" href="{{url('/article/edit/'.$article->slug)}}"> Edit</a>
 <button class="btn btn-danger" data-toggle="modal" data-target="#confirmation-{{$article->id}}"> Delete</button>
 @if(isset($status) && !Auth::user()->is_admin)
 <div class="h3 bg-warning align-self-center">Status : {{$status}}
@@ -40,7 +40,7 @@ Status : <span>{{$article->is_published ? 'Published' : 'Pending'}}</span>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<a  class="btn btn-danger" href="/article/delete/{{$article->id}}">Delete</a>
+				<a  class="btn btn-danger" href="/article/delete/{{$article->slug}}">Delete</a>
 			</div>
 		</div>
 	</div>

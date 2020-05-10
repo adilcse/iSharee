@@ -48,7 +48,7 @@ class ArticleController  extends Controller
      */
     public function editForm($id)
     {
-        $article=ArticleModel::find($id);
+        $article=ArticleModel::where('slug',$id)->first();
         if(is_null($article)){
             return view('error',['message'=>'invalid article']);
         }
@@ -81,7 +81,7 @@ class ArticleController  extends Controller
             $article->title = $request->title;
             $article->slug = Slug::createSlug('article',$request->title);
             $article->body = $request->body;
-            $article->user_id_fk=Auth::id();
+            $article->allow_image_as_slider = $request->sliderCheck?1:0;
             if(count($request->catagory)>0){
                 try{
                 $article->catagories()->sync($request->catagory);
@@ -100,8 +100,10 @@ class ArticleController  extends Controller
 
     public function delete($id)
     {
-        $article= ArticleModel::find($id);
+        $article= ArticleModel::where('slug',$id)->first();
         if(Gate::allows('update-post', $article)){
+            $article->likes()->detach();
+            $article->comments()->detach();
             $article->catagories()->detach();
             $article->delete();
             return redirect()->back()->with('success','delete');
@@ -192,10 +194,13 @@ class ArticleController  extends Controller
             return redirect()->back()->with('status','failed');
             }
         }
-        $id=Auth::user()->id;
+        $id=Auth::id();
         $data->title = $request->title;
         $data->body = $request->body;
         $data->user_id=$id;
+        if(!$request->sliderCheck){
+            $data->allow_image_as_slider = 0;
+        }
         if($id != 0 ){
             $data->is_published=1;
         }

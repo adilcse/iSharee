@@ -49,11 +49,7 @@
         <div>
         <select id="multiple-selected" class="custom-select mdb-select" name='catagory[]' multiple="multiple">
         @foreach($catagory as $cat)
-            <option value="{{$cat->id}}" 
-                @if(in_array($cat->id,$catids))
-                    selected
-                @endif
-              > 
+            <option value="{{$cat->id}}"  {{(in_array($cat->id,$catids))? 'selected' : ''}}> 
                 {{$cat->name}}
             </option>
             @endforeach
@@ -62,7 +58,6 @@
         <br/>
       
                 <img src="{{$article->image_url}}" id="img" class="img-fluid"   @if(!$article->image_url)style="display:none" @endif>
-                
         <div class="row justify-content-center">
             <div class="file-field">
               
@@ -70,7 +65,13 @@
                 <span> Image Upload   </span>
                 <input type="file" name="image" accept="image/*" id="image">
                 </div>
+                <br>
+                <div class="form-check">
+                    <input type="checkbox" name="sliderCheck" {{$article->allow_image_as_slider ? 'checked' : ''}} class="form-check-input" id="allow-slider-check">
+                    <label class="form-check-label" for="allow-slider-check">Allow image to view as slider?</label>
+                </div>
             </div>
+            
         </div>
         <!--Message-->
         <div class="md-form row">

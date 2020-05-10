@@ -21,7 +21,7 @@ $comments=count($article->comments()->where('is_published',1)->get());
                         <h5> <span class='comment'>{{$comments}}</span> {{$comments > 1 ? " Comments" :" Comment" }}  </h5> 
                     </div>
                     <div>
-                        <a href="{{route('article',$article->id)}}#viewComments">
+                        <a href="{{route('article',$article->slug)}}#viewComments">
 
                         <i class="far fa-comment fa-3x" ></i>
                         </a>
