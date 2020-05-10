@@ -177,11 +177,12 @@ class ArticleController  extends Controller
             //invalid response if already liked
             return ['error'=>true,'message'=>'already liked'];
         }
-        
     }
 
     /**
-     * validate inpu request 
+     * validate input request 
+     * @param request object
+     * @return request after validation 
      */
     protected function validator(Request $request)
     {
@@ -192,13 +193,17 @@ class ArticleController  extends Controller
         ]);
     }
     /**
-     * add a new article 
+     * add a new article by a user
+     * @param requst object with all details
+     * @return response add status
      */
     public function addPost(Request $request)
     {
         $this->validator($request);
+        //create a new article model
         $data = new ArticleModel;     
         if( $request->image){
+            //upload image 
             try {
             $filePath = $this->UserImageUpload($request->image); //Passing $data->image as parameter to our created method
             $data->image_url = $filePath;
@@ -207,6 +212,7 @@ class ArticleController  extends Controller
             return redirect()->back()->with('status','failed');
             }
         }
+        //update article data
         $id=Auth::id();
         $data->title = $request->title;
         $data->body = $request->body;
@@ -218,16 +224,20 @@ class ArticleController  extends Controller
             $data->is_published=1;
         }
         try{
+            //create slug by article name
             $data->slug= Slug::createSlug('article',$request->title);
             $data->save();
-            event(new NewArticleAdded($data));
             if($request->catagory && count($request->catagory)>0){
                 $data->catagories()->attach($request->catagory);
-            }  
+            } 
+            //create an event that a new article is added to notify admin
+            event(new NewArticleAdded($data)); 
         }
         catch(Exception $e){
+            //throw exception
             return redirect()->back()->withError(['status'=>'can not create slug']);
         }
+        //return to article display page is article created successfully
         return redirect(route('article',$data->slug))->with('create','success');
     }
 }

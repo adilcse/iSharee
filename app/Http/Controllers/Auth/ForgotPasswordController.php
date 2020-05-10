@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\EmailVerify;
 use App\User;
 use Illuminate\Support\Facades\Hash;
-use Helper\Otp;
+use App\Helper\Otp;
 
 class ForgotPasswordController extends Controller
 {
