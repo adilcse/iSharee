@@ -9,7 +9,8 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EmailVerify;
 use App\User;
-use App\Model\EmailVerify as ModelVerify;
+use App\Helper\Otp;
+
 class VerifyEmailController extends Controller
 {
     /*
@@ -35,21 +36,18 @@ class VerifyEmailController extends Controller
     public function email(Request $request)
     {
         $to=$request->input('email');
-        $otp=rand(1000,9999);
         $user=User::where('email',$to)->first();
         if($user){
             if($request->input('resend') == 'false'){
                 return view('auth.verify',['email'=>$to,'error'=>$request->input('error')]);
             }
             if($user->is_email_verified === 0){
-                if(is_null(ModelVerify::where('email',$to)->first())){
-                    ModelVerify::insert(['email'=>$to,'otp'=>$otp]);     
+                $otp=Otp::emailOtp($to);
+                if($otp){
+                    Mail::to($to)->send(new EmailVerify($otp));
+                    return view('auth.verify',['email'=>$to]);
                 }
-                else{
-                    ModelVerify::where('email',$to)->update(['otp'=>$otp]);
-                }
-                Mail::to($to)->send(new EmailVerify($otp));
-                return view('auth.verify',['email'=>$to]);
+                return redirect()->back()->withErrors(['otp'=>'error in generating otp']);
             }
             else{
                 return redirect(route('login'));
@@ -64,18 +62,12 @@ class VerifyEmailController extends Controller
     {
         $mail=$request->input('mail');
         $otp=$request->input('otp');
-        $data=ModelVerify::where('email',$mail)->first();
-        if($data){
-            if($otp == $data->otp){
-                User::where('email',$mail)->update(['is_email_verified'=>1,'is_active'=>1]);
-                $email=urlencode($mail);
-                return redirect(route('login')."?verify=success&email=".$email);
-            }else{
-                $email=urlencode($mail);
-                return redirect("/email/verify?email=".$email."&resend=false&error=otp");
-            }
-        }else{
-            return redirect("/email/verify?&resend=false&error=email");
+        if(Otp::verifyEmailOtp($mail,$otp)){
+            User::where('email',$mail)->update(['is_email_verified'=>1,'is_active'=>1]);
+            $email=urlencode($mail);
+            return redirect(route('login')."?verify=success&email=".$email);
         }
+        $email=urlencode($mail);
+        return redirect("/email/verify?email=".$email."&resend=false")->withErrors(['otp'=>'invalid otp']);
     }
 }

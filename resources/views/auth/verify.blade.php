@@ -40,9 +40,9 @@
         <!-- Name -->
         <div class="md-form mt-3">
             <input type="text" id="otp" name="otp" class="form-control" placeholder="OTP">
-            @if(isset($error))
+            @if($errors->first())
             <div class="alert alert-danger" role="alert">
-                invalid {{$error}}
+                {{$errors->first()}}
                 </div>
                 @endif
         </div>
