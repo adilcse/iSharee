@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Catagory;
 use Illuminate\Database\QueryException;
-
+use App\Helper\Slug;
 /**
  * handle user catagory action
  */
@@ -65,6 +65,7 @@ class CatagoryController extends Controller
         try{
             $catagory= new Catagory;
             $catagory->name=$request->input('catagory');
+            $catagory->slug=Slug::createSlug('catagory',$request->input('catagory'));
             $catagory->save();
             return redirect('/admin/catagory/add')->with('success','Catagory successfully added');
         }

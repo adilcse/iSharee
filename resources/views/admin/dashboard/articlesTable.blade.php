@@ -30,7 +30,7 @@
               <tbody>
                 @foreach ($articles as $article)
                     <tr>
-                        <th scope="row"><a class="text-primary" href="{{route('article',$article->id)}}">
+                        <th scope="row"><a class="text-primary" href="{{route('article',$article->slug)}}">
                           {{strlen($article->title)>30?substr($article->title,0,30)."..." :$article->title }}</a></th>
                         <td>{{$article->likes_count}}</a></td>
                         <td ><a href="{{route('admin.userView',$article->user->id)}}" class="text-primary">{{$article->user->name}}</a></td>

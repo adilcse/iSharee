@@ -34,7 +34,7 @@ class NotifyAdmin implements ShouldQueue
                     ->where('is_email_verified',1)
                     ->get();
         foreach($admins as $admin){
-            Mail::to($admin->email)->send(new ArticlePublished($event->article->user,$event->article));
+            Mail::to($admin->email)->queue(new ArticlePublished($event->article->user,$event->article));
         }
     }
 }

@@ -17,15 +17,16 @@
             <div class="card-body">
 
             <!-- Title -->
-            <a href="{{route('article',$article->id)}}" class="text-decoration-none">
+            <a href="{{route('article',$article->slug)}}" class="text-decoration-none">
             <h3 class="card-title">{{$article->title}}</h3>
             </a>
             <h5 class="text-secondary">Published by:<a class="text-primary" href="{{route('userArticles',$article->user->id)}}">{{$article->user->name}}</a></h5>
+            <h6 class="text-secondary"> {{$article->views}} views</h5>
             <!-- Text -->
             <div class="card-text">
             <div class="row">
                 @foreach($article->catagories as $cat)
-                <a href='{{route("catagory",$cat->id)}}'>
+                <a href='{{route("catagory",$cat->slug)}}'>
                 <span class="btn btn-outline-secondary btn-sm"> <strong>{{$cat->name}}</strong> </span>
                 </a>
                 @endforeach
@@ -36,7 +37,7 @@
             </div>
             <!-- Button -->
             <div class="row">
-                <a href="{{route('article',$article->id)}}" class="btn btn-primary activator waves-effect mr-4">Read full article</a>
+                <a href="{{route('article',$article->slug)}}" class="btn btn-primary activator waves-effect mr-4">Read full article</a>
                 @if (Gate::forUser(Auth::user())->allows('update-post', $article)) 
                         @include('post.deleteModal')
                 @endif

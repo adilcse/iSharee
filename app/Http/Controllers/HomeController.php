@@ -37,20 +37,21 @@ class HomeController extends Controller
         return view('home',['articles'=>$articles]);
     }
 
-    public function userProfile(Request $request)
-    {
-        
-    }
     public function catagory($id)
     {
-        # code...
-        $catagory=Catagory::find($id);
+        try{
+            $catagory=Catagory::where('slug',$id)->first();
         $articles=$catagory->articles()
         ->where('articles.is_published',1)
         ->orderby('views','desc')
         ->paginate($this->per_page);
 
         return view('home',['articles'=>$articles,'catagory'=>$catagory]);
+        }
+        catch(Exception $e){
+            return view('error',['message'=>'catagory view failed']);
+        }
+        
     }
 
     public function myArticle(Request $request)

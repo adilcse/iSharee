@@ -13,11 +13,10 @@ class CommentController extends Controller
     {
         $request->validate(['status'=>'boolean|required']);
         $comment=Comments::find($id);
-        
         if(is_null($comment)){
             return response(['error'=>true,'message'=>'comment not exist'],405);
         }
-        if(Gate::denies('article-update',$comment)){
+        if(Gate::denies('update-post',$comment)){
             return response(['error'=>true,'message'=>'update not allowed'],405);
         }
         if('1' === $request->input('status')){
@@ -26,7 +25,7 @@ class CommentController extends Controller
         }else{
             $comment->delete();
             if('article' === $request->input('from')){
-                return redirect()->back()->with(['status'=>'comment deleted']);
+                return redirect($request->url().'#viewComments')->with(['status'=>'comment deleted']);
             }
             return \response(['error'=>false,'message'=>'deleted'],200);
         }

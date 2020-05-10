@@ -30,7 +30,7 @@
   <h3 class="card-title">{{$article->title}}</h3>
   <div class="row">
                 @foreach($article->catagories as $cat)
-                <a href="{{route('catagory',$cat->id)}}">
+                <a href="{{route('catagory',$cat->slug)}}">
                 <span class="btn btn-outline-secondary btn-sm"> <strong>{{$cat->name}}</strong> </span>
                 </a>
                 @endforeach

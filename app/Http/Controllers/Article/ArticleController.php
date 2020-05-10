@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\Events\NewArticleAdded;
 use App\Events\NewCommentAdded;
-
+use App\Helper\Slug;
 
 class ArticleController  extends Controller
 {
@@ -21,10 +21,10 @@ class ArticleController  extends Controller
 
     public function index($id)
     {
-        $article=ArticleModel::find($id);
-        $article->timestamps=false;
-        $article->increment('views');
+        $article=ArticleModel::where('slug',$id)->first();
         if($article){
+            $article->timestamps=false;
+            $article->increment('views');
             if($article->is_published){
                 return view('post.full',['article'=>$article]);
             }else if(Gate::allows('update-post', $article)){
@@ -79,15 +79,18 @@ class ArticleController  extends Controller
                 }
             }
             $article->title = $request->title;
+            $article->slug = Slug::createSlug('article',$request->title);
             $article->body = $request->body;
             $article->user_id_fk=Auth::id();
             if(count($request->catagory)>0){
                 try{
                 $article->catagories()->sync($request->catagory);
-                }catch(Exception $e){}
+                }catch(Exception $e){
+                    return view('error',['message'=>'error in adding catagory']);
+                }
             }  
             $article->save();
-            return redirect()->back()->with('status','success');
+            return redirect(route('article',$article->slug))->with('status','success');
 
         }else{
             return view('error',['message'=>'you are not autherorized']);
@@ -178,7 +181,6 @@ class ArticleController  extends Controller
      */
     public function addPost(Request $request)
     {
-        
         $this->validator($request);
         $data = new ArticleModel;     
         if( $request->image){
@@ -197,14 +199,17 @@ class ArticleController  extends Controller
         if($id != 0 ){
             $data->is_published=1;
         }
-        $data->save();
-        event(new NewArticleAdded($data));
-        if(count($request->catagory)>0){
-            $data->catagories()->attach($request->catagory);
-        }  
-        if($id==0){
-            return redirect()->back()->with('status','pending for approval');
+        try{
+            $data->slug= Slug::createSlug('article',$request->title);
+            $data->save();
+            event(new NewArticleAdded($data));
+            if($request->catagory && count($request->catagory)>0){
+                $data->catagories()->attach($request->catagory);
+            }  
         }
-        return redirect()->back()->with('status','success');
+        catch(Exception $e){
+            return redirect()->back()->withError(['status'=>'can not create slug']);
+        }
+        return redirect(route('article',$data->slug))->with('create','success');
     }
 }
