@@ -8,6 +8,9 @@
 
 
     <div class="card-body text-center px-4">
+    @if(!$comments->items())
+            <h3> No pending comments</h3>
+        @else
     <div class="list-group list-group-flush table-responsive text-nowrap">
             <table class="table">
             <thead>
@@ -18,9 +21,6 @@
                 <th scope="col">Action</th>
             </tr>
         </thead>
-        @if(is_null($comments))
-            <h3> no pending comments</h3>
-        @else
         <tbody>
             @foreach($comments as $comment)
         <tr>
@@ -36,9 +36,9 @@
         </tr>
         @endforeach
         </tbody>
-        @endif
         </table>
     </div>
+    @endif
     </div>
     <div class="card-footer white py-3 d-flex justify-content-between">
             {{$comments->links()}}

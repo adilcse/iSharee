@@ -16,6 +16,9 @@
 
 
     <div class="card-body text-center px-4">
+    @if(!$users->items())
+            <h3> No Users</h3>
+        @else
     <div class="list-group list-group-flush table-responsive text-nowrap">
             <table class="table">
             <thead>
@@ -43,6 +46,7 @@
         </tbody>
         </table>
     </div>
+    @endif
     </div>
     <div class="card-footer white py-3 d-flex justify-content-between">
                 {{$users->links()}}

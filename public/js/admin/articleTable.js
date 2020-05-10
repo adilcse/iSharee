@@ -13,9 +13,7 @@ const articleStatusChanged=(id,element)=>{
         },
         success:(res)=>{
         console.log(res);
-        },
-        
-        
+        },      
     })
 }
 
@@ -76,4 +74,11 @@ const updateCommentStatus=(element,id,status)=>{
         
         
     })
+}
+
+const deleteArticle=(element,name)=>{
+    let r = confirm(`Are you sure ?\n Delete ${name} \n Note:deleting article will delete all related comments and likes`);
+    if (r == true) {
+        window.location.href=$(element).attr('data-target');
+    }
 }

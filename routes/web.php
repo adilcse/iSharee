@@ -33,9 +33,9 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         Route::post('/catagory/edit','CatagoryController@update');
         Route::get('/user/update/{id}','AdminController@userStatusUpdate');
         Route::post('/user/update','AdminController@userUpdate');
-        
         Route::get('/user/view/{id}','AdminController@userView')->name('admin.userView');
         Route::get('/article/update/{id}','AdminController@articleUpdate')->name('admin.article.status');
+        Route::get('/article/delete/{id}','AdminController@articleDelete')->name('admin.article.delete');
     });
     Route::namespace('Auth')->group(function(){
         Route::get('/login','LoginController@showLoginForm')->name('admin.login');
@@ -75,6 +75,7 @@ Route::namespace('Auth')->group(function () {
     Route::get('/mobile/verify','VerifyMobileController@index')->name('mobileVerify');
     Route::get('/guest','LoginController@GuestLogin')->name('guest');
     Route::post('/email/verify/otp','VerifyEmailController@otp')->name('emailotp');
+    Route::post('/mobile/verify/otp','VerifyMobileController@verifyOtp')->name('mobileotp');
     Route::post('/password/reset/send','ForgotPasswordController@send');
     Route::post('/password/reset/verify','ForgotPasswordController@verify');      
 });

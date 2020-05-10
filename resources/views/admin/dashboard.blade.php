@@ -14,6 +14,11 @@
     <h3 class="font-weight-bold text-center dark-grey-text pb-2">Dashboard</h3>
     <hr class="w-header my-4">
 
+    @if(session('success'))
+        <div class='alert alert-success'>
+            {{session('success')}}
+        </div>
+    @endif
     <div class="row">
 
       <!-- Grid column -->

@@ -191,7 +191,6 @@ class AdminController extends Controller
  */
     public function articleUpdate(Request $request,$id)
     {
-
         $article=Article::find($id);
         if(is_null($article)){
             return response(['status'=>false,'message'=>'invalid article id'],404);    
@@ -204,6 +203,20 @@ class AdminController extends Controller
         }
         return response(['status'=>false,'message'=>'invalid status update'],403);
     }
+
+    public function articleDelete(Request $request,$id)
+    {
+        $article=Article::find($id);
+        if(is_null($article)){
+            return view('error',['message'=>'invalid article ']);
+        }
+        $article->catagories()->detach();
+        $article->comments()->detach();
+        $article->likes()->detach();
+        $article->delete();
+        return redirect()->back()->with(['success'=>'deleted successfully']);
+    }
+
     public function profile()
     {
         return view('admin.dashboard');

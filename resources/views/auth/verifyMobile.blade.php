@@ -5,6 +5,12 @@
     <div class="row justify-content-center">
         <div class="col-md-5">
             <!-- Material form register -->
+            @foreach($errors->all() as $error)
+                <div class="alert alert-danger">
+                    {{$error}}
+                </div>
+                @endforeach
+
 <div class="card">
 
 <h5 class="card-header info-color white-text text-center py-4">
@@ -30,7 +36,7 @@
             </div>
             <div class="col-md-4">
                 <button class="btn btn-outline-info btn-rounded z-depth-0 btn-block waves-effect" type="button">
-                    <a href="?resend=true"> Resend</a>
+                    <a href="?number={{$mobile}}&resend=true"> Resend</a>
                 </button>
             </div>
             </div>

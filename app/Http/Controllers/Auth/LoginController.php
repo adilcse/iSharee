@@ -55,18 +55,20 @@ class LoginController extends Controller
                 Auth::logout();
                 return view('auth.login',['error'=>'please login through admin pannel']);
             }
-            if($user->is_email_verified && $user->is_active){
-                return redirect(route('home'));  
-            }else if(!$user->is_active){
+            else if(0===$user->is_active){
                 Auth::logout();
                 return view('auth.login',['error'=>'user, your account is blocked.']);
             }
-            else{
+            else if(0===$user->is_email_verified){
                 $email=urlencode($user->email);
                 Auth::logout();
                 return  redirect('/email/verify?email='.$email);
+            }else if(0===$user->is_mobile_verified){
+                Auth::logout();
+                $mobile=urlencode($user->mobile);
+                return  redirect('/mobile/verify?number='.$mobile.'&resend=true');
             }
-          //  return redirect()->intended('dashboard');
+            return redirect(route('home')); 
         }else{
             return view('auth.login',['error'=>'email/password']);
         }

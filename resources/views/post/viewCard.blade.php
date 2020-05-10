@@ -17,7 +17,9 @@
             <div class="card-body">
 
             <!-- Title -->
+            <a href="{{route('article',$article->id)}}" class="text-decoration-none">
             <h3 class="card-title">{{$article->title}}</h3>
+            </a>
             <h5 class="text-secondary">Published by:<a class="text-primary" href="{{route('userArticles',$article->user->id)}}">{{$article->user->name}}</a></h5>
             <!-- Text -->
             <div class="card-text">
