@@ -9,6 +9,8 @@ class Comments extends Model
     //
     protected $table='comments';
 
+    protected $fillable=['article_id','body','user_id','is_published'];
+
     public function article()
     {
         # code...

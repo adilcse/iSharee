@@ -6,10 +6,14 @@ use Illuminate\Http\Request;
 use App\Model\Catagory;
 use App\Model\Article as ArticleModel;
 use App\Model\ArticleCatagory;
+use App\Model\Comments;
 use App\Traits\ImageUpload;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Events\NewArticleAdded;
+use App\Events\NewCommentAdded;
+
 
 class ArticleController  extends Controller
 {
@@ -143,10 +147,15 @@ class ArticleController  extends Controller
         }   
         if(Auth::check()){
             if(Auth::id()==0){
-                $article->comments()->attach(Auth::id(),['is_published'=>0,'body'=>$request->comment]);
+                $comment = new Comments(['article_id'=>$article->id,'is_published'=>0,'body'=>$request->comment,'user_id'=>Auth::id()]);
+                $comment->save();
+                event(new NewCommentAdded($comment));
+                
                 return redirect()->back()->with(['comment'=>'pending for admin approval']);
             }else{
-                $article->comments()->attach(Auth::id(),['body'=>$request->comment]);
+                $comment = new Comments(['article_id'=>$article->id,'body'=>$request->comment,'user_id'=>Auth::id()]);
+                $comment->save();
+                event(new NewCommentAdded($comment));
             }
             return redirect()->back()->with(['status'=>'success']);
         }else{
@@ -164,13 +173,14 @@ class ArticleController  extends Controller
             'body' => ['string','required'],
         ]);
     }
-
+    /**
+     * add a new article 
+     */
     public function addPost(Request $request)
     {
         
         $this->validator($request);
         $data = new ArticleModel;     
- 
         if( $request->image){
             try {
             $filePath = $this->UserImageUpload($request->image); //Passing $data->image as parameter to our created method
@@ -188,6 +198,7 @@ class ArticleController  extends Controller
             $data->is_published=1;
         }
         $data->save();
+        event(new NewArticleAdded($data));
         if(count($request->catagory)>0){
             $data->catagories()->attach($request->catagory);
         }  

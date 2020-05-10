@@ -21,6 +21,12 @@ class EventServiceProvider extends ServiceProvider
         'Illuminate\Mail\Events\MessageSent' => [
             'App\Listeners\LogSentMessage',
         ],
+        'App\Events\NewArticleAdded' => [
+            'App\Listeners\NotifyAdmin',
+        ],
+        'App\Events\NewCommentAdded' => [
+            'App\Listeners\NotifyUser',
+        ],
     ];
 
     /**
