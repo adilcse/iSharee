@@ -9,17 +9,23 @@
 </div>
 @endif
 
-@if(Auth::user()->is_admin)
+
 <div class="ml-auto h4">
+@if(Auth::user()->is_admin)
 	Change Status:
 <span class="d-inline-block">
-                        <select class="custom-select" id="admin-article-status" onChange="articleStatusChanged({{$article->id}},this)">
-                            <option value="0"  {{$article->is_published === 0 ? 'selected' : ''}}>Pending</option>
-                            <option value="1" {{$article->is_published ? 'selected' : ''}}>Published</option>
-                        </select>
-							</span>
+	<select class="custom-select" id="admin-article-status" onChange="articleStatusChanged({{$article->id}},this)">
+		<option value="0"  {{$article->is_published === 0 ? 'selected' : ''}}>Pending</option>
+		<option value="1" {{$article->is_published ? 'selected' : ''}}>Published</option>
+	</select>
+</span>
+@elseif(isset($myArticle))
+<div>
+Status : <span> {{$article->is_published === 1 ? 'Published' : 'Pending'}}</span>
 </div>
 @endif
+</div>
+
 </div>
 <!-- Modal -->
 <div class="modal fade" id="confirmation-{{$article->id}}" tabindex="-1" role="dialog" aria-labelledby="header-{{$article->id}}" aria-hidden="true">

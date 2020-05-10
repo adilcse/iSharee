@@ -8,10 +8,15 @@ use App\Model\Article;
 use App\Model\Comments;
 use App\User;
 use Auth;
+
+/**
+ * handles all admin requests
+ */
 class AdminController extends Controller
 {
-        /**
+    /**
      * Create a new controller instance.
+     * setup the number of page records dispay in admin tables.
      *
      * @return void
      */
@@ -22,18 +27,24 @@ class AdminController extends Controller
         $this->per_page=intval(env('ADMIN_TABLE_PER_PAGE',5));
     }
 
+    /**
+     * fetch all details table and return to admin dashbord page
+     * @param request 
+     * @param table (optional) whose content is to be changed
+     * @return view admin homepage view
+     */
     public function index(Request $request,$table=null)
     {
-        # code...
-
+        //get the current view of the user and article tables
         $view=$request->input('view');
         $userview=$request->input('userview');
         if(is_null($table)){
+            //return default view for all the tables
             $articles=$this->getArticles($request);
             $users=$this->getUsers($request);
             $comments=$this->getComments($request);
         }else if('article' === $table){
-
+            //change article view 
             if(isset($view)){
                 switch($view){
                     case "2":
@@ -48,10 +59,12 @@ class AdminController extends Controller
             }else{
                 $articles=$this->getArticles($request);
             }
+            //default view for other table
             $request->merge(['page'=>1]);
             $users=$this->getUsers($request);
             $comments=$this->getComments($request);
         }else if('user' === $table){
+            //change view for user table
             if(isset($userview)){
                 switch($userview){
                     case "2":
@@ -66,160 +79,102 @@ class AdminController extends Controller
             }else{
                 $users=$this->getUsers($request);
             }
+            //default view for other table
             $request->merge(['page'=>1]);
             $articles=$this->getArticles($request);
             $comments=$this->getComments($request);
         }
         else if('comments' === $table){
+            //change view for comment table
             $comments=$this->getComments($request);
             $request->merge(['page'=>1]);
             $articles=$this->getArticles($request);
             $users=$this->getUsers($request);
         }
+        //returns admin view with all the table data
         return view('admin.dashboard',['users'=>$users,'articles'=>$articles,'view'=>$view,'userview'=>$userview,'comments'=>$comments]);
     }
 
+    /**
+     * helper funtion for index to fetch article and current view of the page
+     * @param request object
+     * @param view current view of article table null for all
+     * @return paginated collection of articles sorted with leatest
+     */
     private function getArticles($request,$view=null)
     {
         $url=$url=$this->getUrl($request);
-        if(is_null($view)){
-            $article=Article::orderby('created_at','desc')->withCount('likes');
-        }else{
-            $article=Article::where('is_published',$view)
-                    ->orderby('created_at','desc')->withCount('likes');
+        try{
+            if(is_null($view)){
+                //set article to default view with total likes of a article
+                $article=Article::orderby('created_at','desc')->withCount('likes');
+            }else{
+                //get articles with defined view and likes
+                $article=Article::where('is_published',$view)
+                        ->orderby('created_at','desc')->withCount('likes');
+            }
+            //set url with defined view
+            return $article ->paginate($this->per_page)->withPath($url."/article");
+        }catch(Exception $e){
+            return null;
         }
-        return $article ->paginate($this->per_page)->withPath($url."/article");
     }
-
-    public function getUsers($request,$active=null)
+    /**
+     * helper function for index 
+     * gets users from users table with current view defined
+     * @param request object
+     * @param active|inactive user null for all users
+     * @return paginated user table
+     */
+    private function getUsers($request,$active=null)
     {
-        # code...
         $url=$this->getUrl($request);
-        if(is_null($active)){
-            $users=User::where('is_admin',0)
-                    ->orderby('created_at','desc');
-        }else{
-            $users=User::where('is_admin',0)
-                    ->where('is_active',$active)
-                    ->orderby('created_at','desc');
+        try{
+            //gets all the users who is not admin
+            if(is_null($active)){
+                $users=User::where('is_admin',0)
+                        ->orderby('created_at','desc');
+            }else{
+                //gets only active|inactive users
+                $users=User::where('is_admin',0)
+                        ->where('is_active',$active)
+                        ->orderby('created_at','desc');
+            }
+            return $users->withCount('articles')->paginate($this->per_page)->withPath($url."/user");
+        }catch(Exception $e){
+            return null;
         }
-        return $users->withCount('articles')->paginate($this->per_page)->withPath($url."/user");
     }
 
-    public function getComments($request)
+    /**
+     * helper function for index gets all guest comments form comments table
+     * @param request object
+     * @return comments all guest comment in paginated form
+     */
+    private function getComments($request)
     {
         $url=$url=$this->getUrl($request);
-
         try{
-            $comments=Comments::where('is_published',0)
+            //gets al lcomment which are not published
+            return Comments::where('is_published',0)
                     ->paginate($this->per_page)
                     ->withPath($url."/comments");
         }
         catch(Exception $e){
             return null;
-        }
-        return $comments;
-        
-
-        
+        }   
     }
-    public function getUrl($request)
+
+    /**
+     * helper funcion for user,comment,article functions
+     * trim any extra parimeter
+     */
+    private function getUrl($request)
     {
-        # code...
         $url=$request->url();
         $url=rtrim($url,"/article");
         $url=rtrim($url,"/user");
         $url=rtrim($url,"/comments");
         return $url;
-    }
-
-    public function userView(Request $request,$id)
-    {
-        $user=User::find($id);
-        if(is_null($user)){
-            return redirect()->back()->withErrors(['user not found']);
-        }
-        $articles=$user->articles()->paginate($this->per_page);
-        return view('admin.profile',['profile'=>$user,'articles'=>$articles]);
-    }
-
-    public function userStatusUpdate(Request $request,$id)
-    {
-        if($request->user()->is_admin){
-            $status=intval($request->input('status'));
-            if(1 === $status || 0 === $status){
-                $user=User::find($id);
-                if(is_null($user)){
-                    return response(['error'=>true,'message'=>'invalid user input'],403);
-                }
-                $user->is_active=$status;
-                $user->save();
-                return response(['error'=>false,'message'=>'update successfull'],200);
-            }else{
-                return response(['error'=>true,'message'=>'invalid status'],403);
-            }
-        }
-        else{
-            return response(['error'=>true,'message'=>'you are not admin'],403);
-        }
-    }
-
-    public function userUpdate(Request $request)
-    {
-        $request->validate([
-            'name'=>['string','required','min:4'],
-            'mobile'=>['required','digits:10'],
-            'email'=>['email','required'],
-            'id'=>['string','required'],
-            'mobileVerify'=>['boolean','required'],
-            'emailVerify'=>['boolean','required']
-        ]);
-        $user=User::find($request->input('id'));
-        if(is_null($user)){
-            return redirect()->back()->withErrors(['invalid user id']);
-        }
-        $user->name=$request->input('name');
-        $user->email=$request->input('email');
-        $user->mobile=$request->input('mobile');
-        $user->is_mobile_verified=$request->input('mobileVerify');
-        $user->is_email_verified=$request->input('emailVerify');
-        $user->save();
-        return redirect()->back()->with(['status'=>'success']);
-    }
-/**
- * update article status and return status of article
- */
-    public function articleUpdate(Request $request,$id)
-    {
-        $article=Article::find($id);
-        if(is_null($article)){
-            return response(['status'=>false,'message'=>'invalid article id'],404);    
-        }
-        $ip=intval($request->input('status'));
-        if($ip=== 1 || $ip===0){
-            $article->is_published=$ip;
-            $article->save();
-            return response(['status'=>true,'message'=>'updated'],200);     
-        }
-        return response(['status'=>false,'message'=>'invalid status update'],403);
-    }
-
-    public function articleDelete(Request $request,$id)
-    {
-        $article=Article::find($id);
-        if(is_null($article)){
-            return view('error',['message'=>'invalid article ']);
-        }
-        $article->catagories()->detach();
-        $article->comments()->detach();
-        $article->likes()->detach();
-        $article->delete();
-        return redirect()->back()->with(['success'=>'deleted successfully']);
-    }
-
-    public function profile()
-    {
-        return view('admin.dashboard');
-        # code...
     }
 }
