@@ -8,18 +8,11 @@ use Illuminate\Queue\InteractsWithQueue;
 use App\Mail\CommentAdded;
 use Illuminate\Support\Facades\Mail;
 
+/**
+ * Listen to any comment added in an article and notify user about that comment
+ */
 class NotifyUser implements ShouldQueue
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
     /**
      * Handle the event.
      *
@@ -29,6 +22,7 @@ class NotifyUser implements ShouldQueue
     public function handle(NewCommentAdded $event)
     {
         $user = $event->comment->article->user;
+        //send email to the user to notify about comment
         if($user->is_email_verified){
             Mail::to($user->email)->queue(new CommentAdded($event->comment));
         }

@@ -8,7 +8,9 @@ use Route;
 class IsAdmin
 {
     /**
-     * Handle an incoming request.
+     * Check the user is admin or not.
+     * Only admin can access admin section
+     * other users are redirect back to login page
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
@@ -19,6 +21,6 @@ class IsAdmin
         if (Auth::user() && Auth::user()->is_admin==1) {
             return $next($request);
     }
-    return redirect(route('login'));
+    return redirect(route('home'))->withErrors(['message'=>'Sorry you are not admin']);
     }
 }
