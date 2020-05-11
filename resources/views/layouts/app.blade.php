@@ -41,14 +41,17 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    @if ($isUser)
                     <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                            <a class="nav-link" href="{{ route('myArticle') }}">My Articles</a>
-                        </li>
+                        @if($isGuest)
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('newArticle') }}">Publish new Article</a>
                         </li>
+                        @endif
+                        @if ($isUser)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('myArticle') }}">My Articles</a>
+                        </li>
+                        @endif
                         @if($isAdmin)
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('admin.catagory') }}">manage catagory</a>
@@ -58,7 +61,7 @@
                         </li>
                         @endif
                     </ul>
-                    @endif
+                    
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
@@ -71,9 +74,6 @@
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
-                            <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.login') }}">Admin Login</a>
-                                </li>
                         @endguest
                         @if($isGuest)
                                 <li class="nav-item">
@@ -81,9 +81,6 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.login') }}">Admin Login</a>
                                 </li>
                             @endif
                             @if($isUser || $isAdmin)

@@ -70,15 +70,15 @@ class VerifyEmailController extends Controller
      */
     public function otp(Request $request)
     {
-        $request->valdate([
+        $request->validate([
             'mail'=> 'email|required',
-            'otp'=>'numeric|betweem:1000,9999|required'
+            'otp'=>'numeric|between:1000,9999|required'
         ]);
         $mail=$request->input('mail');
         $otp=$request->input('otp');
         if(Otp::verifyEmailOtp($mail,$otp)){
             //update email status when email and otp verifies
-            User::where('email',$mail)->update(['is_email_verified'=>1,'is_active'=>1]);
+            User::where('email',$mail)->update(['is_email_verified'=>1]);
             $email=urlencode($mail);
             return redirect(route('login')."?verify=success&email=".$email);
         }

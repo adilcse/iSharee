@@ -52,8 +52,7 @@ class LoginController extends Controller
             // Authentication passed...
             $user=Auth::user();
             if(1 === $user->is_admin){
-                Auth::logout();
-                return view('auth.login',['error'=>'please login through admin pannel']);
+                return redirect(route('admin.home'));
             }
             else if(0===$user->is_active){
                 Auth::logout();
@@ -63,11 +62,13 @@ class LoginController extends Controller
                 $email=urlencode($user->email);
                 Auth::logout();
                 return  redirect('/email/verify?email='.$email);
-            }else if(0===$user->is_mobile_verified){
-                Auth::logout();
-                $mobile=urlencode($user->mobile);
-                return  redirect('/mobile/verify?number='.$mobile.'&resend=true');
             }
+            // twilio mobile verification suspended will add after account resumes
+            // else if(0===$user->is_mobile_verified){
+            //     Auth::logout();
+            //     $mobile=urlencode($user->mobile);
+            //     return  redirect('/mobile/verify?number='.$mobile.'&resend=true');
+            // }
             return redirect(route('home')); 
         }else{
             return view('auth.login',['error'=>'email/password']);
