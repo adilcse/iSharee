@@ -6,13 +6,11 @@ use Illuminate\Http\Request;
 use App\Model\Catagory;
 use App\Model\Article as ArticleModel;
 use App\Model\ArticleCatagory;
-use App\Model\Comments;
 use App\Traits\ImageUpload;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\Events\NewArticleAdded;
-use App\Events\NewCommentAdded;
 use App\Helper\Slug;
 
 /**

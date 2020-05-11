@@ -1,3 +1,4 @@
+//validate mobile number before sending otp
 $('#verify-mobile-btn').click(function(e){
     e.preventDefault();
     let url=$(this).attr('data-target');

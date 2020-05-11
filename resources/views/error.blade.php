@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+<!-- error page to display error messages -->
 @section('content')
 <div class="container">
     <div class='row justify-content-center'>

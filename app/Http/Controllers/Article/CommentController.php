@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Article;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Comments;
+use App\Model\Article;
 use App\User;
 use Gate;
+use Auth;
+use App\Events\NewCommentAdded;
 
 /**
  * handles user comment related action
@@ -52,7 +55,7 @@ class CommentController extends Controller
      * add comment for an article
      * @param request object
      */
-    public function comment(Request $request)
+    public function articleComment(Request $request)
     {
         //validate user's input with article id and comment
         $request->validate([
@@ -60,7 +63,7 @@ class CommentController extends Controller
             'comment'=>['required','string']
         ]);
         //find the article for which comment is added
-        $article= ArticleModel::find($request->id);
+        $article= Article::find($request->id);
         if(is_null($article)){
             return view('error')->with(['message'=>'invalid article']);
         }   
