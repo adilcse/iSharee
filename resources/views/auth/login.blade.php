@@ -82,7 +82,7 @@
 						</h5>
 						<!-- Social login -->
 						<h4>sign in with:
-							<a type="button" class="btn-floating btn-fb btn-sm">
+							<a href="{{route('google-login')}}" type="button" class="btn-floating btn-fb btn-sm">
 								<img src='https://image.flaticon.com/teams/slug/google.jpg' width="50px" height="50px">
 							</a>
 						</h4>

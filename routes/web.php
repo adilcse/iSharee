@@ -19,8 +19,11 @@ Route::get('/', function () {
 Route::get('/error', function () {
     return view('error');
 })->name('error');
+
 Auth::routes();
 
+Route::get('/google-login','Auth\GoogleLoginController@googleLogin')->name('google-login');
+Route::get('/login/google','Auth\GoogleLoginController@googleLoginCallback');
 Route::prefix('/admin')->namespace('Admin')->group(function(){
     Route::group(['middleware' => 'isAdmin'], function () {
         Route::get('/dashboard','AdminController@index')->name('admin.home');
@@ -43,6 +46,7 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         Route::post('/logout','LoginController@logout')->name('admin.logout');
     });
   });
+
   Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/profile', function(){

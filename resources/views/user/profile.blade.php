@@ -82,7 +82,35 @@
                                 </span>
                             @enderror
                         </div>
-                        <input class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" value="update"></input>
+                        <div class="col">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="changePasswordCheck" name="changePasswordCheck" onClick="changePasswordClick(this)">
+                                <label class="form-check-label" for="changePasswordCheck">Change Password</label>
+                            </div>
+                        </div>
+                        <div class="ml-auto mr-auto justify-content-center col-md-8 password-section" style="display:none">
+                            @if(!Auth::user()->oauth_token)
+                                <div class="md-form row">
+                                    <input type="password" id="old-password" name="oldPassword" class="form-control" placeholder="old password">
+                                </div>
+                            @endif
+                            <div class="md-form row">
+                                <input type="password" id="password" name="newPassword" class="form-control" aria-describedby="describe-password" placeholder="New password">
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                <small id="describe-password" class="form-text text-muted mb-4">
+                                    At least 6 charecters
+                                </small>
+                            </div>
+                            <div class="md-form row">
+                                <input type="password" name="cPassword" id="cpassword" class="form-control" placeholder="Confirm Password" >
+                            </div>
+                        </div>
+                        <br>
+                        <input class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" value="update"></input>             
                     </form>
                     <!-- Form -->
                 </div>

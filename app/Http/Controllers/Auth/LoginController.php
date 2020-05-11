@@ -102,9 +102,7 @@ class LoginController extends Controller
      */
     public function GuestLogin(Request $request)
     {
-        
         if(Auth::loginUsingId(0)){
-
             return redirect(route('home'));  
         }
         return redirect(route('login'));

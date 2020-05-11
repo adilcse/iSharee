@@ -8,6 +8,8 @@ use App\Model\Catagory;
 use App\Model\ArticleCatagory;
 use App\User;
 use Auth;
+use Illuminate\Support\Facades\Hash;
+
 class HomeController extends Controller
 {
     /**
@@ -114,12 +116,30 @@ class HomeController extends Controller
     {
         $request->validate([
             'name'=>'required|string|max:50|min:3',
-            'id'=>'numeric|required'
+            'id'=>'numeric|required',
+            'newPassword'=>'nullable|string|min:6',
+            'cPassword'=> 'nullable|string|min:6',
+            'oldPassword'=> 'nullable|string|min:6'
         ]);
         //fetch the user update name and return with response
         try{
             $user=Auth::user();
             $user->name=$request->input('name');
+            if($request->changePasswordCheck){
+                if($request->cPassword !== $request->newPassword){
+                    return redirect()->back()->withErrors(['password'=>'confirm password does not matched']);
+                }else if(Auth::user()->oauth_token){
+                    $user->password = Hash::make($request->newPassword);
+                    $user->oauth_token = null;
+                }else{
+                    if(Hash::check($request->oldPassword,Auth::user()->password)){
+                        $user->password = Hash::make($request->newPassword);
+                        $user->oauth_token = null;
+                    }else{
+                        return redirect()->back()->withErrors(['password'=>'invalid password']);
+                    }
+                }
+            }
             $user->save();
             return redirect()->back()->with(['status'=>'success']);
         }

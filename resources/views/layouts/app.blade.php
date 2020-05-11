@@ -6,7 +6,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <meta name="google-signin-client_id" content="">
     <title>{{ config('app.name', 'iShare') }}</title>
 
     <!-- Scripts -->
