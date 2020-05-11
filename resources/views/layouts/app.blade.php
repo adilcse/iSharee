@@ -71,9 +71,6 @@
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
-                            <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.login') }}">Admin Login</a>
-                                </li>
                         @endguest
                         @if($isGuest)
                                 <li class="nav-item">
@@ -81,9 +78,6 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.login') }}">Admin Login</a>
                                 </li>
                             @endif
                             @if($isUser || $isAdmin)

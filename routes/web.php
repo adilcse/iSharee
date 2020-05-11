@@ -40,11 +40,6 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         Route::get('/article/update/{id}','AdminArticleController@articleUpdate')->name('admin.article.status');
         Route::get('/article/delete/{id}','AdminArticleController@articleDelete')->name('admin.article.delete');
     });
-    Route::namespace('Auth')->group(function(){
-        Route::get('/login','LoginController@showLoginForm')->name('admin.login');
-        Route::post('/login','LoginController@login');
-        Route::post('/logout','LoginController@logout')->name('admin.logout');
-    });
   });
 
   Route::group(['middleware' => 'auth'], function () {

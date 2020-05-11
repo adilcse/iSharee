@@ -52,8 +52,7 @@ class LoginController extends Controller
             // Authentication passed...
             $user=Auth::user();
             if(1 === $user->is_admin){
-                Auth::logout();
-                return view('auth.login',['error'=>'please login through admin pannel']);
+                return redirect(route('admin.home'));
             }
             else if(0===$user->is_active){
                 Auth::logout();
