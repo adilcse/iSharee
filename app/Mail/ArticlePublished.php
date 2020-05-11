@@ -7,17 +7,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * generate mail layout to notify admin
+ */
 class ArticlePublished extends Mailable
 {
     use Queueable, SerializesModels;
-
+    public $article,$user;
     /**
      * Create a new message instance.
-     *
+     * @param user model of the article
+     * @param article model
      * @return void
      */
-    public $article,$user;
-
     public function __construct($user,$article)
     {
         $this->article=$article;
@@ -25,7 +27,7 @@ class ArticlePublished extends Mailable
     }
 
     /**
-     * Build the message.
+     * Build the message with mail view.
      *
      * @return $this
      */

@@ -74,24 +74,35 @@ class LoginController extends Controller
         }
         
     }
+
+    /**
+     * show form for user login
+     */
     public function showLoginForm(Request $request)
     {
+        //redirected user fill email field for login
         if($request->input('verify')==='success'){
             $email=urldecode($request->input('email'));
             return view('auth.login',['email'=>$email,'verify'=>true]);
         }
         return view('auth.login');
     }
+
+    /**
+     * logout user and redirect to login page
+     */
     public function logout()
     {
         Auth::logout();
         return redirect(route('login'));
     }
+
+    /**
+     * guest user can view home page by logging in as guest
+     */
     public function GuestLogin(Request $request)
     {
-        
         if(Auth::loginUsingId(0)){
-
             return redirect(route('home'));  
         }
         return redirect(route('login'));

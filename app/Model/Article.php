@@ -7,15 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model
 {
     protected $table='articles';
+
     protected $fillable = [
         'title', 'image_url', 'body','is_published'
     ];
-
+    /**
+     * joining catagories with articles
+     */
     public function catagories()
     {
         return $this->belongsToMany('App\Model\Catagory', 'article_catagory', 'article_id', 'catagory_id')
                 ->withTimestamps();
     }
+
+    /**
+     * joining commens with articles
+     */
     public function comments()
     {
         # code...
@@ -23,6 +30,10 @@ class Article extends Model
                     ->withTimestamps()
                     ->withPivot('is_published','body','id');
     }
+
+    /**
+     * join likes table with articles 
+     */
     public function likes()
     {
         # code...
@@ -30,6 +41,9 @@ class Article extends Model
         ->withTimestamps();
     }
 
+    /**
+     * join user table with article
+     */
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id');

@@ -1,10 +1,11 @@
-
+//like press action
 const likepressed=(articleId,el)=>{
     const e=$(el).parentsUntil('.row').last();
     const likeSpan=e.children('div').first().children().children();
     let likes=parseInt(likeSpan.text());
     const i=e.children('div').last();
     const err=e.children('span');
+    //update like count in server and update like icon and like counter
     $.ajax({url:'/article/like/'+articleId,
     success:(data)=>{
         if(data.error){
@@ -22,6 +23,7 @@ const likepressed=(articleId,el)=>{
     }}) 
 }
 
+//change like icon
 const likeIcon=(icon,liked)=>{
     if(liked){
         icon.addClass('fas');
@@ -34,11 +36,3 @@ const likeIcon=(icon,liked)=>{
     }
 }
 
-
-const commentPressed=(articleId,el)=>{
-    const e=$(el).parentsUntil('.row').last();
-    const commentSpan=e.children('div').first().children().children();
-    let comments=parseInt(likeSpan.text());
-    const i=e.children('div').last();
-    const err=e.children('span');
-}

@@ -10,20 +10,20 @@ use Illuminate\Queue\SerializesModels;
 class EmailVerify extends Mailable
 {
     use Queueable, SerializesModels;
-
+    
+    public $otp;
     /**
      * Create a new message instance.
-     *
+     *@param otp for email verification
      * @return void
      */
-    public $otp;
     public function __construct($otp)
     {
         $this->otp=$otp;
     }
 
     /**
-     * Build the message.
+     * Build the message to verify email address.
      *
      * @return $this
      */

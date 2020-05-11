@@ -1,3 +1,4 @@
+//validate mobile number before sending otp
 $('#verify-mobile-btn').click(function(e){
     e.preventDefault();
     let url=$(this).attr('data-target');
@@ -7,6 +8,14 @@ $('#verify-mobile-btn').click(function(e){
         }else{
             const err=$(this).parent().children('span').show();
             console.log(err);
-        }
-            
+        }  
 })
+
+const changePasswordClick=(element)=>{
+    const ps= $('.password-section');
+    if(ps.css('display')== 'none'){
+        ps.show()
+    }else{
+        ps.hide()
+    }
+}

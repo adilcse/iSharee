@@ -6,6 +6,9 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * user model handle user related operations in database
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -37,17 +40,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    //join likes table with user table
     public function likes()
     {
         return $this->belongsToMany('App\Model\Article', 'likes', 'user_id', 'article_id');
     }
+
+    //join comments table with user table
     public function comments()
     {
         return $this->belongsToMany('App\Model\Article', 'comments', 'user_id', 'article_id');
     }
 
-   public function articles()
-   {
-       return $this->hasMany('App\Model\Article');
-   }
+    //join articles table with user table
+    public function articles()
+    {
+        return $this->hasMany('App\Model\Article');
+    }
 }
