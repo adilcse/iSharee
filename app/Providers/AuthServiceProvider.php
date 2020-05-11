@@ -25,7 +25,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        //authorizing upadate post to admin and the author of the article
         Gate::define('update-post', function ($user, $post) {
             if($user->is_admin){
                 return true;
@@ -34,6 +34,8 @@ class AuthServiceProvider extends ServiceProvider
             }
             return $user->id === $post->user_id;
         });
+
+        //authorizing update comment to the creater of comment and admin
         Gate::define('update-comment', function ($user, $commentUser) {
             if($user->is_admin){
                 return true;
