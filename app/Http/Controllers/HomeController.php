@@ -94,7 +94,7 @@ class HomeController extends Controller
         }
         //admin can view all published articles of the user 
         if(Auth::user()->is_admin){
-            $articles=$user->articles->paginate($this->per_page);
+            $articles=$user->articles()->paginate($this->per_page);
         }else{
             //otheruser can only view published articles
             $articles=$user->articles()
