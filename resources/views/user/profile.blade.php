@@ -58,7 +58,7 @@
                                     <input type="text" id="mobile" class="form-control @error('mobile') is-invalid @enderror" name="mobile" requirded autocomolete="number" placeholder="{{ __('Mobile') }}" value="{{$profile->mobile}}" {{$profile->is_mobile_verified? 'disabled': ''}}>
                                     @if(!$profile->is_mobile_verified)
                                         <!-- change toute to 'mobileVerify' after twilo account resumes -->
-                                        <div class="btn btn-primary" data-target="{{route('home')}}" id="verify-mobile-btn">Verify</div>
+                                        <div class="btn btn-primary" data-target="{{route('mobileVerify')}}" id="verify-mobile-btn">Verify</div>
                                     @endif
                                     @error('name')
                                     <span class="invalid-feedback" role="alert">

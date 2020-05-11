@@ -45,8 +45,8 @@ class Otp
     public static function verifyMobileOtp($mobile,$otp)
     {
         //get user number and verify otp from database
-        $verify=MobileVerify::where('mobile',$mobile)->first();
-        if(is_null($verified) || $otp != $verify->otp){
+        $verify=MobileVerify::where('number',$mobile)->first();
+        if(is_null($verify) || $otp != $verify->otp){
             return false;
         }
         else{
