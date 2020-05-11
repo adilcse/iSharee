@@ -29,7 +29,7 @@
                             <div id='status' class="alert danger">
                                 {{$error}}
                             </div>
-                        @endferror
+                        @endforeach
                         <!-- E-mai -->
                         <div class="md-form">
                             <div class="row">

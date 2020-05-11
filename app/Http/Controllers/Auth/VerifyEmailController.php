@@ -70,9 +70,9 @@ class VerifyEmailController extends Controller
      */
     public function otp(Request $request)
     {
-        $request->valdate([
+        $request->validate([
             'mail'=> 'email|required',
-            'otp'=>'numeric|betweem:1000,9999|required'
+            'otp'=>'numeric|between:1000,9999|required'
         ]);
         $mail=$request->input('mail');
         $otp=$request->input('otp');
