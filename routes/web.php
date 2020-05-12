@@ -22,6 +22,10 @@ Route::get('/error', function () {
 
 Auth::routes();
 
+Route::get('/ads',function(){
+    return view('ads');
+});
+
 Route::get('/google-login','Auth\GoogleLoginController@googleLogin')->name('google-login');
 Route::get('/login/google','Auth\GoogleLoginController@googleLoginCallback');
 Route::prefix('/admin')->namespace('Admin')->group(function(){
