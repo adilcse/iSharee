@@ -37,6 +37,8 @@ class CommentController extends Controller
             if(Auth::user()->is_admin){
                 $comment->is_published=1;
                 $comment->save();
+                event(new NewCommentAdded($comment));
+                return response(['error'=>false,'message'=>'deleted successfully'],200);
             }
             return response(['error'=>true,'message'=>'you re not admin'],405);
         }else{
@@ -72,10 +74,8 @@ class CommentController extends Controller
             if(Auth::id()==0){
                 //guest user comment is set as unpublished
                 $comment = new Comments(['article_id'=>$article->id,'is_published'=>0,'body'=>$request->comment,'user_id'=>Auth::id()]);
-                $comment->save();
-                //notify user of the article about new comment
-                event(new NewCommentAdded($comment));
-                // send pendin message
+                $comment->save();          
+                // send pending message
                 return redirect()->back()->with(['comment'=>'pending for admin approval']);
             }else{
                 //other user's comment is directly publihed
