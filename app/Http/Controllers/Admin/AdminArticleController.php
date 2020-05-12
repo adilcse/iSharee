@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Article;
+use App\Traits\ImageDelete;
 /**
  * handles article related actions for admin 
  */
 class AdminArticleController extends Controller
 {
+    use ImageDelete;
     /**
      * update article status and return status of article
      * only admin can update articles
@@ -53,6 +55,7 @@ class AdminArticleController extends Controller
                 return view('error',['message'=>'invalid article ']);
             }
             //remove all likes comments and catgory of an article and delete it
+            $status=$this->UserImageDelete($article->image_url);
             $article->catagories()->detach();
             $article->comments()->detach();
             $article->likes()->detach();
