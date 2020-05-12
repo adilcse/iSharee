@@ -64,11 +64,11 @@ class LoginController extends Controller
                 return  redirect('/email/verify?email='.$email);
             }
             // twilio mobile verification suspended will add after account resumes
-            // else if(0===$user->is_mobile_verified){
-            //     Auth::logout();
-            //     $mobile=urlencode($user->mobile);
-            //     return  redirect('/mobile/verify?number='.$mobile.'&resend=true');
-            // }
+            else if(0===$user->is_mobile_verified){
+                Auth::logout();
+                $mobile=urlencode($user->mobile);
+                return  redirect('/mobile/verify?number='.$mobile.'&resend=true');
+            }
             return redirect(route('home')); 
         }else{
             return view('auth.login',['error'=>'email/password']);
