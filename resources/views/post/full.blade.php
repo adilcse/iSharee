@@ -26,6 +26,7 @@
 				<div class="card-body text-center">
 				<!--Title-->
 				<h3 class="card-title">{{$article->title}}</h3>
+				<h6 class="text-secondary text-left"> {{$article->views}} views</h5>
 				<div class="row">
 					@foreach($article->catagories as $cat)
 						<a href="{{route('catagory',$cat->slug)}}">
