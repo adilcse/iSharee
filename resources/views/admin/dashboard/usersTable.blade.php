@@ -24,7 +24,7 @@
                                 <tr>
                                     <th scope="col">Name</th>
                                     <th scope="col">Articles</th>
-                                    <th scope="col">Total Likes</th>
+                                    <th scope="col">Articles Liked</th>
                                     <th scope="col">Status</th>
                                 </tr>
                             </thead>
