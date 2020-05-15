@@ -67,6 +67,6 @@ $('form').submit(e=>{
     if(!validate){
         e.preventDefault();
         $('#error').show();
-        $('#error').children().first().text('Please enter correct data');
+        $('#error').children().text('Please enter correct data');
     }    
 })

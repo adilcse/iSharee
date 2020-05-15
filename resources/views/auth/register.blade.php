@@ -54,7 +54,7 @@
                         <div class="md-form mt-0">
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="{{__('Email')}}">
                             <span class="invalid-feedback" style="display:{{$errors->has('email')?'show':'none'}}" role="alert">
-                                <strong>{{ $errors->first('email')??'' }}</strong>
+                                {{ $errors->first('email')??'' }}
                             </span>
                         </div>
                         <!-- Password -->
