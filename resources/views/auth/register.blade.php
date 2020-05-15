@@ -2,6 +2,11 @@
 
 @section('content')
 <!-- user register page -->
+@push('script')
+<!-- Scripts -->
+<script src="{{ asset('js/auth/register.js') }}"></script>
+@endpush
+
 @php
     $action=route('register');
     $login_route=route('login');
@@ -30,44 +35,47 @@
                             <div class="col">
                                 <div class="md-form">
                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="{{ __('Name') }}" required autocomplete="name" autofocus>
-                                    @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                    <span class="invalid-feedback" style="display:{{$errors->has('name')?'show':'none'}}" role="alert">
+                                        <strong>{{ $errors->first('name')??'' }}</strong>
+                                    </span>
                                 </div>
                             </div>
                             <div class="col">
                                 <!-- Last name -->
                                 <div class="md-form">
                                     <input type="text" id="mobile" class="form-control @error('mobile') is-invalid @enderror" name="mobile" requirded autocomolete="number" placeholder="{{ __('Mobile') }}">
+                                    <span class="invalid-feedback" style="display:{{$errors->has('mobile')?'show':'none'}}" role="alert">
+                                        <strong>{{ $errors->first('mobile')??'' }}</strong>
+                                    </span>
                                 </div>
                             </div>
                         </div>
                         <!-- E-mail -->
                         <div class="md-form mt-0">
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="{{__('Email')}}">
-                            @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                            <span class="invalid-feedback" style="display:{{$errors->has('email')?'show':'none'}}" role="alert">
+                                <strong>{{ $errors->first('email')??'' }}</strong>
+                            </span>
                         </div>
                         <!-- Password -->
                         <div class="md-form">
                             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="{{__('Password')}}">
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                            <span class="invalid-feedback" style="display:{{$errors->has('password')?'show':'none'}}" role="alert">
+                                <strong>{{ $errors->first('password')??'' }}</strong>
+                            </span>
                             <small id="passwordHelp" class="form-text text-muted mb-4">
                                 Atleast 6 charecters
                             </small>
                         </div>
                         <div class="md-form">
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm password">
+                            <span class="invalid-feedback" style="display:{{$errors->has('cPassword')?'show':'none'}}" role="alert">
+                                <strong>{{ $errors->first('cPassword')??'' }}</strong>
+                            </span>
                         </div>
+                        <span id="error" class="alert alert-danger" style="display:none">
+                                <strong></strong>
+                            </span>
                         <!-- Sign up button -->
                         <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">
                             {{ __('Register') }}
