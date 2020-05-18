@@ -228,9 +228,10 @@ class ArticleController  extends Controller
             return redirect()->route('articlePaymentPage')->with('data',['userId' => $id, 
                                                 'email' => Auth::user()->email,
                                                 'title'=>$data->title,
+                                                'slug'=>$data->slug,
                                                 'articleId'=>$data->id]);
             //create an event that a new article is added to notify admin
-            //event(new NewArticleAdded($data)); 
+            event(new NewArticleAdded($data)); 
         }
         catch(Exception $e){
             //throw exception

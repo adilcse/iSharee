@@ -23,6 +23,7 @@ class CreateArticleTable extends Migration
             $table->bigInteger('views')->default(0);
             $table->foreignid('user_id');
             $table->boolean('is_published')->default(0);
+            $table->boolean('paid')->default(0);
             $table->timestamps();
         });
 

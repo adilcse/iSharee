@@ -1,7 +1,12 @@
 @extends('layouts.app')
 <!-- payment page not assigned -->
-@push('script')
+@push('head')
+    <script src="https://js.stripe.com/v3/" defer></script>
     <script src="{{asset('js/post/payment.js')}}" defer></script>
+    
+@endpush
+@push('head')
+<link rel="stylesheet" href="{{asset('css/payment.css')}}"></link>
 @endpush
 @section('content')
 <div class="container">
@@ -28,37 +33,21 @@
                         <img class="img-responsive pull-right" src="http://i76.imgup.net/accepted_c22e0.png">
                     </div>
                     <!-- Form -->
-                    <form class="text-center" style="color: #757575;" action="{{ route('stripe.post') }}" 
-                        method="post" class="require-validation" data-cc-on-file="false"
-                        data-stripe-publishable-key="{{ env('STRIPE_P_KEY') }}" id="payment-form">
+                        <form action="{{route('stripe.post')}}" method="post" id="payment-form" data-stripe="{{env('STRIPE_P_KEY')}}">
                         @csrf
-                        <!-- Name -->
-                        <div class="md-form mt-3">
-                            <input type="text" id="cardName" name="cardName" class="form-control" placeholder="Name on Card">
-                            <span class="invalid-feedback" style="display:{{$errors->has('cardName')?'show':'none'}}" role="alert">
-                                <strong>{{ $errors->first('cardName')??'' }}</strong>
-                            </span>
+                        <input hidden name='orderId' value="{{$data['articleId']}}">
+                        <div class="form-row">
+                            <label for="card-element">
+                            Credit or debit card
+                            </label>
+                            <div id="card-element" class="container">
+                            <!-- A Stripe Element will be inserted here. -->
+                            </div>
+                            <!-- Used to display form errors. -->
+                            <div id="card-errors" role="alert"></div>
                         </div>
-                        <div class='md-form mt-2'>
-                            <input autocomplete='off' name="cardNumber" class='form-control card-number' size='20' placeholder="Card Number" type='text'>
-                        </div>
-
-                            <!-- image upload -->
-                        <br/>
-                        <div class='row'>
-                            <div class="col-md-3">
-                                <input autocomplete='off' name="cvv" class='form-control card-cvc' placeholder='CVV' size='3' type='text'>
-                            </div>
-                            <div class='col-md-3'>
-                                <input class='form-control card-expiry-month' name="month" placeholder='MM' size='2'  type='text'>
-                            </div>
-                            <div class='col-md-3'>
-                                <input class='form-control card-expiry-year' name="year" placeholder='YYYY' size='4'  type='text'>
-                            </div>
-                        </div>   
-                        <!-- Send button -->
-                        <div id="error" class="alert alert-danger mb-3" style="display:none"></div>
-                        <button class="btn btn-outline-info btn-rounded z-depth-0 my-4 waves-effect" type="submit">Pay ₹99</button>
+                        <button class="btn btn-primary">Pay ₹99</button> 
+                        <a href="{{route('article',$data['slug'])}}" class="btn btn-warning">Cancel payment</a>
                     </form>
                     <!-- Form -->
                 </div>

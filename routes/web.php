@@ -51,9 +51,6 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
     Route::get('/profile', function(){
         return view('user.profile',['profile'=>Auth::user()]);
     })->name('profile');
-    Route::get('/profile', function(){
-        return view('user.profile',['profile'=>Auth::user()]);
-    })->name('profile');
     Route::get('/home/catagory/{id}', 'HomeController@catagory')->name('catagory');
     Route::get('/myArticle','HomeController@myArticle')->name('myArticle');
     Route::get('/user/{id}/articles','HomeController@userArticles')->name('userArticles');
