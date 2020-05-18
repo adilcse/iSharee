@@ -4,6 +4,11 @@ $(document).ready(function() {
     $('#multiple-selected').multiselect();
 });
 
+/**
+ * 
+ * @param {*} text title to be validated
+ * @returns boolean value 
+ */
 const validateTitle=(text)=>{
     return text.length > 3 && text.length < 50;
 }

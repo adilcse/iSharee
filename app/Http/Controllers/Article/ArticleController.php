@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\Events\NewArticleAdded;
 use App\Helper\Slug;
-
+use Redirect;
 /**
  * handles all article related actions
  */
@@ -218,18 +218,19 @@ class ArticleController  extends Controller
         if(!$request->sliderCheck){
             $data->allow_image_as_slider = 0;
         }
-        if($id != 0 ){
-            $data->is_published=1;
-        }
         try{
             //create slug by article name
             $data->slug= Slug::createSlug('article',$request->title);
             $data->save();
             if($request->catagory && count($request->catagory)>0){
                 $data->catagories()->attach($request->catagory);
-            } 
+            }
+            return redirect()->route('articlePaymentPage')->with('data',['userId' => $id, 
+                                                'email' => Auth::user()->email,
+                                                'title'=>$data->title,
+                                                'articleId'=>$data->id]);
             //create an event that a new article is added to notify admin
-            event(new NewArticleAdded($data)); 
+            //event(new NewArticleAdded($data)); 
         }
         catch(Exception $e){
             //throw exception

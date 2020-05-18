@@ -68,6 +68,8 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         Route::post('/edit', 'ArticleController@edit')->name('editArticle');
         Route::post('/new', 'ArticleController@addPost')->name('postArticle');
         Route::get('/new','ArticleController@getAddForm')->name('newArticle');
+        Route::get('/payment','PaymentController@index')->name('articlePaymentPage');
+        Route::post('/payment','PaymentController@payment')->name('stripe.post');
     });
   
   });
