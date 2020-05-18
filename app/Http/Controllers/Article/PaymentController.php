@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Model\Article;
 use App\Model\Payment;
+use App\Events\NewArticleAdded;
 
 class PaymentController extends Controller
 {
@@ -46,6 +47,8 @@ class PaymentController extends Controller
                 $article->is_published = 1;
                 $article->paid = 1;
                 $article->save();
+                  //create an event that a new article is added to notify admin
+            event(new NewArticleAdded($article)); 
                 return view('post.paymentStatus',['status'=>'success','article'=>$article,'payment'=>$payment]);
             }
             return view('post.paymentStatus',['status'=>'failed','article'=>$article,'payment'=>$payment]);

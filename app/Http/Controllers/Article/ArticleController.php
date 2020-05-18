@@ -230,8 +230,6 @@ class ArticleController  extends Controller
                                                 'title'=>$data->title,
                                                 'slug'=>$data->slug,
                                                 'articleId'=>$data->id]);
-            //create an event that a new article is added to notify admin
-            event(new NewArticleAdded($data)); 
         }
         catch(Exception $e){
             //throw exception

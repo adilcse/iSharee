@@ -37,7 +37,6 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         Route::get('/catagory/delete/{id}','CatagoryController@delete');
         Route::post('/catagory/add','CatagoryController@insert');
         Route::post('/catagory/edit','CatagoryController@update');
-
         Route::get('/user/update/{id}','AdminUserController@userStatusUpdate');
         Route::post('/user/update','AdminUserController@userUpdate');
         Route::get('/user/view/{id}','AdminUserController@userView')->name('admin.userView');
