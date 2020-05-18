@@ -44,7 +44,9 @@ class PaymentController extends Controller
             $payment->save();
             if($pay->paid){
                 $article = Article::find($request->orderId);
-                $article->is_published = 1;
+                if(0 !== Auth::id()){
+                    $article->is_published = 1;
+                }
                 $article->paid = 1;
                 $article->save();
                   //create an event that a new article is added to notify admin
