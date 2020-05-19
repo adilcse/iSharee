@@ -35,7 +35,7 @@ Route::get('/google-login','Auth\GoogleLoginController@googleLogin')->name('goog
 Route::get('/login/google','Auth\GoogleLoginController@googleLoginCallback');
 
 //group of all admin routes
-Route::prefix('/admin')->namespace('Admin')->group(['middleware' => 'isAdmin'],function(){
+Route::prefix('/admin')->namespace('Admin')->middleware('isAdmin')->group(function(){
     Route::get('/dashboard','AdminController@index')->name('admin.home');
     Route::get('/dashboard/{table}','AdminController@index')->name('admin.tables');
     Route::get('/catagory/add','CatagoryController@add')->name('admin.catagory');
