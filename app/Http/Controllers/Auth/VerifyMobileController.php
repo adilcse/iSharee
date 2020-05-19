@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Twilio\Rest\Client;
 use App\Helper\Otp;
 use App\User;
-
+use Auth;
 /**
  * handel mobile verification controller
  */
@@ -30,8 +30,14 @@ class VerifyMobileController extends Controller
      */
     public function index(Request $request)
     {
+
         $request->validate(['number'=>'numeric|required']);
         $mobile=$request->input('number');
+        if(Auth::check()){
+            $user=Auth::user();
+            $user->mobile=$mobile;
+            $user->save();
+        }
         if(strlen($mobile) === 10 && $request->input('resend') === 'true'){
             $otp=Otp::mobileOtp($mobile);
             if($otp){

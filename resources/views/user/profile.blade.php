@@ -15,7 +15,7 @@
             {{session('status')}}
         </div>
     @endif
-    @foreach($errors as $error)
+    @foreach($errors->all() as $error)
         <div class="row alert alert-danger">
             {{$error}}
         </div>

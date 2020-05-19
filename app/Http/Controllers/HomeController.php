@@ -108,7 +108,7 @@ class HomeController extends Controller
     }
 
     /**
-     * iser can update name of his/her profile 
+     * user can update name of his/her profile 
      * @param request object
      * @return redirect with proper message
      */
@@ -117,6 +117,8 @@ class HomeController extends Controller
         $request->validate([
             'name'=>'required|string|max:50|min:3',
             'id'=>'numeric|required',
+            'mobile'=>'numeric|nullable|digits:10',
+            'email'=>'nullable|email|uqique:users',
             'newPassword'=>'nullable|string|min:6',
             'cPassword'=> 'nullable|string|min:6',
             'oldPassword'=> 'nullable|string|min:6'
@@ -125,6 +127,12 @@ class HomeController extends Controller
         try{
             $user=Auth::user();
             $user->name=$request->input('name');
+            if(!$user->is_email_verified && $request->email !=$user->email){
+                $user->email = $request->email;
+            }
+            if(!$user->is_mobile_verified && $request->mobile != $user->mobile){
+                $user->mobile=$request->mobile;
+            }
             if($request->changePasswordCheck){
                 if($request->cPassword !== $request->newPassword){
                     return redirect()->back()->withErrors(['password'=>'confirm password does not matched']);
