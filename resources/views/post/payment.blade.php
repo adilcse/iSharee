@@ -1,6 +1,6 @@
 @extends('layouts.app')
 <!-- payment page not assigned -->
-@push('head')
+@push('script')
     <script src="https://js.stripe.com/v3/" defer></script>
     <script src="{{asset('js/post/payment.js')}}" defer></script>
     
@@ -8,6 +8,12 @@
 @push('head')
 <link rel="stylesheet" href="{{asset('css/payment.css')}}"></link>
 @endpush
+
+
+@if(!isset($data)){
+    <script>window.location = "/error";</script>
+}
+@endif
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -47,7 +53,7 @@
                             <div id="card-errors" role="alert"></div>
                         </div>
                         <button class="btn btn-primary">Pay ₹99</button> 
-                        <a href="{{route('article',$data['slug'])}}" class="btn btn-warning">Cancel payment</a>
+                        <a href="{{route('article',$data['slug']??'1')}}" class="btn btn-warning">Cancel payment</a>
                     </form>
                     <!-- Form -->
                 </div>

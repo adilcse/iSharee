@@ -4,7 +4,7 @@
 <div class="container">
     <div class='row justify-content-center'>
         <div class='col-md-8  text-center'>
-        @if($message)
+        @if(isset($message))
             <h2>{{$message}}</h2>
         @else
             <h2>Something went wrong</h2>
