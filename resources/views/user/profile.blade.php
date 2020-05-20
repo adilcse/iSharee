@@ -9,6 +9,7 @@
 @php
     $action=url('/user/update');
 @endphp
+
 <div class="container">
     @if(session('status'))
         <div class="row alert alert-success">
