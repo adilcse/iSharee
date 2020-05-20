@@ -15,6 +15,7 @@ trait ImageUpload
         $this->imageBkt=env('GOOGLE_STORAGE_BUCKET');
         $this->storageAPI=env('GOOGLE_STORAGE_API');
     }
+    
     public function UserImageUpload($query,$id=0) // Taking input image as parameter
     {
         //generate random name for image

@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         $users=[
-            ['id'=>0,
+            [
             'name'=>'guest',
             'email'=>'guest@ishare.com',
             'mobile'=>'0000000000',
@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             'is_mobile_verified'=>1,
             'is_active'=>1
         ],
-            ['id'=>1,
+            [
             'name'=>'admin',
             'email'=>'admin@ishare.com',
             'mobile'=>'7205518366',
@@ -35,5 +35,6 @@ class UserSeeder extends Seeder
             ]
         ];
         DB::table('users')->insert($users);
+        DB::table('users')->where('name','guest')->update(['id'=>0]);
     }
 }

@@ -7,6 +7,7 @@ use App\Model\Catagory;
 use App\Model\Article as ArticleModel;
 use App\Model\ArticleCatagory;
 use App\Traits\ImageUpload;
+use App\Traits\ImageDelete;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -20,7 +21,7 @@ class ArticleController  extends Controller
 {
     //to upload image to the server
     use ImageUpload;
-
+    use ImageDelete;
     /**
      * view fullscreen article 
      * @param slug name of the article to viewed
@@ -128,11 +129,13 @@ class ArticleController  extends Controller
      */
     public function delete($id)
     {
-
         $article= ArticleModel::where('slug',$id)->first();
         if(Gate::allows('update-post', $article)){
             //only authorized user can dlete the article
             //remove all likes,comment and catagory before deleting the article
+            if($article->image_url){
+                $this->UserImageDelete($article->image_url);
+            }
             $article->likes()->detach();
             $article->comments()->detach();
             $article->catagories()->detach();

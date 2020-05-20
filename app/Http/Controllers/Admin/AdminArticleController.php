@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Article;
 use App\Traits\ImageDelete;
+use App\Traits\ImageUpload;
 /**
  * handles article related actions for admin 
  */
 class AdminArticleController extends Controller
 {
+    use ImageUpload;
     use ImageDelete;
     /**
      * update article status and return status of article
