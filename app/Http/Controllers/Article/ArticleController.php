@@ -92,7 +92,7 @@ class ArticleController  extends Controller
             //only aithorized user can edit the post
             if( $request->image){
                 try {
-                $filePath = $this->UserImageUpload($request->image); //Passing $request->image as parameter to our created method
+                $filePath = $this->UserImageUpload($request->image,$article->id); //Passing $request->image as parameter to our created method
                 $article->image_url = $filePath;
                 } catch (Exception $e) {
                 //Write your error message here
@@ -203,7 +203,7 @@ class ArticleController  extends Controller
         if( $request->image){
             //upload image 
             try {
-            $filePath = $this->UserImageUpload($request->image); //Passing $data->image as parameter to our created method
+            $filePath = $this->UserImageUpload($request->image,$data->id); //Passing $data->image as parameter to our created method
             $data->image_url = $filePath;
             } catch (Exception $e) {
             //Write your error message here
