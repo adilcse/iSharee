@@ -7,12 +7,13 @@ use App\Model\Catagory;
 use App\Model\Article as ArticleModel;
 use App\Model\ArticleCatagory;
 use App\Traits\ImageUpload;
+use App\Traits\ImageDelete;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\Events\NewArticleAdded;
 use App\Helper\Slug;
-
+use Redirect;
 /**
  * handles all article related actions
  */
@@ -20,7 +21,7 @@ class ArticleController  extends Controller
 {
     //to upload image to the server
     use ImageUpload;
-
+    use ImageDelete;
     /**
      * view fullscreen article 
      * @param slug name of the article to viewed
@@ -92,7 +93,7 @@ class ArticleController  extends Controller
             //only aithorized user can edit the post
             if( $request->image){
                 try {
-                $filePath = $this->UserImageUpload($request->image); //Passing $request->image as parameter to our created method
+                $filePath = $this->UserImageUpload($request->image,$article->id); //Passing $request->image as parameter to our created method
                 $article->image_url = $filePath;
                 } catch (Exception $e) {
                 //Write your error message here
@@ -128,11 +129,13 @@ class ArticleController  extends Controller
      */
     public function delete($id)
     {
-
         $article= ArticleModel::where('slug',$id)->first();
         if(Gate::allows('update-post', $article)){
             //only authorized user can dlete the article
             //remove all likes,comment and catagory before deleting the article
+            if($article->image_url){
+                $this->UserImageDelete($article->image_url);
+            }
             $article->likes()->detach();
             $article->comments()->detach();
             $article->catagories()->detach();
@@ -203,7 +206,7 @@ class ArticleController  extends Controller
         if( $request->image){
             //upload image 
             try {
-            $filePath = $this->UserImageUpload($request->image); //Passing $data->image as parameter to our created method
+            $filePath = $this->UserImageUpload($request->image,$data->id); //Passing $data->image as parameter to our created method
             $data->image_url = $filePath;
             } catch (Exception $e) {
             //Write your error message here
@@ -218,18 +221,18 @@ class ArticleController  extends Controller
         if(!$request->sliderCheck){
             $data->allow_image_as_slider = 0;
         }
-        if($id != 0 ){
-            $data->is_published=1;
-        }
         try{
             //create slug by article name
             $data->slug= Slug::createSlug('article',$request->title);
             $data->save();
             if($request->catagory && count($request->catagory)>0){
                 $data->catagories()->attach($request->catagory);
-            } 
-            //create an event that a new article is added to notify admin
-            event(new NewArticleAdded($data)); 
+            }
+            return redirect()->route('articlePaymentPage')->with('data',['userId' => $id, 
+                                                'email' => Auth::user()->email,
+                                                'title'=>$data->title,
+                                                'slug'=>$data->slug,
+                                                'articleId'=>$data->id]);
         }
         catch(Exception $e){
             //throw exception

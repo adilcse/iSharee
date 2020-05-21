@@ -12,41 +12,47 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//default home route
 Route::get('/', function () {
     return redirect()->to('home');
 });
+
+//error page route
 Route::get('/error', function () {
     return view('error');
 })->name('error');
 
+//register login routes
 Auth::routes();
 
+//ads roure
+Route::get('/ads',function(){
+    return view('ads');
+});
+
+//google auth login
 Route::get('/google-login','Auth\GoogleLoginController@googleLogin')->name('google-login');
 Route::get('/login/google','Auth\GoogleLoginController@googleLoginCallback');
-Route::prefix('/admin')->namespace('Admin')->group(function(){
-    Route::group(['middleware' => 'isAdmin'], function () {
-        Route::get('/dashboard','AdminController@index')->name('admin.home');
-        Route::get('/dashboard/{table}','AdminController@index')->name('admin.tables');
-        Route::get('/catagory/add','CatagoryController@add')->name('admin.catagory');
-        Route::get('/catagory/edit/{id}','CatagoryController@edit');
-        Route::get('/catagory/delete/{id}','CatagoryController@delete');
-        Route::post('/catagory/add','CatagoryController@insert');
-        Route::post('/catagory/edit','CatagoryController@update');
 
-        Route::get('/user/update/{id}','AdminUserController@userStatusUpdate');
-        Route::post('/user/update','AdminUserController@userUpdate');
-        Route::get('/user/view/{id}','AdminUserController@userView')->name('admin.userView');
-        Route::get('/article/update/{id}','AdminArticleController@articleUpdate')->name('admin.article.status');
-        Route::get('/article/delete/{id}','AdminArticleController@articleDelete')->name('admin.article.delete');
-    });
-  });
+//group of all admin routes
+Route::prefix('/admin')->namespace('Admin')->middleware('isAdmin')->group(function(){
+    Route::get('/dashboard','AdminController@index')->name('admin.home');
+    Route::get('/dashboard/{table}','AdminController@index')->name('admin.tables');
+    Route::get('/catagory/add','CatagoryController@add')->name('admin.catagory');
+    Route::get('/catagory/edit/{id}','CatagoryController@edit');
+    Route::get('/catagory/delete/{id}','CatagoryController@delete');
+    Route::post('/catagory/add','CatagoryController@insert');
+    Route::post('/catagory/edit','CatagoryController@update');
+    Route::get('/user/update/{id}','AdminUserController@userStatusUpdate');
+    Route::post('/user/update','AdminUserController@userUpdate');
+    Route::get('/user/view/{id}','AdminUserController@userView')->name('admin.userView');
+    Route::get('/article/update/{id}','AdminArticleController@articleUpdate')->name('admin.article.status');
+    Route::get('/article/delete/{id}','AdminArticleController@articleDelete')->name('admin.article.delete');
+});
 
-  Route::group(['middleware' => 'auth'], function () {
+//all routes of authenticated users
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('/profile', function(){
-        return view('user.profile',['profile'=>Auth::user()]);
-    })->name('profile');
     Route::get('/profile', function(){
         return view('user.profile',['profile'=>Auth::user()]);
     })->name('profile');
@@ -64,11 +70,12 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         Route::post('/edit', 'ArticleController@edit')->name('editArticle');
         Route::post('/new', 'ArticleController@addPost')->name('postArticle');
         Route::get('/new','ArticleController@getAddForm')->name('newArticle');
+        Route::get('/payment','PaymentController@index')->name('articlePaymentPage');
+        Route::post('/payment','PaymentController@payment')->name('stripe.post');
     });
-  
-  });
+});
 
-
+//verification routes
 Route::namespace('Auth')->group(function () {
     Route::get('/email/verify','VerifyEmailController@email')->name('emailVerify');
     Route::get('/mobile/verify','VerifyMobileController@index')->name('mobileVerify');

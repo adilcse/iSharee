@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@push('script')
+@push('script') 
 <!-- Scripts -->
 <script src="{{ asset('js/post/add.js') }}" defer></script>
 @endpush
@@ -31,6 +31,9 @@
                         <!-- Name -->
                         <div class="md-form mt-3">
                             <input type="text" id="title" name="title" class="form-control" placeholder="Title">
+                            <span class="invalid-feedback" style="display:{{$errors->has('title')?'show':'none'}}" role="alert">
+                                <strong>{{ $errors->first('title')??'' }}</strong>
+                            </span>
                         </div>
                         <span>Catagory</span>
                         <div>
@@ -57,8 +60,12 @@
                         <!--Body-->
                         <div class="md-form row">
                             <textarea id="body" name="body" class="form-control md-textarea" rows="3" placeholder="Description"></textarea>
+                            <span class="invalid-feedback" style="display:{{$errors->has('body')?'show':'none'}}" role="alert">
+                                <strong>{{ $errors->first('body')??'' }}</strong>
+                            </span>
                         </div>
                         <!-- Send button -->
+                        <div id="error" class="alert alert-danger mb-3" style="display:none"></div>
                         <button class="btn btn-outline-info btn-rounded btn-block z-depth-0 my-4 waves-effect" type="submit">Post</button>
                     </form>
                     <!-- Form -->

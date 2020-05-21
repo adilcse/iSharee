@@ -1,16 +1,22 @@
 <?php
 namespace App\Traits;
+use Google\Cloud\Storage\StorageClient;
 
-use Illuminate\Support\Facades\File; 
 /**
  * handle image upload to the server
  */
 trait ImageDelete
 {
     public function UserImageDelete($filename) // Taking input image as parameter
-    {   
-        $fullPath=public_path().$filename;
-        $success = File::delete($fullPath);
-        return $success; // Just return status
+    {   try{
+            $storage = new StorageClient();
+            $bucket = $storage->bucket($this->imageBkt);
+            $objectName=str_replace($this->storageAPI.$this->imageBkt.'/','',$filename); 
+            $success = $bucket->object($objectName)->delete();
+            return $success; // Just return status
+        }
+        catch(Exception $e){
+            return false;
+        }
     }
 }
