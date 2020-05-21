@@ -10,7 +10,7 @@ $(document).ready(function() {
  * @returns boolean value 
  */
 const validateTitle=(text)=>{
-    return text.length > 3 && text.length < 50;
+    return text.length > 3 && text.length < 500;
 }
 
 const validateBody=(text)=>{
