@@ -1,5 +1,39 @@
 runtime: php72 # Replace with php73 to use the PHP 7.3 runtime
 
+env_variables:
+  APP_NAME: iShare
+  APP_ENV: production
+  APP_KEY: base64:8dDALiQmLnXLcvR/ht36ftyEu/TJoPvFh/ZRlFx22UE=
+  APP_DEBUG: false
+  APP_STORAGE: /tmp
+  VIEW_COMPILED_PATH: /tmp
+  SESSION_DRIVER: cookie
+  ITEMS_PER_PAGE: 10
+  ADMIN_TABLE_PER_PAGE: 10
+  LOG_CHANNEL: stackdriver
+  TWILIO_SID: AC859f859e95610f30da82eab18757c646
+  TWILIO_AUTH_TOKEN: de37e3b297b8d40c8c0d6e277d738b91
+  TWILIO_MOBILE_NUMBER: +12058436330;
+  STRIPE_P_KEY: pk_test_jUiQ0weJGyW7Dl8uxUfrfV3S004pj2H58y
+  STRIPE_S_KEY: sk_test_Hy1laYRpBQT06xlirzAVmqbo00ERX1qUNt
+  GOOGLE_CLIENT_ID: 159915889120-0357u1n0hcn4is1ola10g6ajh90ol9a1.apps.googleusercontent.com
+  GOOGLE_CLIENT_SECRET: 5p2_5Ua__0zoOyNMlwxffXOv
+  DB_CONNECTION: mysql
+  DB_HOST: 127.0.0.1
+  DB_PORT: 3306
+  DB_DATABASE: ishare
+  DB_USERNAME: root
+  DB_PASSWORD: Mindfire1
+  MAIL_MAILER: smtp
+  MAIL_HOST: smtp.mailtrap.io
+  MAIL_PORT: 2525
+  MAIL_USERNAME: 38b2433798fa67
+  MAIL_PASSWORD: eb98e5a874ad40
+  MAIL_ENCRYPTION: null
+  MAIL_FROM_ADDRESS: service@ishare.com
+  MAIL_FROM_NAME: iShare
+
+
 handlers:
 # Serve a directory as a static resource.
 - url: /public
