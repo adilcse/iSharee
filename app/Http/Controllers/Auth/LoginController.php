@@ -58,13 +58,13 @@ class LoginController extends Controller
                 Auth::logout();
                 return view('auth.login',['error'=>'user, your account is blocked.']);
             }
-            else if(0===$user->is_email_verified){
+            else if(0===$user->is_email_verified && env('ALLOW_EMAIL',false)){
                 $email=urlencode($user->email);
                 Auth::logout();
                 return  redirect('/email/verify?email='.$email);
             }
             // twilio mobile verification suspended will add after account resumes
-            else if(0===$user->is_mobile_verified){
+            else if(0===$user->is_mobile_verified && env('ALLOW_SMS',false)){
                 Auth::logout();
                 $mobile=urlencode($user->mobile);
                 return  redirect('/mobile/verify?number='.$mobile.'&resend=true');

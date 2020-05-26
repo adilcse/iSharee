@@ -87,7 +87,12 @@ class RegisterController extends Controller
 
         event(new Registered($user = $this->create($request->all())));
         $email=urlencode($user->email);
-        return $this->registered($request, $user)
+        if(env('ALLOW_EMAIL',false)){
+            return $this->registered($request, $user)
             ?: redirect($this->redirectPath().'?email='.$email);
+        }
+        return $this->registered($request, $user)
+        ?:redirect(route('login'));
+        
     }
 }

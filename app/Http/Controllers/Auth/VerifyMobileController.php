@@ -15,12 +15,16 @@ class VerifyMobileController extends Controller
 {
 
     protected $client;
+    protected $registered_number;
+    protected $sender_number;
     /**
      * setup twilio mobile verificaation account
      */
     public function __construct()
     {
         $this->client = new Client($_ENV['TWILIO_SID'], $_ENV['TWILIO_AUTH_TOKEN']);
+        $this->registered_number = $_ENV['TWILIO_REGISTERED_NUMBER'];
+        $this->sender_number = $_ENV['TWILIO_MOBILE_NUMBER'];
     }
 
     /**
@@ -79,11 +83,10 @@ class VerifyMobileController extends Controller
      */
     private function send_sms($otp,$mobile)
     {
-        
         $this->client->messages->create(
-            '+917978689252',
+            $this->registered_number,
             array(
-                'from' => "+12058436330",
+                'from' => $this->sender_number,
                 'body' => 'Your verification code for'.$mobile.' is '.$otp
             )
         );
