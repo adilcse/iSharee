@@ -17,7 +17,11 @@
 						<div class="card-body card-body-cascade text-left">
 						<!-- Title -->
 							<div class=" card-title row">
-								<h4 class="font-weight-bold">{{$com->name}} </h4>
+								<h4 class="font-weight-bold">
+									<a class="text-primary" href="{{route('userArticles',$com->id)}}">
+										{{$com->name}} 
+									</a>	
+								</h4>
 								@if(Gate::allows('update-comment',$com))
 								<span class="ml-auto">
 									<a href="/article/comment/update/{{$com->pivot->id}}?status=0&from=article"><i class="fas fa-trash-alt"></i></a>
