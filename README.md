@@ -1,4 +1,4 @@
-# iShare (article publishing app)
+## iShare (article publishing app)
 - User can register to this app by providing basic details like email address,name mobile number and password.
 - User can also login by there social account.
 - Guest user can also login by clicking "guest login" button.
