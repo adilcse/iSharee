@@ -6,8 +6,8 @@ class Slug
 {
     /**
      * create a new slug
-     * @param table
-     * @param title
+     * @param table name of the table
+     * @param title 
      * @param id
      * @return string
      * @throws \Exception

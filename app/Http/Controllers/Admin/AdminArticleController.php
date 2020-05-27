@@ -29,9 +29,9 @@ class AdminArticleController extends Controller
                 return response(['status'=>false,'message'=>'invalid article id'],404);    
             }
             $ip=intval($request->input('status'));
-            if($ip=== 1 || $ip===0){
+            if(1 === $ip || 0 === $ip){
                 //change article status if valid status given
-                $article->is_published=$ip;
+                $article->is_published = $ip;
                 $article->save();
                 return response(['status'=>true,'message'=>'updated'],200);     
             }
