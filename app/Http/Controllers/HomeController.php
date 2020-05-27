@@ -26,7 +26,7 @@ class HomeController extends Controller
 
     /**
      * Show the application home page.
-     *
+     * @param Request object
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(Request $request)
@@ -42,7 +42,7 @@ class HomeController extends Controller
     /**
      * catagory page.
      * Display article belongs to a given catagory
-     * @param slum name of the catagory to be displayed
+     * @param slug name of the catagory to be displayed
      * @return home view with artcles belongs to a catagory
      */
     public function catagory($id)
@@ -65,6 +65,7 @@ class HomeController extends Controller
     /**
      * display all artice published by a user
      * @param request oblect
+     * @return view home|error for requisted user
      */
     public function myArticle(Request $request)
     {
