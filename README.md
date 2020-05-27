@@ -13,21 +13,21 @@
 - Admin can login by admin email and password.
 
 ## Guest user:-
-- Guest user can view 
+- Can view 
     - all published articles in homepage.
     - articles published by different users.
     - article by catagory.
-- Guest user can add article and make payment for it.
+- Can add article and make payment for it.
 - Only articles approved by admin will be shown in artilce home page.
-- Guest user can comment on any article.
+- Ccan comment on any article.
 - Comment will be shown after admin approval.
 
 ## Registered user:-
-- Registered user can view 
+- Can view 
     - all published articles in homepage.
     - articles published by different users.
     - article by catagory.
-- Registered user can add articles and make payment for it.
+- Can add articles and make payment for it.
 - After payment articles will be published.
 - He/She can like in any article.
 - He/She can comment in any articles.
