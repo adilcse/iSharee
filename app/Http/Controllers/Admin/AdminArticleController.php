@@ -1,5 +1,14 @@
 <?php
-
+/**
+ * Handles article actions of admin
+ * PHP version: 7.0
+ * 
+ * @category Admin/Article
+ * @package  Http/Controller/Admin
+ * @author   Adil Hussain <adilh@mindfiresolutions.com>
+ * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
+ * @link     https://github.com/adilcse/iSharee/blob/finalCode/app/Http/Controllers/Admin/AdminArticleController.php
+ */
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -7,54 +16,83 @@ use Illuminate\Http\Request;
 use App\Model\Article;
 use App\Traits\ImageDelete;
 use App\Traits\ImageUpload;
+use App\Helper\Constants;
 /**
- * handles article related actions for admin 
+ * Controller for admin article related action
+ * 
+ * @category Admin/Article
+ * @package  Http/Controller/Admin
+ * @author   Adil Hussain <adilh@mindfiresolutions.com>
+ * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
+ * @link     https://github.com/adilcse/iSharee/blob/finalCode/app/Http/Controllers/Admin/AdminArticleController.php
  */
 class AdminArticleController extends Controller
 {
     use ImageUpload;
     use ImageDelete;
     /**
-     * update article status and return status of article
+     * Update article status and return status of article
      * only admin can update articles
-     * @param Request
-     * @param id of article whose status is to be updated
-     * @return Response
+     * 
+     * @param Request $request of user
+     * @param int     $id      of article whose status is to be updated
+     * 
+     * @return json response with update status
      */
     public function articleUpdate(Request $request,$id)
     {
         try{
             $article=Article::find($id);
-            if(is_null($article)){
-                return response(['status'=>false,'message'=>'invalid article id'],404);    
+            if (is_null($article)) {
+                return response(
+                    ['status'=>false, 
+                    'message'=>Constants::$ERROR_INVALID_ARTICLE_ID], 
+                    404
+                );    
             }
             $ip=intval($request->input('status'));
-            if(1 === $ip || 0 === $ip){
+            if (1 === $ip || 0 === $ip) {
                 //change article status if valid status given
                 $article->is_published = $ip;
                 $article->save();
-                return response(['status'=>true,'message'=>'updated'],200);     
+                return response(
+                    ['status'=>true,'message'=>Constants::$SUCCESS_UPDATED], 
+                    200
+                );     
             }
             //return with false status if request fails
-            return response(['status'=>false,'message'=>'invalid status update'],200);
+            return response(
+                ['status'=>false,
+                'message'=>Constants::$ERROR_STATUS_UPDATE], 
+                200
+            );
         }catch(Exception $e){
-            return response(['status'=>false,'message'=>'something went wrong'],400);
+            return response(
+                ['status'=>false,
+                'message'=>Constants::$ERROR_WRONG], 
+                400
+            );
         }
     }
 
     /**
-     * delete an article with given id
+     * Delete an article with given id
      * only admin can delete an article
-     * @param Request object
-     * @param id of article to be deleted
-     * @return Response
+     * 
+     * @param Request $request of an user
+     * @param int     $id      of article to be deleted
+     * 
+     * @return Response redirect success|error page
      */
     public function articleDelete(Request $request,$id)
     {
         try{
             $article=Article::find($id);
-            if(is_null($article)){
-                return view('error',['message'=>'invalid article ']);
+            if (is_null($article)) {
+                return view(
+                    'error', 
+                    ['message'=>Constants::$ERROR_INVALID_ARTICLE_ID]
+                );
             }
             //remove all likes comments and catgory of an article and delete it
             $status=$this->UserImageDelete($article->image_url);
@@ -63,10 +101,10 @@ class AdminArticleController extends Controller
             $article->likes()->detach();
             $article->delete();
             //return success if everithing deleted completely
-            return redirect()->back()->with(['success'=>'deleted successfully']);
+            return redirect()->back()->with(['success'=>Constants::$SUCCESS_DELETE]);
         }
         catch(Exception $e){
-            return view('error',['message'=>'can not delete the Article']);
+            return view('error', ['message'=>Constant::$ERROR_ARTICLE_DELETE]);
         }
         
     }

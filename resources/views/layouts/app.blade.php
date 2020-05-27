@@ -24,7 +24,7 @@
             $isUser=Auth::user() && !Auth::user()->id;
             $isGuest=Auth::user() && !Auth::id();
         @endphp
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm ">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
                     {{ config('app.name', 'iShare')}}
@@ -38,21 +38,27 @@
                         @if(Auth::check())
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('newArticle') }}">
-                                <i class="far fa-newspaper"></i>Publish new Article
+                                Publish new Article <i class="far fa-newspaper"></i>
                             </a>
                         </li>
                         @endif
-                        @if ($isUser)
+                        @if ($isUser || $isAdmin)
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('myArticle') }}">My Articles</a>
+                            <a class="nav-link" href="{{ route('myArticle') }}">
+                                My Articles <i class="fab fa-blogger"></i>
+                                </a>
                         </li>
                         @endif
                         @if($isAdmin)
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.catagory') }}">manage catagory</a>
+                            <a class="nav-link" href="{{ route('admin.catagory') }}">
+                                manage catagory <i class="fas fa-tools"></i>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.home') }}">Dashboard</a>
+                            <a class="nav-link" href="{{ route('admin.home') }}">
+                            Dashboard   <i class="fas fa-chart-line"></i> 
+                            </a>
                         </li>
                         @endif
                     </ul>
@@ -62,20 +68,28 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ route('login') }}">
+                                {{ __('Login') }} <i class="fas fa-sign-in-alt"></i>
+                                </a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">
+                                    {{ __('Register') }} <i class="fas fa-user-plus"></i>
+                                    </a>
                                 </li>
                             @endif
                         @endguest
                         @if($isGuest)
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">
+                                        {{ __('Login') }} <i class="fas fa-sign-in-alt"></i>
+                                    </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">
+                                        {{ __('Register') }} <i class="fas fa-user-plus"></i>
+                                    </a>
                                 </li>
                             @endif
                             @if($isUser || $isAdmin)
@@ -85,12 +99,12 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ url('/profile') }}">
-                                        profile
+                                    <i class="fas fa-user-circle"></i> profile 
                                     </a>    
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        <i class="fas fa-sign-out-alt"></i>{{ __('Logout') }}
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
@@ -102,7 +116,7 @@
                 </div>
             </div>
         </nav>
-        <main class="py-4">
+        <main class="py-4" style="background-image: url(/image/background.jpg);">
             @yield('content')
         </main>
     </div>

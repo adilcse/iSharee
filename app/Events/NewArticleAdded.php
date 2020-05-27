@@ -1,5 +1,14 @@
 <?php
-
+/**
+ * Event for new article added by any user
+ * PHP version: 7.0
+ * 
+ * @category Event
+ * @package  App/Events
+ * @author   Adil Hussain <adilh@mindfiresolutions.com>
+ * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
+ * @link     https://github.com/adilcse/iSharee/blob/finalCode/app/Events/NewArticleAdded.php
+ */
 namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
@@ -15,6 +24,12 @@ use App\Model\Article;
  * Triggered when new articles added by any user
  * with details of new article. 
  * Admin will be notified with new article details.
+ * 
+ * @category Event
+ * @package  App/Events
+ * @author   Adil Hussain <adilh@mindfiresolutions.com>
+ * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
+ * @link     https://github.com/adilcse/iSharee/blob/finalCode/app/Events/NewArticleAdded.php
  */
 class NewArticleAdded
 {
@@ -23,7 +38,9 @@ class NewArticleAdded
     public $article,$user;
     /**
      * Create a new event instance.
-     * @param Article model
+     * 
+     * @param Article $article model of article
+     * 
      * @return void
      */
     public function __construct(Article $article)
@@ -38,6 +55,6 @@ class NewArticleAdded
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return new PrivateChannel('newArticle');
     }
 }
