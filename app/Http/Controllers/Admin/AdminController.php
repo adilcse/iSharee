@@ -119,6 +119,7 @@ class AdminController extends Controller
             return null;
         }
     }
+
     /**
      * helper function for index 
      * gets users from users table with current view defined

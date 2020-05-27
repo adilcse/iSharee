@@ -11,17 +11,21 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use App\Model\Article;
 
+/**
+ * Triggered when new articles added by any user
+ * with details of new article. 
+ * Admin will be notified with new article details.
+ */
 class NewArticleAdded
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $article,$user;
     /**
      * Create a new event instance.
-     *
+     * @param Article model
      * @return void
      */
-    public $article,$user;
-
     public function __construct(Article $article)
     {
         $this->article=$article;

@@ -16,11 +16,9 @@ class Slug
     {
         // Normalize the title
         $slug = Str::slug($title,'-');
-
         // Get any that could possibly be related.
         // This cuts the queries down by doing it once.
         $allSlugs = self::getRelatedSlugs($slug, $id);
-
         // If we haven't used it before then we are all good.
         if (! $allSlugs->contains('slug', $slug)){
             return $slug;
@@ -36,7 +34,11 @@ class Slug
         throw new \Exception('Can not create a unique slug');
     }
 
-    protected static function getRelatedSlugs($slug,$id=0,$table='article'){
+    /**
+     * check for selected slug and fid its related slug
+     */
+    protected static function getRelatedSlugs($slug,$id=0,$table='article')
+    {
         if('article' === $table){
             return self::getRelatedArticleSlugs($slug,$id);
         }
@@ -44,6 +46,11 @@ class Slug
 
     }
 
+    /**
+     * get article slug which is not assigned to any article
+     * @param slug generated slug
+     * @return status of given slug is present or not
+     */
     protected static function getRelatedArticleSlugs($slug, $id = 0)
     {
         return Article::select('slug')->where('slug', 'like', $slug.'%')
@@ -51,6 +58,11 @@ class Slug
             ->get();
     }
 
+    /**
+     * check for catagory name already present 
+     * @param slug of given catagory and check if it is already linked or not
+     * @return status of given present or not
+     */
     protected static function getRelatedCatagorySlugs($slug, $id = 0)
     {
         return Catagory::select('slug')->where('slug', 'like', $slug.'%')

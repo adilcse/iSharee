@@ -18,7 +18,7 @@ class IsAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user() && Auth::user()->is_admin==1) {
+        if (Auth::user() && 1 === Auth::user()->is_admin) {
             return $next($request);
     }
     return redirect(route('home'))->withErrors(['message'=>'Sorry you are not admin']);

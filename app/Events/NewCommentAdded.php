@@ -10,6 +10,11 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * when any user adds comment for any article 
+ * this event will trigger
+ * Recives comment model added by any user and send email to the author of article. 
+ */
 class NewCommentAdded
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;

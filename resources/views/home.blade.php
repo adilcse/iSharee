@@ -7,6 +7,11 @@
     <script src="{{ asset('js/admin/articleTable.js') }}" defer></script>
 @endpush
 <div class="container">
+    @if(isset($message))
+        <div class="row alert alert-danger">
+            {{$message}}
+        </div>
+    @endif
     <!-- dispay success messages -->
     @if(session('success'))
         <div class="row alert alert-success">

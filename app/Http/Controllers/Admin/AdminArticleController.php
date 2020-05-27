@@ -17,9 +17,9 @@ class AdminArticleController extends Controller
     /**
      * update article status and return status of article
      * only admin can update articles
-     * @param request
+     * @param Request
      * @param id of article whose status is to be updated
-     * @return response
+     * @return Response
      */
     public function articleUpdate(Request $request,$id)
     {
@@ -45,9 +45,9 @@ class AdminArticleController extends Controller
     /**
      * delete an article with given id
      * only admin can delete an article
-     * @param request object
-     * @param i of article to be deleted
-     * @return response
+     * @param Request object
+     * @param id of article to be deleted
+     * @return Response
      */
     public function articleDelete(Request $request,$id)
     {

@@ -12,13 +12,14 @@ use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
+    // items will be displayed per page
+    protected $per_page;
+
     /**
      * Create a new controller instance.
      *set per page items in home page from env
      * @return void
      */
-    protected $per_page;
-
     public function __construct()
     {
         $this->per_page=intval(env('ITEMS_PER_PAGE',5));

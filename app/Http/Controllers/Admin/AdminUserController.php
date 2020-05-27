@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\User;
 /**
  * handles admin user related actions
+ * isAdmin middleware is applied to allow only admin access
  */
 class AdminUserController extends Controller
 {
@@ -60,7 +61,6 @@ class AdminUserController extends Controller
      * only admin can update these data
      * @param request object 
      * @return redirect with status
-     * 
      */
     public function userUpdate(Request $request)
     {

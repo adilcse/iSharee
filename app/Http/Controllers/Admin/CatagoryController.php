@@ -12,11 +12,10 @@ use App\Helper\Slug;
 class CatagoryController extends Controller
 {
 
-
     /**
      * gives admin catagory edit view with catagory details
-     *@param id of the catagory to be updated
-     *@return catagoy view
+     * @param id of the catagory to be updated
+     * @return catagoy view
      */
     public function edit($id)
     {
@@ -32,7 +31,6 @@ class CatagoryController extends Controller
         catch(Exception $e){
             return view('error',['message'=>'error in getting catagory']);
         }
-
     }
     
     /**

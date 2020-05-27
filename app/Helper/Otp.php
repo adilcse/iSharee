@@ -33,7 +33,6 @@ class Otp
         }catch(Exception $e){
             return false;
         }
-
     }
     
     /**
