@@ -8,6 +8,7 @@ use App\User;
 /**
  * handles admin user related actions
  * isAdmin middleware is applied to allow only admin access
+ * 
  */
 class AdminUserController extends Controller
 {
