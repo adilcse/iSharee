@@ -1,10 +1,10 @@
-## iShare (article publoshing app)
+# iShare (article publishing app)
 - User can register to this app by providing basic details like email address,name mobile number and password.
 - User can also login by there social account.
 - Guest user can also login by clicking "guest login" button.
 - Admin can login by admin email and password.
 
-# Guest user:-
+## Guest user:-
 - Guest user can view 
     - all published articles in homepage.
     - articles published by different users.
@@ -14,7 +14,7 @@
 - Guest user can comment on any article.
 - Comment will be shown after admin approval.
 
-# Registered user:-
+## Registered user:-
 - Registered user can view 
     - all published articles in homepage.
     - articles published by different users.
@@ -32,7 +32,7 @@
 - Can change his/her name and password in profile section.
 - Can Change his/her password by entering otp sent to registered email address.
 
-# Admin:-
+## Admin:-
 - Have all registered user access.
 - Can view admin dashboard.
 - Admin dashboard contains

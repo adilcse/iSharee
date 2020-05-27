@@ -1,7 +1,7 @@
 /node_modules
 /public/hot
 /public/storage
-/public/image/post
+/public/image/post/*.*
 /storage/*.key
 /vendor
 iShare-gcloud.json
