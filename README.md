@@ -1,4 +1,12 @@
-## iShare (article publishing app)
+# iShare (article publishing app)
+## Technology used:-
+- html
+- php laravel (7.0)
+- css
+- javascript
+- bootstrap/mdbootstrap
+
+## Description
 - User can register to this app by providing basic details like email address,name mobile number and password.
 - User can also login by there social account.
 - Guest user can also login by clicking "guest login" button.
@@ -57,3 +65,11 @@
 - Can update mobile number, email address, name of any user.
 - Can change verify status of phone number and email address of any user. 
 - Will be notified via email for every new post added by any user.
+
+### Required:-
+- twilio account for mobile verification.
+- Stripe for payment.
+- Google service account for accessing gcloud bucket for image storage.
+- Gcloud bucket.
+- Mysql server.
+- smtp mail server.

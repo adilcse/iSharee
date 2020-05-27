@@ -20,7 +20,7 @@ trait ImageUpload
     {
         //generate random name for image
         $str=rand(); 
-        $image_name = $id.md5($str); 
+        $image_name = $id.md5($str);
         $ext = strtolower($query->getClientOriginalExtension()); // You can use also getClientOriginalName()
         $image_full_name = 'articles/images/'.$image_name.'.'.$ext;
         $image_url = $this->storageAPI.$this->imageBkt.'/'.$image_full_name;

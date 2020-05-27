@@ -25,6 +25,7 @@
 								<th scope="col">Likes</th>
 								<th scope="col">Published By</th>
 								<th scope="col">Total Views</th>
+								<th scope="col">Payment</th>
 								<th scope="col">Status</th>
 							</tr>
 						</thead>
@@ -38,6 +39,13 @@
 									<td>{{$article->likes_count}}</a></td>
 									<td ><a href="{{route('admin.userView',$article->user->id)}}" class="text-primary">{{$article->user->name}}</a></td>
 									<td >{{$article->views}}</td>
+									<td >
+										@if($article->paid)
+											<span class="text-success">paid</span>
+										@else
+										<span class="text-danger">not paid</span>
+										@endif
+									</td>
 									<td>
 										<span class="badge {{$article->is_published ? 'badge-success' : 'badge-warning'}}">
 											<select class="custom-select" id="admin-article-status" onChange="articleStatusChanged({{$article->id}},this)">
