@@ -183,10 +183,12 @@ class ArticleController  extends Controller
             if ($article->image_url) {
                 $this->userImageDelete($article->image_url);
             }
+            if ($article->payment) {
+                $article->payment->delete();
+            }
             $article->likes()->detach();
             $article->comments()->detach();
-            $article->catagories()->detach();
-            $article->payments()->detach();
+            $article->catagories()->detach();            
             $article->delete();
             return redirect(route('home'))->with('success', Constants::$SUCCESS_DELETE);
         } else {
