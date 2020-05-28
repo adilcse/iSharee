@@ -14,9 +14,7 @@ use Auth;
 class VerifyMobileController extends Controller
 {
 
-    protected $client;
-    protected $registered_number;
-    protected $sender_number;
+    protected $client, $registered_number,$sender_number,$registered_number_extra;
     /**
      * setup twilio mobile verificaation account
      */
@@ -24,6 +22,7 @@ class VerifyMobileController extends Controller
     {
         $this->client = new Client($_ENV['TWILIO_SID'], $_ENV['TWILIO_AUTH_TOKEN']);
         $this->registered_number = $_ENV['TWILIO_REGISTERED_NUMBER'];
+        $this->registered_number_extra = $_ENV['TWILIO_REGISTERED_NUMBER_EXTRA'];
         $this->sender_number = $_ENV['TWILIO_MOBILE_NUMBER'];
     }
 
@@ -83,8 +82,11 @@ class VerifyMobileController extends Controller
      */
     private function send_sms($otp,$mobile)
     {
+        $to= ltrim($this->registered_number_extra,"+91") === $mobile
+            ?$this->registered_number_extra
+            :$this->registered_number;
         $this->client->messages->create(
-            $this->registered_number,
+            $to,
             array(
                 'from' => $this->sender_number,
                 'body' => 'Your verification code for'.$mobile.' is '.$otp

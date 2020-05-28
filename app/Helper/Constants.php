@@ -28,6 +28,7 @@ class Constants
     public static $SUCCESS_CATAGORY_ADD="Catagory added successfully";
 
     public static $ERROR_FAILED="failed";
+    public static $ERROR_ID="invalid id";
     public static $ERROR_ARTICLE_DELETE="Article delete failed";
     public static $ERROR_STATUS_UPDATE="invalid status update";
     public static $ERROR_WRONG="Something went wrong";
@@ -42,7 +43,9 @@ class Constants
     public static $ERROR_INVALID_CATAGORY="Invalid catagory";
     public static $ERROR_UNAUTHORIZED="you are not autherorized";
     public static $ERROR_SLUG_CREATE="can not create slug";
+    
     public static $MESSAGE_ARTICLE_NOT_PUBLISHED="article is not published yet" ;
     public static $MESSAGE_LOGIN_FIRST="Please login first" ;
+    public static $MESSAGE_APPROVAL_PENDING="Admin approval pending" ;
     public static $MESSAGE_LIKED="Already liked" ;
 }
