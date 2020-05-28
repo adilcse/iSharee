@@ -11,6 +11,7 @@
  */
 namespace App\Traits;
 use Google\Cloud\Storage\StorageClient;
+use Google\Cloud\Core\Exception\NotFoundException;
 
 /**
  * Handle image upload to the server
@@ -41,7 +42,7 @@ trait ImageDelete
             $success = $bucket->object($objectName)->delete();
             return $success; // Just return status
         }
-        catch(Exception $e){
+        catch(NotFoundException $e){
             return false;
         }
     }
