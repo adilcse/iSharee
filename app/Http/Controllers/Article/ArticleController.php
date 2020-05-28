@@ -187,7 +187,7 @@ class ArticleController  extends Controller
             $article->comments()->detach();
             $article->catagories()->detach();
             $article->delete();
-            return redirect()->back()->with('success', Constants::$SUCCESS_DELETE);
+            return redirect(route('home'))->with('success', Constants::$SUCCESS_DELETE);
         } else {
             return view('error', ['message'=>Constants::$ERROR_UNAUTHORIZED]);
         }
