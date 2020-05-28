@@ -21,7 +21,7 @@
     <div id="app">
         @php
             $isAdmin=Auth::user() && Auth::user()->is_admin;
-            $isUser=Auth::user() && !Auth::user()->id;
+            $isUser=Auth::user() && Auth::user()->id;
             $isGuest=Auth::user() && !Auth::id();
         @endphp
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm ">
