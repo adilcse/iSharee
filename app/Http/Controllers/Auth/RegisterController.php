@@ -1,5 +1,14 @@
 <?php
-
+/**
+ * Control user's register actions
+ * PHP version 7.0
+ * 
+ * @category Auth
+ * @package  Http/Controller/Auth
+ * @author   Adil Hussain <adilh@mindfiresolutions.com>
+ * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
+ * @link     https://github.com/adilcse/iSharee/blob/finalCode/app/Http/Controllers/Auth/RegisterController.php
+ */
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -11,6 +20,15 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 
+/**
+ * Register user with basic details like name, email, mobile number and password 
+ * 
+ * @category Auth
+ * @package  Http/Controller/Auth
+ * @author   Adil Hussain <adilh@mindfiresolutions.com>
+ * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
+ * @link     https://github.com/adilcse/iSharee/blob/finalCode/app/Http/Controllers/Auth/RegisterController.php
+ */
 class RegisterController extends Controller
 {
     /*
@@ -46,39 +64,47 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data user data to be validated
+     * 
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'mobile'=>['required','string','max:10','min:10','unique:users'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
-        ]);
+        return Validator::make(
+            $data, 
+            [
+                'name' => ['required', 'string', 'max:255'],
+                'mobile'=>['required','string','max:10','min:10','unique:users'],
+                'email' => ['required', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:6', 'confirmed'],
+            ]
+        );
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data new user details
+     * 
      * @return \App\User
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'mobile' => $data['mobile'],
-            'password' => Hash::make($data['password']),
-        ]);
+        return User::create(
+            [
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'mobile' => $data['mobile'],
+                'password' => Hash::make($data['password']),
+            ]
+        );
     }
 
-        /**
+    /**
      * Handle a registration request for the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request http object
+     * 
      * @return \Illuminate\Http\Response
      */
     public function register(Request $request)
@@ -87,7 +113,12 @@ class RegisterController extends Controller
 
         event(new Registered($user = $this->create($request->all())));
         $email=urlencode($user->email);
-        return $this->registered($request, $user)
+        if (env('ALLOW_EMAIL', false)) {
+            return $this->registered($request, $user)
             ?: redirect($this->redirectPath().'?email='.$email);
+        }
+        return $this->registered($request, $user)
+        ?:redirect(route('login'));
+        
     }
 }

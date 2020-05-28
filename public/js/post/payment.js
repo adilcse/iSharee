@@ -1,5 +1,4 @@
 // Create a Stripe client.
-console.log();
 var stripe = Stripe($('#payment-form').attr('data-stripe'));
 
 // Create an instance of Elements.

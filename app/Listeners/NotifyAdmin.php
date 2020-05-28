@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Mail;
 use App\User;
 
 /**
- * listen to add new article event and notify admin that new article is added
+ * Listen to add new article event and notify admin that new article is added
  */
 class NotifyAdmin implements ShouldQueue
 {
@@ -27,18 +27,20 @@ class NotifyAdmin implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  NewArticleAdded  $event
+     * @param NewArticleAdded $event to be handled
+     * 
      * @return void
      */
     public function handle(NewArticleAdded $event)
     {
         //find all admin users and send mail to notify about new artice
-        $admins = User::where('is_admin',1)
-                    ->where('is_active',1)
-                    ->where('is_email_verified',1)
+        $admins = User::where('is_admin', 1)
+                    ->where('is_active', 1)
+                    ->where('is_email_verified', 1)
                     ->get();
-        foreach($admins as $admin){
-            Mail::to($admin->email)->queue(new ArticlePublished($event->article->user,$event->article));
+        foreach ($admins as $admin) {
+            Mail::to($admin->email)
+                ->queue(new ArticlePublished($event->article->user, $event->article));
         }
     }
 }

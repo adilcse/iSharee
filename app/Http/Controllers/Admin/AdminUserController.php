@@ -1,20 +1,39 @@
 <?php
-
+/**
+ * Handles admin user related actions
+ * PHP version: 7.0
+ * 
+ * @category Admin/Article
+ * @package  Http/Controller/Admin
+ * @author   Adil Hussain <adilh@mindfiresolutions.com>
+ * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
+ * @link     https://github.com/adilcse/iSharee/blob/finalCode/app/Http/Controllers/Admin/AdminUserController.php
+ */
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
+use App\Helper\Constants;
 /**
- * handles admin user related actions
+ * Handles admin user related actions
+ * isAdmin middleware is applied to allow only admin access
+ * 
+ * @category Admin/Article
+ * @package  Http/Controller/Admin
+ * @author   Adil Hussain <adilh@mindfiresolutions.com>
+ * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
+ * @link     https://github.com/adilcse/iSharee/blob/finalCode/app/Http/Controllers/Admin/AdminUserController.php
  */
 class AdminUserController extends Controller
 {
     /**
-     * diplay profile of any user
+     * Diplay profile of any user
      * admin can view profile of any user
-     * @param request object
-     * @param id of user
+     * 
+     * @param Request $request object
+     * @param int     $id      of user
+     * 
      * @return view with user details
      */
     public function userView(Request $request,$id)
@@ -22,63 +41,81 @@ class AdminUserController extends Controller
         try{
             //gets user with specified id
             $user=User::find($id);
-            if(is_null($user)){
-                return redirect()->back()->withErrors(['user not found']);
+            if (is_null($user)) {
+                return redirect()
+                    ->back()
+                    ->withErrors([Constants::$ERROR_USER_NOT_FOUND]);
             }
-            return view('admin.profile',['profile'=>$user]);
+            return view('admin.profile', ['profile'=>$user]);
         }catch(Exception $e){
-            return view('error',['message'=>'error in getting user']);
+            return view('error', ['message'=>Constants::$ERROR_GETTING_USER]);
         }
     }
 
     /**
-     * update user status
-     * @param request object
-     * @param id of the user whose status is to be updated
-     * @return response
+     * Update user status
+     * 
+     * @param Request $request http request object
+     * @param int     $id      id of user to be updated
+     * 
+     * @return response with proper message
      */
     public function userStatusUpdate(Request $request,$id)
     {
         $status=intval($request->input('status'));
         //check for valid status
-        if(1 === $status || 0 === $status){
+        if (1 === $status || 0 === $status) {
             $user=User::find($id);
-            if(is_null($user)){
-                return response(['error'=>true,'message'=>'invalid user input'],403);
+            if (is_null($user)) {
+                return response(
+                    ['error'=>true,'message'=>Constants::$ERROR_INVALID_USER],
+                    403
+                );
             }
             //update user status 
             $user->is_active=$status;
             $user->save();
-            return response(['error'=>false,'message'=>'update successfull'],200);
-        }else{
-            return response(['error'=>true,'message'=>'invalid status'],403);
+            return response(
+                ['error'=>false, 'message'=>$SUCCESS_UPDATED],
+                200
+            );
+        } else {
+            return response(
+                ['error'=>true,'message'=>Constants::$ERROR_STATUS_UPDATE],
+                403
+            );
         }
     }
 
     /**
-     * update user profile data by admin
+     * Update user profile data by admin
      * only admin can update these data
-     * @param request object 
-     * @return redirect with status
      * 
+     * @param Request $request object 
+     * 
+     * @return redirect with status
      */
     public function userUpdate(Request $request)
     {
         //validate user's input data
-        $request->validate([
-            'name'=>['string','required','min:4'],
-            'mobile'=>['required','digits:10'],
-            'email'=>['email','required'],
-            'id'=>['string','required'],
-            'mobileVerify'=>['boolean','required'],
-            'emailVerify'=>['boolean','required']
-        ]);
+        $request->validate(
+            [
+                'name'=>['string','required','min:4'],
+                'mobile'=>['required','digits:10'],
+                'email'=>['email','required'],
+                'id'=>['string','required'],
+                'mobileVerify'=>['boolean','required'],
+                'emailVerify'=>['boolean','required']
+            ]
+        );
         try{
             //gets user with input id
             $user=User::find($request->input('id'));
-            if(is_null($user)){
+            if (is_null($user)) {
                 //redirect back with error message
-                return redirect()->back()->withErrors(['invalid user id']);
+                return redirect()
+                    ->back()
+                    ->withErrors([Constants::$ERROR_INVALID_USER]);
             }
             //update user details
             $user->name=$request->input('name');
@@ -88,10 +125,10 @@ class AdminUserController extends Controller
             $user->is_email_verified=$request->input('emailVerify');
             $user->save();
             //return with success message
-            return redirect()->back()->with(['status'=>'success']);
+            return redirect()->back()->with(['status'=>Constants::$SUCCESS_MSG]);
         }
         catch(Exception $e){
-            return view('error',['message'=>'error in getting user']);
+            return view('error', ['message'=>Constants::$ERROR_GETTING_USER]);
         }
     }
 }

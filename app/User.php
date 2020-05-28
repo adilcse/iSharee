@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * user model handle user related operations in database
+ * User model handle user related operations in database
  */
 class User extends Authenticatable
 {
@@ -40,19 +40,40 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    //join likes table with user table
+    /**
+     * Join likes table with user table
+     * 
+     * @return void
+     */ 
     public function likes()
     {
-        return $this->belongsToMany('App\Model\Article', 'likes', 'user_id', 'article_id');
+        return $this->belongsToMany(
+            'App\Model\Article', 
+            'likes', 'user_id', 
+            'article_id'
+        );
     }
 
-    //join comments table with user table
+    /**
+     * Join comments table with user table
+     * 
+     * @return void
+     */ 
     public function comments()
     {
-        return $this->belongsToMany('App\Model\Article', 'comments', 'user_id', 'article_id');
+        return $this->belongsToMany(
+            'App\Model\Article', 
+            'comments', 
+            'user_id', 
+            'article_id'
+        );
     }
 
-    //join articles table with user table
+    /**
+     * Join articles table with user table
+     * 
+     * @return void
+     */ 
     public function articles()
     {
         return $this->hasMany('App\Model\Article');

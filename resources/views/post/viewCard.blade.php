@@ -7,7 +7,7 @@
     <!-- Card image -->
     @if($article->image_url && $article->allow_image_as_slider)
         <div class="view overlay ">
-            <img class="card-img-top" src="{{$article->image_url}}" width='300px' height="500px" alt="{{$article->title.'-image'}}">
+            <img class="card-img-top" src="{{$article->image_url}}" alt="{{$article->title.'-image'}}">
         </div>
     @endif
     <!-- Card content -->

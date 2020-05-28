@@ -16,14 +16,15 @@ class NotifyUser implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  NewCommentAdded  $event
+     * @param NewCommentAdded $event user
+     * 
      * @return void
      */
     public function handle(NewCommentAdded $event)
     {
         $user = $event->comment->article->user;
         //send email to the user to notify about comment
-        if($user->is_email_verified && $event->comment->is_published){
+        if ($user->is_email_verified && $event->comment->is_published) {
             Mail::to($user->email)->queue(new CommentAdded($event->comment));
         }
     }

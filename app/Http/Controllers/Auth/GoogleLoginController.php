@@ -1,5 +1,14 @@
 <?php
-
+/**
+ * Control google login actions
+ * PHP version 7.0
+ * 
+ * @category Auth
+ * @package  Http/Controller/Auth
+ * @author   Adil Hussain <adilh@mindfiresolutions.com>
+ * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
+ * @link     https://github.com/adilcse/iSharee/blob/finalCode/app/Http/Controllers/Auth/GoogleLoginController.php
+ */
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -8,25 +17,41 @@ use Socialite;
 use App\User;
 use Auth;
 
+/**
+ * User signin via google login
+ * 
+ * @category Auth
+ * @package  Http/Controller/Auth
+ * @author   Adil Hussain <adilh@mindfiresolutions.com>
+ * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
+ * @link     https://github.com/adilcse/iSharee/blob/finalCode/app/Http/Controllers/Auth/GoogleLoginController.php
+ */
 class GoogleLoginController extends Controller
 {
-        /**
-     * handle google login button click
+    /**
+     * Handle google login button click
+     * 
+     * @return redirect to google signin page
      */
     public function googleLogin()
     {
         return Socialite::driver('google')->redirect();
     }
 
+    /**
+     * Called when user autherize google signin for this app
+     * 
+     * @return redirect to home after login
+     */
     public function googleLoginCallback()
     {
         $user = Socialite::driver('google')->user();
-        $existingUser=User::where('email',$user->email)->first();
-        if($existingUser){
+        $existingUser=User::where('email', $user->email)->first();
+        if ($existingUser) {
             $existingUser->oauth_token=$user->token;
             $existingUser->save();
             Auth::loginUsingId($existingUser->id);
-        }else{
+        } else {
             $newUser=new User;
             $newUser->name = $user->name;
             $newUser->oauth_token=$user->token;

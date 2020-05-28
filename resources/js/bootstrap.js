@@ -13,7 +13,7 @@ try {
    require('bootstrap');
     require('mdbootstrap');
 } catch (e) {
-    console.log(e);
+    
 }
 
 /**

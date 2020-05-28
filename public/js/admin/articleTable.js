@@ -25,7 +25,6 @@ const articleStatusChanged=(id,element)=>{
         },
         success:(res)=>{
             //log success message
-            console.log(res);
         },      
     })
 }

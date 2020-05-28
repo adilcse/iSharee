@@ -8,7 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * generate mail layout to notify admin
+ * Generate mail layout to notify admin
  */
 class ArticlePublished extends Mailable
 {
@@ -16,8 +16,10 @@ class ArticlePublished extends Mailable
     public $article,$user;
     /**
      * Create a new message instance.
-     * @param user model of the article
-     * @param article model
+     * 
+     * @param User    $user    model of the article
+     * @param Article $article model
+     * 
      * @return void
      */
     public function __construct($user,$article)

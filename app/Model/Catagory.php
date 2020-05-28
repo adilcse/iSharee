@@ -9,9 +9,12 @@ class Catagory extends Model
     protected $table='catagories';
 
     /**
-     * join articles table with catagories table
+     * Join articles table with catagories table
+     * 
+     * @return void
      */
-    public function articles(){
+    public function articles()
+    {
         return $this->belongsToMany('App\Model\Article')->withTimestamps();
     }
 }
