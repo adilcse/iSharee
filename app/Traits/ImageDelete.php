@@ -36,7 +36,7 @@ trait ImageDelete
             $storage = new StorageClient();
             $bucket = $storage->bucket($this->_imageBkt);
             $objectName=str_replace(
-                $this->storageAPI.$this->_imageBkt.'/', '', $filename
+                $this->_storageAPI.$this->_imageBkt.'/', '', $filename
             ); 
             $success = $bucket->object($objectName)->delete();
             return $success; // Just return status
