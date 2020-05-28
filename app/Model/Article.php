@@ -60,4 +60,9 @@ class Article extends Model
     {
         return $this->belongsTo('App\User', 'user_id');
     }
+
+    public function payment()
+    {
+        return $this->hasOne('App\Model\Payment', 'article_id');
+    }
 }
