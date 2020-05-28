@@ -11,17 +11,23 @@ class Comments extends Model
 
     protected $fillable=['article_id','body','user_id','is_published'];
 
-    // join artices table with comments table
+    /**
+     * Join artices table with comments table
+     * 
+     * @return void
+     */ 
     public function article()
     {
-        # code...
         return $this->belongsTo('App\Model\Article');
     }
 
-    //join users table with comments table
+    /**
+     * Join users table with comments table
+     * 
+     * @return void
+     */
     public function user()
     {
-        # code...
         return $this->belongsTo('App\User');
     }
 }

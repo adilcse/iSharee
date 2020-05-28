@@ -8,7 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * build comment mail to notify user anout the comment
+ * Build comment mail to notify user anout the comment
  */
 class CommentAdded extends Mailable
 {
@@ -17,7 +17,9 @@ class CommentAdded extends Mailable
     
     /**
      * Create a new message instance.
-     *@param comment model
+     * 
+     * @param Comment $comment model
+     * 
      * @return void
      */
     public function __construct($comment)

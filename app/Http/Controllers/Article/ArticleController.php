@@ -132,7 +132,7 @@ class ArticleController  extends Controller
             //only aithorized user can edit the post
             if ($request->image) {
                 try {
-                    $filePath = $this->UserImageUpload($request->image, $article->id); //Passing $request->image as parameter to our created method
+                    $filePath = $this->userImageUpload($request->image, $article->id); //Passing $request->image as parameter to our created method
                     $article->image_url = $filePath;
                 } catch (Exception $e) {
                     //Write your error message here
@@ -181,7 +181,7 @@ class ArticleController  extends Controller
             //only authorized user can dlete the article
             //remove all likes,comment and catagory before deleting the article
             if ($article->image_url) {
-                $this->UserImageDelete($article->image_url);
+                $this->userImageDelete($article->image_url);
             }
             $article->likes()->detach();
             $article->comments()->detach();
@@ -263,7 +263,7 @@ class ArticleController  extends Controller
         if ($request->image) {
             //upload image 
             try {
-                $filePath = $this->UserImageUpload($request->image, $data->id); //Passing $data->image as parameter to our created method
+                $filePath = $this->userImageUpload($request->image, $data->id); //Passing $data->image as parameter to our created method
                 $data->image_url = $filePath;
             } catch (Exception $e) {
                 //Write your error message here

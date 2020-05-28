@@ -35,6 +35,6 @@ class UserSeeder extends Seeder
             ]
         ];
         DB::table('users')->insert($users);
-        DB::table('users')->where('name','guest')->update(['id'=>0]);
+        DB::table('users')->where('name', 'guest')->update(['id'=>0]);
     }
 }

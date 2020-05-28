@@ -95,7 +95,7 @@ class AdminArticleController extends Controller
                 );
             }
             //remove all likes comments and catgory of an article and delete it
-            $status=$this->UserImageDelete($article->image_url);
+            $status=$this->userImageDelete($article->image_url);
             $article->catagories()->detach();
             $article->comments()->detach();
             $article->likes()->detach();

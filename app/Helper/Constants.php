@@ -28,6 +28,7 @@ class Constants
     public static $SUCCESS_CATAGORY_ADD="Catagory added successfully";
     public static $SUCCESS_OTP_SENT="otp sent";
     public static $SUCCESS_PASSWORD_SET="Password set success";
+    public static $SUCCESS_MOBILE_VERIFIED="Mobile number verified";
 
     public static $ERROR_FAILED="failed";
     public static $ERROR_ID="invalid id";
@@ -48,6 +49,11 @@ class Constants
     public static $ERROR_EMAIL_UNVERIFIED="Email not verified";
     public static $ERROR_PASSWORD_NOT_SET="Password reset failed";
     public static $ERROR_OTP_INVALID="invalid otp"; 
+    public static $ERROR_OTP_SEND="can not send otp"; 
+    public static $ERROR_MOBILE_INVALID="invalid mobile number"; 
+    public static $ERROR_CATAGORY="Catagory view failed"; 
+    public static $ERROR_PASSWORD_MATCH="Password not matched"; 
+    public static $ERROR_PASSWORD_INVALID="invalid password"; 
     
     
     public static $MESSAGE_ARTICLE_NOT_PUBLISHED="article is not published yet" ;

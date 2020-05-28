@@ -14,7 +14,9 @@ class EmailVerify extends Mailable
     public $otp;
     /**
      * Create a new message instance.
-     *@param otp for email verification
+     * 
+     * @param int $otp for email verification
+     * 
      * @return void
      */
     public function __construct($otp)
