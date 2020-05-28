@@ -26,6 +26,8 @@ class Constants
     public static $SUCCESS_UPDATED="updated";
     public static $SUCCESS_DELETE="deleted successfully";
     public static $SUCCESS_CATAGORY_ADD="Catagory added successfully";
+    public static $SUCCESS_OTP_SENT="otp sent";
+    public static $SUCCESS_PASSWORD_SET="Password set success";
 
     public static $ERROR_FAILED="failed";
     public static $ERROR_ID="invalid id";
@@ -43,9 +45,14 @@ class Constants
     public static $ERROR_INVALID_CATAGORY="Invalid catagory";
     public static $ERROR_UNAUTHORIZED="you are not autherorized";
     public static $ERROR_SLUG_CREATE="can not create slug";
+    public static $ERROR_EMAIL_UNVERIFIED="Email not verified";
+    public static $ERROR_PASSWORD_NOT_SET="Password reset failed";
+    public static $ERROR_OTP_INVALID="invalid otp"; 
+    
     
     public static $MESSAGE_ARTICLE_NOT_PUBLISHED="article is not published yet" ;
     public static $MESSAGE_LOGIN_FIRST="Please login first" ;
     public static $MESSAGE_APPROVAL_PENDING="Admin approval pending" ;
     public static $MESSAGE_LIKED="Already liked" ;
+    public static $MESSAGE_USER_BLOCKED="Your account is blocked by admin." ;
 }

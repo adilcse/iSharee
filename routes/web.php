@@ -76,7 +76,7 @@ Route::group(['middleware' => 'auth'], function () {
 Route::namespace('Auth')->group(function () {
     Route::get('/email/verify','VerifyEmailController@email')->name('emailVerify');
     Route::get('/mobile/verify','VerifyMobileController@index')->name('mobileVerify');
-    Route::get('/guest','LoginController@GuestLogin')->name('guest');
+    Route::get('/guest','LoginController@guestLogin')->name('guest');
     Route::post('/email/verify/otp','VerifyEmailController@otp')->name('emailotp');
     Route::post('/mobile/verify/otp','VerifyMobileController@verifyOtp')->name('mobileotp');
     Route::post('/password/reset/send','ForgotPasswordController@send');

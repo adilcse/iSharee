@@ -1,5 +1,14 @@
 <?php
-
+/**
+ * Control user's login actions
+ * PHP version 7.0
+ * 
+ * @category Auth
+ * @package  Http/Controller/Auth
+ * @author   Adil Hussain <adilh@mindfiresolutions.com>
+ * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
+ * @link     https://github.com/adilcse/iSharee/blob/finalCode/app/Http/Controllers/Auth/LoginController.php
+ */
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -7,6 +16,17 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Helper\Constants;
+
+/**
+ *  Handle all actions for user login
+ * 
+ * @category Auth
+ * @package  Http/Controller/Auth
+ * @author   Adil Hussain <adilh@mindfiresolutions.com>
+ * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
+ * @link     https://github.com/adilcse/iSharee/blob/finalCode/app/Http/Controllers/Auth/LoginController.php
+ */
 class LoginController extends Controller
 {
     /*
@@ -38,59 +58,67 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
     /**
      * Handle an authentication attempt.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request httprequest
      *
      * @return Response
      */
     public function login(Request $request)
     {
-        $credentials = ['email'=>$request->input('email'), 'password'=>$request->input('password')];
-        if (Auth::attempt($credentials,$request->filled('remember'))) {
+        $credentials = [
+            'email'=>$request->input('email'), 
+            'password'=>$request->input('password')
+        ];
+        if (Auth::attempt($credentials, $request->filled('remember'))) {
             // Authentication passed...
             $user=Auth::user();
-            if(1 === $user->is_admin){
+            if (1 === $user->is_admin) {
                 return redirect(route('admin.home'));
-            }
-            else if(0===$user->is_active){
+            } else if (0===$user->is_active) {
                 Auth::logout();
-                return view('auth.login',['error'=>'user, your account is blocked.']);
-            }
-            else if(0===$user->is_email_verified && env('ALLOW_EMAIL',false)){
+                return view(
+                    'auth.login',
+                    ['error'=>Constants::$MESSAGE_USER_BLOCKED]
+                );
+            } else if (0===$user->is_email_verified && env('ALLOW_EMAIL', false)) {
                 $email=urlencode($user->email);
                 Auth::logout();
                 return  redirect('/email/verify?email='.$email);
-            }
-            // twilio mobile verification suspended will add after account resumes
-            else if(0===$user->is_mobile_verified && env('ALLOW_SMS',false)){
+            } else if (0===$user->is_mobile_verified && env('ALLOW_SMS', false)) {
                 Auth::logout();
                 $mobile=urlencode($user->mobile);
                 return  redirect('/mobile/verify?number='.$mobile.'&resend=true');
             }
             return redirect(route('home')); 
-        }else{
-            return view('auth.login',['error'=>'email/password']);
+        } else {
+            return view('auth.login', ['error'=>'email/password']);
         }
-        
     }
 
     /**
-     * show form for user login
+     * Show form for user login
+     * 
+     * @param Request $request http request object
+     * 
+     * @return view login form
      */
     public function showLoginForm(Request $request)
     {
         //redirected user fill email field for login
-        if($request->input('verify')==='success'){
+        if ($request->input('verify')==='success') {
             $email=urldecode($request->input('email'));
-            return view('auth.login',['email'=>$email,'verify'=>true]);
+            return view('auth.login', ['email'=>$email,'verify'=>true]);
         }
         return view('auth.login');
     }
 
     /**
-     * logout user and redirect to login page
+     * Logout user and redirect to login page
+     * 
+     * @return redirect to login page
      */
     public function logout()
     {
@@ -99,11 +127,13 @@ class LoginController extends Controller
     }
 
     /**
-     * guest user can view home page by logging in as guest
+     * Guest user can view home page by logging in as guest
+     * 
+     * @return redirect to home page
      */
-    public function GuestLogin(Request $request)
+    public function guestLogin()
     {
-        if(Auth::loginUsingId(0)){
+        if (Auth::loginUsingId(0)) {
             return redirect(route('home'));  
         }
         return redirect(route('login'));
