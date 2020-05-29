@@ -25,8 +25,13 @@
 				<!--Card content-->
 				<div class="card-body text-center">
 				<!--Title-->
-				<h3 class="card-title">{{$article->title}}</h3>
-				<h5 class="text-secondary text-left">Published by:<a class="text-primary" href="{{route('userArticles',$article->user->id)}}">{{$article->user->name}}</a></h5>
+				<h3 class="card-title text-left">{{$article->title}}</h3>
+				<h5 class="text-secondary text-left">
+					{{(new DateTime($article->created_at))->format('M d, Y')}} by 
+					<a class="text-primary" href="{{route('userArticles',$article->user->id)}}">
+						{{$article->user->name}}
+					</a>
+				</h5>
 				<h6 class="text-secondary text-left"> {{$article->views}} views</h5>
 				<div class="row">
 					@foreach($article->catagories as $cat)

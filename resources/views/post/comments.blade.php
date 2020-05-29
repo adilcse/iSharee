@@ -20,7 +20,10 @@
 								<h4 class="font-weight-bold">
 									<a class="text-primary" href="{{route('userArticles',$com->id)}}">
 										{{$com->name}} 
-									</a>	
+									</a>
+									<div class="text-muted h6">
+										{{$com->pivot->created_at->format('d M, Y g:i A')}}
+									</div>	
 								</h4>
 								@if(Gate::allows('update-comment',$com))
 								<span class="ml-auto">

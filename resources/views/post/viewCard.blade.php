@@ -16,7 +16,7 @@
         <a href="{{route('article',$article->slug)}}" class="text-decoration-none">
             <h3 class="card-title">{{$article->title}}</h3>
         </a>
-        <h5 class="text-secondary">Published by:<a class="text-primary" href="{{route('userArticles',$article->user->id)}}">{{$article->user->name}}</a></h5>
+        <h5 class="text-secondary">{{$article->created_at->format('M d, Y')}} by  <a class="text-primary" href="{{route('userArticles',$article->user->id)}}">{{$article->user->name}}</a></h5>
         <h6 class="text-secondary"> {{$article->views}} views</h5>
         <!-- Text -->
         <div class="card-text">
