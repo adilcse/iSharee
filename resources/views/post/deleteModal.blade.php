@@ -4,7 +4,7 @@
 		<a class="btn btn-warning mr-2" href="{{url('/article/edit/'.$article->slug)}}"> Edit</a>
 		<button class="btn btn-danger" data-toggle="modal" data-target="#confirmation-{{$article->id}}"> Delete</button>
 		@if(isset($status) && !Auth::user()->is_admin)
-			<div class="h3 bg-warning align-self-center">
+			<div class="h3 bg-warning align-self-center ml-auto">
 				Status : {{$status}}
 			</div>
 		@endif
