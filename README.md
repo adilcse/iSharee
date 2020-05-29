@@ -73,3 +73,5 @@
 - Gcloud bucket.
 - Mysql server.
 - smtp mail server.
+### Note:- Add ip address of project to your hosts file and set iShare.com as domain name to use google login.
+
