@@ -3,12 +3,12 @@
 	<div class="row">
 		<a class="btn btn-warning mr-2" href="{{url('/article/edit/'.$article->slug)}}"> Edit</a>
 		<button class="btn btn-danger" data-toggle="modal" data-target="#confirmation-{{$article->id}}"> Delete</button>
-		@if(isset($status) && !Auth::user()->is_admin)
-			<div class="h3 bg-warning  ml-auto">
-				Status : {{$status}}
-			</div>
-		@endif
 		<div class="ml-auto h4">
+			@if(isset($status) && !Auth::user()->is_admin)
+				<div class="h3 bg-warning  text-right">
+					Status : {{$status}}
+				</div>
+			@endif
 			@if(Auth::user()->is_admin)
 				Change Status:
 				<span class="d-inline-block">
