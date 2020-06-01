@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    protected $table='catagories';
+    protected $table='categories';
 
     /**
      * Join articles table with catagories table

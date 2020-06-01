@@ -3,7 +3,7 @@
 @section('content')
 @push('head')
 <!-- Scripts -->
-<script src="{{ asset('js/password/reset.min.js') }}" defer></script>
+<script src="{{ asset('js/1.0/password/reset.min.js') }}" defer></script>
 @endpush
 
 @php

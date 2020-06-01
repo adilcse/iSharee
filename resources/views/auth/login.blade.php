@@ -4,7 +4,7 @@
 <!-- user login page -->
 @push('script')
 <!-- Scripts -->
-<script src="{{ asset('js/auth/login.min.js') }}"></script>
+<script src="{{ asset('js/1.0/auth/login.min.js') }}"></script>
 @endpush
 @php
 	$action=route('login');

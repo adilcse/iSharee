@@ -1,7 +1,8 @@
 @extends('layouts.app')
 @push('script')
 <!-- Scripts -->
-    <script src="{{ asset('js/post/edit.min.js') }}" defer></script>
+    <script src="{{ asset('js/1.0/post/edit.min.js') }}" defer></script>
+    <script src="{{ asset('js/1.0/post/add.min.js') }}" defer></script>
 @endpush
 @section('content')
 @php
@@ -38,6 +39,9 @@
                         <!-- Name -->
                         <div class="md-form mt-3">
                             <input type="text" id="title" name="title" class="form-control" placeholder="Title" value="{{$article->title}}">
+                            <span class="invalid-feedback" style="display:{{$errors->has('title')?'show':'none'}}" role="alert">
+                                <strong>{{ $errors->first('title')??'' }}</strong>
+                            </span>
                         </div>
                         <div>
                             <span>Category</span>
@@ -67,6 +71,9 @@
                         <!--Message-->
                         <div class="md-form row">
                             <textarea type="text" id="body" name="body" class="form-control md-textarea" rows="{{$rows}}" placeholder="Description" >{{trim($article->body)}}</textarea>                       </textarea>
+                            <span class="invalid-feedback" style="display:{{$errors->has('body')?'show':'none'}}" role="alert">
+                                <strong>{{ $errors->first('body')??'' }}</strong>
+                            </span>
                         </div>
                         <!-- Send button -->
                         <button class="btn btn-outline-info btn-rounded btn-block z-depth-0 my-4 waves-effect" type="submit">Update</button>

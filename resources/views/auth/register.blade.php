@@ -4,7 +4,7 @@
 <!-- user register page -->
 @push('script')
 <!-- Scripts -->
-<script src="{{ asset('js/auth/register.min.js') }}"></script>
+<script src="{{ asset('js/1.0/auth/register.min.js') }}"></script>
 @endpush
 
 @php

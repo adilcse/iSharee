@@ -3,11 +3,11 @@
 @section('content')
 @push('script')
 <!-- Scripts -->
-	<script src="{{ asset('js/post/like.min.js') }}" defer></script>
+	<script src="{{ asset('js/1.0/post/like.min.js') }}" defer></script>
 @endpush
 @if(Auth::user()->is_admin)
 	@push('script')
-		<script src="{{ asset('js/admin/articleTable.min.js') }}" defer></script>
+		<script src="{{ asset('js/1.0/admin/articleTable.min.js') }}" defer></script>
 	@endpush
 @endif
 <div class="container">

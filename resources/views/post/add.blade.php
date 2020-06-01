@@ -3,7 +3,7 @@
 @section('content')
 @push('script') 
 <!-- Scripts -->
-<script src="{{ asset('js/post/add.min.js') }}" defer></script>
+<script src="{{ asset('js/1.0/post/add.min.js') }}" defer></script>
 @endpush
 <div class="container">
     <div class="row justify-content-center">
