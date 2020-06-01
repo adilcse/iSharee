@@ -16,7 +16,7 @@ class CreateMobileVerifyTable extends Migration
         Schema::create('mobile_verify', function (Blueprint $table) {
             $table->id();
             $table->string('number',10)->unique();
-            $table->integer('otp',4);
+            $table->smallInteger('otp');
             $table->timestamps();
 
         });

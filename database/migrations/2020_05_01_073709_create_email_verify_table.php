@@ -16,7 +16,7 @@ class CreateEmailVerifyTable extends Migration
         Schema::create('email_verify', function (Blueprint $table) {
             $table->id();
             $table->string('email',50)->unique();
-            $table->integer('otp',4);
+            $table->smallInteger('otp');
             $table->timestamps();
         });
     }
