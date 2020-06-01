@@ -13,7 +13,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\User;
+use App\Model\User;
 use App\Helper\Constants;
 /**
  * Handles admin user related actions
@@ -111,13 +111,29 @@ class AdminUserController extends Controller
         try{
             //gets user with input id
             $user=User::find($request->input('id'));
+            $is_duplicte_email=User::where('email',$request->input('email'))
+                ->where('id','<>',$request->input('id'))
+                ->first();
+            $is_duplicte_mobile=User::where('mobile',$request->input('mobile'))
+                ->where('id','<>',$request->input('id'))
+                ->first();
             if (is_null($user)) {
                 //redirect back with error message
                 return redirect()
                     ->back()
                     ->withErrors([Constants::$ERROR_INVALID_USER]);
+            } else if ($is_duplicte_email) {
+                return redirect()
+                ->back()
+                ->withErrors([Constants::$ERROR_EMAIL_EXIST]);
+            }  else if ($is_duplicte_mobile) {
+                return redirect()
+                ->back()
+                ->withErrors([Constants::$ERROR_MOBILE_EXIST]);
             }
+
             //update user details
+
             $user->name=$request->input('name');
             $user->email=$request->input('email');
             $user->mobile=$request->input('mobile');

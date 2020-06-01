@@ -13,7 +13,7 @@ class Payment extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\Model\User', 'user_id');
     }
 
     /**

@@ -35,7 +35,7 @@ class Article extends Model
      */
     public function comments()
     {
-        return $this->belongsToMany('App\User', 'comments', 'article_id', 'user_id')
+        return $this->belongsToMany('App\Model\User', 'comments', 'article_id', 'user_id')
             ->withTimestamps()
             ->withPivot('is_published', 'body', 'id');
     }
@@ -47,7 +47,7 @@ class Article extends Model
      */
     public function likes()
     {
-        return $this->belongsToMany('App\User', 'likes', 'article_id', 'user_id')
+        return $this->belongsToMany('App\Model\User', 'likes', 'article_id', 'user_id')
             ->withTimestamps();
     }
 
@@ -58,7 +58,7 @@ class Article extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\Model\User', 'user_id');
     }
 
     public function payment()

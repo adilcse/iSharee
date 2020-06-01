@@ -1,4 +1,10 @@
 <!-- Edit delete article button and modal -->
+@if(Auth::user()->is_admin)
+	@push('script')
+		<script src="{{ asset('js/admin/articleTable.js') }}" defer></script>
+	@endpush
+@endif
+
 <div class="col">
 	<div class="row">
 		<a class="btn btn-warning mr-2" href="{{url('/article/edit/'.$article->slug)}}"> Edit</a>

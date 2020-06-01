@@ -1,6 +1,5 @@
 //password reset page
 //show only email field and send button
-
 $("#status").hide();
 $('#otp').hide();
 $('#password').hide();

@@ -25,12 +25,12 @@
                     <!-- Form -->
                     <form class="text-center" style="color: #757575;" action="/email/verify/otp" method="post">
                         @csrf
+                        <div id="status" class=" alert danger">
                         @foreach($errors->all() as $error)
-                            <div id='status' class="alert danger">
                                 {{$error}}
-                            </div>
                         @endforeach
-                        <!-- E-mai -->
+                        </div>
+                        <!-- E-mail -->
                         <div class="md-form">
                             <div class="row">
                                 <div class="col-md-8">

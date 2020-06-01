@@ -15,7 +15,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Comments;
 use App\Model\Article;
-use App\User;
+use App\Model\User;
 use Gate;
 use Auth;
 use App\Events\NewCommentAdded;
@@ -106,8 +106,11 @@ class CommentController extends Controller
         //find the article for which comment is added
         $article= Article::find($request->id);
         if (is_null($article)) {
-            return view('error')
-                ->with(['message'=>Constants::$ERROR_INVALID_ARTICLE_ID]);
+            $data = [
+                'status'=>false,
+                'message'=>Constants::$ERROR_INVALID_ARTICLE_ID
+            ];
+            return response()->json($data, 404);    
         }   
         if (Auth::check()) {
             //only authorized user can comment
@@ -123,9 +126,12 @@ class CommentController extends Controller
                 );
                 $comment->save();          
                 // send pending message
-                return redirect()
-                    ->back()
-                    ->with(['comment'=>Constants::$MESSAGE_APPROVAL_PENDING]);
+                $data = [
+                    'status'=>false,
+                    'pending'=>true,
+                    'message'=>Constants::$MESSAGE_APPROVAL_PENDING
+                ];
+                return response()->json($data, 200);
             } else {
                 //other user's comment is directly publihed
                 $comment = new Comments(
@@ -139,10 +145,18 @@ class CommentController extends Controller
                 event(new NewCommentAdded($comment));
             }
             //return with success message
-            return redirect()->back()->with(['status'=>'success']);
+            $data = [
+                'status'=>true,
+                'message'=>'comment added successfully',
+            ];
+            return response()->json($data, 200);
         } else {
             //return error if user is unauthorized
-            return view('error', ['message'=>Constants::$ERROR_UNAUTHORIZED]);
+            $data = [
+                'status'=>false,
+                'message'=>Constants::$ERROR_UNAUTHORIZED
+            ];
+            return response()->json($data, 200);
         }
     }
 }

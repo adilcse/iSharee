@@ -15,9 +15,9 @@ class CreateArticleTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->unique();
-            $table->string('title');
-            $table->string('image_url')->nullable();
+            $table->string('slug',255)->unique();
+            $table->string('title',100);
+            $table->string('image_url',500)->nullable();
             $table->boolean('allow_image_as_slider')->default(1);
             $table->longtext('body');
             $table->bigInteger('views')->default(0);

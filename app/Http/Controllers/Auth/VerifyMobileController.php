@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 use Twilio\Rest\Client;
 use App\Helper\Otp;
 use App\Helper\Constants;
-use App\User;
+use App\Model\User;
 use Auth;
 /**
  * Handel mobile verification controller

@@ -33,7 +33,7 @@
         </div>
         <!-- Button -->
         <div class="row">
-            <a href="{{route('article',$article->slug)}}" class="btn btn-primary activator waves-effect mr-4">Read full article</a>
+            <a href="{{route('article',$article->slug)}}" class="btn btn-primary activator waves-effect mr-4 mb-auto">Read full article</a>
             @if (Gate::forUser(Auth::user())->allows('update-post', $article)) 
                     @include('post.deleteModal')
             @endif

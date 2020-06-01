@@ -15,7 +15,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Article;
 use App\Model\Comments;
-use App\User;
+use App\Model\User;
 use Auth;
 
 /**
@@ -130,7 +130,7 @@ class AdminController extends Controller
      */
     private function _getArticles($request,$view=null)
     {
-        $url=$url=$this->_getUrl($request);
+        $url=$this->_getUrl($request);
         try{
             if (is_null($view)) {
                 //set article to default view with total likes of a article

@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EmailVerify;
-use App\User;
+use App\Model\User;
 use App\Helper\Otp;
 use App\Helper\Constants;
 

@@ -54,7 +54,8 @@ class Constants
     public static $ERROR_CATAGORY="Catagory view failed"; 
     public static $ERROR_PASSWORD_MATCH="Password not matched"; 
     public static $ERROR_PASSWORD_INVALID="invalid password"; 
-    
+    public static $ERROR_EMAIL_EXIST="Email address is already registered"; 
+    public static $ERROR_MOBILE_EXIST="Mobile number is already registered"; 
     
     public static $MESSAGE_ARTICLE_NOT_PUBLISHED="article is not published yet" ;
     public static $MESSAGE_LOGIN_FIRST="Please login first" ;

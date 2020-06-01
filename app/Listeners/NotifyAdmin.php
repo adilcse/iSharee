@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use App\Mail\ArticlePublished;
 use Illuminate\Support\Facades\Mail;
-use App\User;
+use App\Model\User;
 
 /**
  * Listen to add new article event and notify admin that new article is added

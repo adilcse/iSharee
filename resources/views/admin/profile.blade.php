@@ -16,7 +16,7 @@
             {{session('status')}}
         </div>
     @endif
-    @foreach($errors as $error)
+    @foreach($errors->all() as $error)
     <!-- displat errors -->
         <div class="row alert alert-danger">
             {{$error}}
@@ -81,7 +81,7 @@
                             @enderror
                         </div>
                         <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">
-                            Upadete
+                            UPDATE
                         </button>
                     </form>
                 <!-- Form -->

@@ -15,7 +15,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EmailVerify;
-use App\User;
+use App\Model\User;
 use Illuminate\Support\Facades\Hash;
 use App\Helper\Otp;
 use App\Helper\Constants;
@@ -99,7 +99,7 @@ class ForgotPasswordController extends Controller
                 ->update(['password'=>Hash::make($password)]);
             if (1 === $data) {
                 return json_encode(
-                    ['data'=>Constants::$PASSWORD_SET_SUCCESS,'success'=>true]
+                    ['data'=>Constants::$SUCCESS_PASSWORD_SET,'success'=>true]
                 );
             } else {
                 return json_encode(

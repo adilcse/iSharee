@@ -30,9 +30,10 @@
                 <input type="email" id="email" name="email" class="form-control" value="{{$email}}" placeholder="{{__('Email')}}" disabled>
             </div>
             <div class="col-md-4">
-                <button class="btn btn-outline-info btn-rounded z-depth-0 btn-block waves-effect" type="button">
-                    <a href="?resend=true"> Resend</a>
-                </button>
+
+                <a  href="?resend=true&email={{$email}}" class="btn btn-outline-info btn-rounded z-depth-0 btn-block waves-effect" type="button">
+                    Resend
+                </a>
             </div>
             </div>
         </div>

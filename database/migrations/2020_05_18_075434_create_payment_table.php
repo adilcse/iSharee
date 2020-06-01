@@ -17,11 +17,11 @@ class CreatePaymentTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('article_id');
-            $table->double('amount');
-            $table->string('payment_method');
-            $table->string('payment_id');
-            $table->string('txn_id');
-            $table->string('receipt_url');
+            $table->double('amount',7,2);
+            $table->string('payment_method',50);
+            $table->string('payment_id',100);
+            $table->string('txn_id',100);
+            $table->string('receipt_url',255);
             $table->boolean('status');
             $table->timestamps();
         });
@@ -39,7 +39,7 @@ class CreatePaymentTable extends Migration
     public function down()
     {
         Schema::table('payments', function (Blueprint $table) {
-            //
+            Schema::dropIfExists('payments');
         });
     }
 }

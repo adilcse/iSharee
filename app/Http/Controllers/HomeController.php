@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 use App\Model\Article;
 use App\Model\Catagory;
 use App\Model\ArticleCatagory;
-use App\User;
+use App\Model\User;
 use App\Helper\Constants;
 use Auth;
 use Illuminate\Support\Facades\Hash;

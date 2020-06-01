@@ -146,7 +146,7 @@ class ArticleController  extends Controller
             $article->slug = Slug::createSlug('article', $request->title);
             $article->body = $request->body;
             $article->allow_image_as_slider = $request->sliderCheck?1:0;
-            if (count($request->catagory) > 0) {
+            if (\is_array($request->catagory) && count($request->catagory) > 0) {
                 try{
                     $article->catagories()->sync($request->catagory);
                 }catch(Exception $e){

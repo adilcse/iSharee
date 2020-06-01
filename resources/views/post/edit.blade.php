@@ -66,9 +66,7 @@
                             </div>
                         <!--Message-->
                         <div class="md-form row">
-                            <textarea id="body" name="body" class="form-control md-textarea" rows="{{$rows}}" placeholder="Description" >
-                                {{$article->body}}
-                            </textarea>
+                            <textarea type="text" id="body" name="body" class="form-control md-textarea" rows="{{$rows}}" placeholder="Description" >{{trim($article->body)}}</textarea>                       </textarea>
                         </div>
                         <!-- Send button -->
                         <button class="btn btn-outline-info btn-rounded btn-block z-depth-0 my-4 waves-effect" type="submit">Update</button>

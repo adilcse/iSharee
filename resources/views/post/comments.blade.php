@@ -1,17 +1,21 @@
+@push('script') 
+<!-- Scripts -->
+<script src="{{ asset('js/post/comment.js') }}" defer></script>
+@endpush
 <div class = 'row'>
 	<div class="col">
 		@if(session('comment'))
-			<h4>
+			<div class="alert alert-info h5">
 				{{session('comment')}}
-			</h4>
+			</div>
 		@endif
 		<br/>
-		@if(count($article->comments()->where('is_published',1)->get()) <1)
-				<h3>Be the first to comment</h3>
+		@if($article->comments()->where('is_published',1)->count() <1)
+				<div id="zeroComments" class="alert alert-info h5">Be the first to comment</div>
 		@else
 		@foreach($article->comments as $com)
 			@if($com->pivot->is_published)
-			<div class = 'row'>
+			<div  class = 'userComment row'>
 				<div class="col">
 					<div class="card card-cascade z-depth-0">
 						<div class="card-body card-body-cascade text-left">
@@ -45,13 +49,19 @@
 </div>
 <div class="row">
 	<div class="col">
-		<form class="md-form" method="POST" action="/article/comment">
+	<div class="alert" id="commentMsg" style="display:none;">
+
+		</div>
+		<form class="md-form" method="POST">
 			@csrf
 			<input hidden name="id" value="{{$article->id}}">
 			<div class="form-group shadow-textarea">
 				<textarea row="3" name="comment" placeholder="Comment here" class="md-textarea form-control "></textarea>
 			</div>
 			<button type="submit" class="btn btn-primary"> Comment </button>
+			<button id="commentLoading" class="h4 btn btn-primary disabled" style="display:none;">
+				Loading ......
+</button>
 		</form>
 	</div>
 </div>
