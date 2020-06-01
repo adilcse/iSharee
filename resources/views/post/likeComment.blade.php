@@ -12,7 +12,7 @@
         <div>
             <i  data-target="{{$iliked}}" class="{{$iliked?'fas red-text':'far'}} fa-heart fa-3x like-heart" onclick="likepressed({{$article->id}},this)"></i>
         </div>
-        <span class="like-error" style="displat:none"></span>
+        <span class="like-error" style="display:none"></span>
     </div>
     <div class="ml-auto mr-1">
         <div>
@@ -23,6 +23,6 @@
                 <i class="far fa-comment fa-3x" ></i>
             </a>
         </div>
-        <span class="comment-error" style="displat:none"></span>
+        <span class="comment-error" style="display:none"></span>
     </div>
 </div>

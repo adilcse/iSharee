@@ -19,6 +19,7 @@
 						</div>
 					@endif
 					<div class="row">
+						<div class="alert alert-danger" id="articleMsg" style="display:none;"></div>
 						<div class="col-lg-12 col-md-12 mb-12">
 						<!-- article table -->
 						@include('admin.dashboard.articlesTable')

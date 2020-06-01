@@ -22,10 +22,7 @@ const articleStatusChanged=(id,element)=>{
             }else{
                 changeBadge(element,false);
             }
-        },
-        success:(res)=>{
-            //log success message
-        },      
+        },     
     })
 }
 
@@ -104,6 +101,7 @@ const updateCommentStatus=(element,id,status)=>{
         url:`/article/comment/update/${id}?status=${status}`,
         error:(xhr,status,error)=>{
             //handles error
+            $("#statusMsg").show.text("something went wrong");
         },
         success:(res)=>{
             if(!res.error){

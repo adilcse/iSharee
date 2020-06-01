@@ -21,13 +21,10 @@ const validateInput=(e,fun,msg)=>{
     const current = $(e.currentTarget)
     if(fun(current.val())){
         current.siblings().first().hide();
-        current.removeClass('is-invalid');
-        current.addClass('is-valid');
+        current.removeClass('is-invalid').addClass('is-valid');
     }else{
-        current.siblings().first().show();
-        current.siblings().first().text(msg);
-        current.removeClass('is-valid');
-        current.addClass('is-invalid');
+        current.siblings().first().show().text(msg);
+        current.removeClass('is-valid').addClass('is-invalid');
     }
 }
 
