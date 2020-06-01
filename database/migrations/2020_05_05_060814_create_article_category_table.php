@@ -21,7 +21,7 @@ class CreateArticleCategoryTable extends Migration
         Schema::table('article_category', function (Blueprint $table) {
             $table->primary(['article_id','category_id']);
             $table->foreign('article_id')->references('id')->on('articles');
-            $table->foreign('category_id')->references('id')->on('catagories');
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 
