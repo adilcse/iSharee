@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @push('script')
-<script src="{{ asset('js/admin/articleTable.js') }}" defer></script>
+<script src="{{ asset('js/admin/articleTable.min.js') }}" defer></script>
 @endpush
 @section('content')
 <!-- admin dashboard -->

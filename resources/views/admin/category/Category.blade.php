@@ -4,20 +4,20 @@
 @php
     $value=isset($value)?$value:'';
     $id=isset($id)?$id:0;
-    $action=$mode=='Add'?'/admin/catagory/add':'/admin/catagory/edit';
+    $action=$mode=='Add'?'/admin/category/add':'/admin/category/edit';
 @endphp
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <!-- Catagory card -->
+            <!-- Category card -->
             <div class="card">
             <h5 class="card-header info-color white-text text-center py-4">
-                <strong>{{$mode}} Catagory</strong>
+                <strong>{{$mode}} Category</strong>
             </h5>
             <!-- add item link if it is in edit mode -->
             @if($mode=='Edit')
                 <h6 class='col-md-4 text-left'>
-                    <a href='/admin/catagory/add'>Add Items</a>
+                    <a href='/admin/category/add'>Add Items</a>
                 </h6>
                 @endif
             <!--Card content-->
@@ -48,7 +48,7 @@
                     <div class="md-form mt-3">
                         <div class="row">
                             <div class="col-md-8">
-                                <input type="text" id="catagory" name="catagory" class="form-control"  placeholder="{{$mode}} catagory" value="{{$value}}">
+                                <input type="text" id="category" name="category" class="form-control"  placeholder="{{$mode}} category" value="{{$value}}">
                                 <input hidden type="text" name="id" value="{{$id}}" />
                             </div>
                             <div class="col-md-4">
@@ -61,21 +61,21 @@
                 </form>
                 <div class="row">
                     <h2>
-                        Catagories:
+                        Categories:
                     </h2>
                     <br/>
                     <div class="col-md-6">
                         <ul>
-                            @foreach($catagories as $catagory)
+                            @foreach($catagories as $category)
                             <li>
                                 <div class="row">
                                     <div class="col text-left">
-                                            {{$catagory->name}}
+                                            {{$category->name}}
                                     </div>
                                     <div class="col">
-                                        <a href='/admin/catagory/edit/{{$catagory->id}}'> <i class="far fa-edit"></i> </a>
+                                        <a href='/admin/category/edit/{{$category->id}}'> <i class="far fa-edit"></i> </a>
                                         &ensp; 
-                                        <a href='/admin/catagory/delete/{{$catagory->id}}'> <i class="fas fa-trash-alt"></i> </a>
+                                        <a href='/admin/category/delete/{{$category->id}}'> <i class="fas fa-trash-alt"></i> </a>
                                     </div>
                                 </div>
                             </li>

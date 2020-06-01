@@ -1,57 +1,57 @@
 <?php
 /**
- * Handles admin catagory related actions
+ * Handles admin category related actions
  * PHP version: 7.0
  * 
  * @category Admin/Article
  * @package  Http/Controller/Admin
  * @author   Adil Hussain <adilh@mindfiresolutions.com>
  * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
- * @link     https://github.com/adilcse/iSharee/blob/finalCode/app/Http/Controllers/Admin/CatagoryController.php
+ * @link     https://github.com/adilcse/iSharee/blob/finalCode/app/Http/Controllers/Admin/CategoryController.php
  */
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\Catagory;
+use App\Model\Category;
 use Illuminate\Database\QueryException;
 use App\Helper\Slug;
 use App\Helper\Constants;
 /**
- * Handle admin catagory action
+ * Handle admin category action
  * 
  * @category Admin/Article
  * @package  Http/Controller/Admin
  * @author   Adil Hussain <adilh@mindfiresolutions.com>
  * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
- * @link     https://github.com/adilcse/iSharee/blob/finalCode/app/Http/Controllers/Admin/CatagoryController.php
+ * @link     https://github.com/adilcse/iSharee/blob/finalCode/app/Http/Controllers/Admin/CategoryController.php
  */
-class CatagoryController extends Controller
+class CategoryController extends Controller
 {
     /**
-     * Gives admin catagory edit view with catagory details
+     * Gives admin category edit view with category details
      * 
-     * @param int $id of the catagory to be updated
+     * @param int $id of the category to be updated
      * 
      * @return view catagoy
      */
     public function edit($id)
     {
         try{
-            $catagoryAll=Catagory::all();
-            $catagory=Catagory::find($id);
-            if (is_null($catagory)) {
+            $categoryAll=Category::all();
+            $category=Category::find($id);
+            if (is_null($category)) {
                 return view(
-                    'admin.catagory.Catagory', 
-                    ['mode'=>'Edit','invalid'=>'id','catagories'=>$catagoryAll]
+                    'admin.category.Category', 
+                    ['mode'=>'Edit','invalid'=>'id','catagories'=>$categoryAll]
                 );
             } else {
                 return view(
-                    'admin.catagory.Catagory',
+                    'admin.category.Category',
                     [
                         'mode'=>'Edit',
                         'id'=>$id,
-                        'value'=>$catagory->name,
-                        'catagories'=>$catagoryAll
+                        'value'=>$category->name,
+                        'catagories'=>$categoryAll
                     ]
                 );
             }
@@ -65,49 +65,49 @@ class CatagoryController extends Controller
     }
     
     /**
-     * Gives admin add catagory view
+     * Gives admin add category view
      * 
-     * @return view catagory
+     * @return view category
      */
     public function add()
     {
         try{
-            $catagory=Catagory::all();
+            $category=Category::all();
             return view(
-                'admin.catagory.Catagory',
-                ['mode'=>'Add','catagories'=>$catagory]
+                'admin.category.Category',
+                ['mode'=>'Add','catagories'=>$category]
             );
         }
         catch(Exception $e){
-            return view('admin.catagory.Catagory', ['mode'=>'Add'])
+            return view('admin.category.Category', ['mode'=>'Add'])
                 ->withErrors([Constants::$ERROR_WRONG]);
         }
     }
 
     /**
-     * Insert new catagory in database
+     * Insert new category in database
      * 
      * @param Request $request http request object
      * 
-     * @return redirect to catagory page with status
+     * @return redirect to category page with status
      */
     public function insert(Request $request)
     {
-        //validate input catagory
+        //validate input category
         $this->validate(
             $request,
-            ['catagory'=>'required|string|min:3|max:50']
+            ['category'=>'required|string|min:3|max:50']
         );
-        //creates a new catagory
+        //creates a new category
         try{
-            $catagory= new Catagory;
-            $catagory->name=$request->input('catagory');
-            $catagory->slug=Slug::createSlug(
-                'catagory', 
-                $request->input('catagory')
+            $category= new Category;
+            $category->name=$request->input('category');
+            $category->slug=Slug::createSlug(
+                'category', 
+                $request->input('category')
             );
-            $catagory->save();
-            return redirect('/admin/catagory/add')
+            $category->save();
+            return redirect('/admin/category/add')
                 ->with('success', Constants::$SUCCESS_CATAGORY_ADD);
         }
         catch(Exception $e){
@@ -116,26 +116,26 @@ class CatagoryController extends Controller
     }
 
     /**
-     * Update a catagory
+     * Update a category
      * 
      * @param Request $request http requrst object
      * 
-     * @return redirect to catagory page
+     * @return redirect to category page
      */
     public function update(Request $request)
     {
         $request->validate(
             [
-                'catagory'=>'required|string|min:3|max:50',
+                'category'=>'required|unique|string|min:3|max:50',
                 'id'=>'required|numeric'
             ]
         );
-        $name=$request->input('catagory');
+        $name=$request->input('category');
         $id= $request->input('id');
         try{
-            //update catagory
-            Catagory::where('id', intval($id))->update(['name'=>$name]);
-            return redirect('/admin/catagory/add');
+            //update category
+            Category::where('id', intval($id))->update(['name'=>$name]);
+            return redirect('/admin/category/add');
         }
         catch(Exception $e){
             return view('error', ['message'=>Constants::$ERROR_UPDATING_CATAGORY]);
@@ -143,27 +143,27 @@ class CatagoryController extends Controller
     }
 
     /**
-     * Delete a catagory by its id
+     * Delete a category by its id
      * 
-     * @param int $id of the catagory to be deleted
+     * @param int $id of the category to be deleted
      * 
      * @return redirect to add page
      */
     public function delete($id)
     {
         try{
-            $catagory=Catagory::find(intval($id));
-            if (is_null($catagory)) {
-                return redirect('/admin/catagory/add')
+            $category=Category::find(intval($id));
+            if (is_null($category)) {
+                return redirect('/admin/category/add')
                 ->withErrors([Constants::$ERROR_INVALID_CATAGORY]);    
             }
             //delete gatagory with given id
-            $catagory->delete(); 
+            $category->delete(); 
         }catch(QueryException $e){  
-            return redirect('/admin/catagory/add')
+            return redirect('/admin/category/add')
                 ->withErrors([Constants::$ERROR_DELETING_CATAGORY]);    
         } 
-        return redirect('/admin/catagory/add')
+        return redirect('/admin/category/add')
             ->with('success', Constants::$SUCCESS_DELETE);
     }
 }

@@ -22,7 +22,7 @@
         <div class="card-text">
             <div class="row">
                 @foreach($article->catagories as $cat)
-                <a href='{{route("catagory",$cat->slug)}}'>
+                <a href='{{route("category",$cat->slug)}}'>
                 <span class="btn btn-outline-secondary btn-sm"> <strong>{{$cat->name}}</strong> </span>
                 </a>
                 @endforeach

@@ -14,9 +14,9 @@ namespace App\Http\Controllers\Article;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\Catagory;
+use App\Model\Category;
 use App\Model\Article as ArticleModel;
-use App\Model\ArticleCatagory;
+use App\Model\ArticleCategory;
 use App\Traits\ImageUpload;
 use App\Traits\ImageDelete;
 use Illuminate\Support\Facades\Validator;
@@ -82,9 +82,9 @@ class ArticleController  extends Controller
      */
     public function getAddForm()
     {
-        //gets all catagory list
-        $catagory=Catagory::all();
-        return view('post.add', ['catagory'=>$catagory]);
+        //gets all category list
+        $category=Category::all();
+        return view('post.add', ['category'=>$category]);
     }
     /**
      * Gets edit article form for editing the article
@@ -99,11 +99,11 @@ class ArticleController  extends Controller
         if (is_null($article)) {
             return view('error', ['message'=>Constants::$ERROR_INVALID_ARTICLE_ID]);
         }
-        $catagory=Catagory::all();
+        $category=Category::all();
         if (Gate::allows('update-post', $article)) {
                 return view(
                     'post.edit', 
-                    ['article'=>$article,'catagory'=>$catagory]
+                    ['article'=>$article,'category'=>$category]
                 );
         } else {
             return view(
@@ -127,7 +127,7 @@ class ArticleController  extends Controller
         if (is_null($article)) {
             return view('error', ['message'=>'invalid article']);
         }
-        $catagory=Catagory::all();
+        $category=Category::all();
         if (Gate::allows('update-post', $article)) {
             //only aithorized user can edit the post
             if ($request->image) {
@@ -143,12 +143,12 @@ class ArticleController  extends Controller
             }
             //update article details
             $article->title = $request->title;
-            $article->slug = Slug::createSlug('article', $request->title);
+            $article->slug = Slug::createSlug('article', $request->title,$request->id);
             $article->body = $request->body;
             $article->allow_image_as_slider = $request->sliderCheck?1:0;
-            if (\is_array($request->catagory) && count($request->catagory) > 0) {
+            if (\is_array($request->category) && count($request->category) > 0) {
                 try{
-                    $article->catagories()->sync($request->catagory);
+                    $article->catagories()->sync($request->category);
                 }catch(Exception $e){
                     return view(
                         'error', 
@@ -179,7 +179,7 @@ class ArticleController  extends Controller
         $article= ArticleModel::where('slug', $slug)->first();
         if (Gate::allows('update-post', $article)) {
             //only authorized user can dlete the article
-            //remove all likes,comment and catagory before deleting the article
+            //remove all likes,comment and category before deleting the article
             if ($article->image_url) {
                 $this->userImageDelete($article->image_url);
             }
@@ -285,8 +285,8 @@ class ArticleController  extends Controller
             //create slug by article name
             $data->slug= Slug::createSlug('article', $request->title);
             $data->save();
-            if ($request->catagory && count($request->catagory) > 0) {
-                $data->catagories()->attach($request->catagory);
+            if ($request->category && count($request->category) > 0) {
+                $data->catagories()->attach($request->category);
             }
             return redirect()   
                 ->route('articlePaymentPage')

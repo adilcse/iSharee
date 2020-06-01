@@ -3,9 +3,14 @@
 @section('content')
 <!-- add scripts -->
 @push('script')
-    <script src="{{ asset('js/post/like.js') }}" defer></script>
-    <script src="{{ asset('js/admin/articleTable.js') }}" defer></script>
+    <script src="{{ asset('js/post/like.min.js') }}" defer></script>
 @endpush
+@if(Auth::user()->is_admin)
+	@push('script')
+		<script src="{{ asset('js/admin/articleTable.min.js') }}" defer></script>
+	@endpush
+@endif
+
 <div class="container">
     @if(isset($message))
         <div class="row alert alert-danger">
@@ -20,8 +25,8 @@
     @endif
     <div class="row justify-content-center">
         <div class="col-md-9">
-            @if(isset($catagory))
-                <h3>Catagory:{{$catagory->name}}</h3>
+            @if(isset($category))
+                <h3>Category:{{$category->name}}</h3>
             @elseif(isset($name))
             <h3>User name :{{$name}}</h3>
             @endif

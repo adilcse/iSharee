@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('script')
-<script src="{{ asset('js/user/profile.js') }}" defer></script>
+<script src="{{ asset('js/user/profile.min.js') }}" defer></script>
 @endpush
 
 @section('content')

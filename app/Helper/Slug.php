@@ -1,6 +1,6 @@
 <?php
 /**
- * Generate sluf for articles and catagory
+ * Generate sluf for articles and category
  * PHP version: 7.0
  * 
  * @category Helper
@@ -16,7 +16,7 @@ use App\Model\Article;
 use Illuminate\Support\Str;
 
 /**
- * Generate slug for uniquely identifying article and catagory
+ * Generate slug for uniquely identifying article and category
  * 
  * @category Helper
  * @package  App/Helper
@@ -30,8 +30,8 @@ class Slug
      * Create a new slug
      * 
      * @param srting $table name of the table
-     * @param string $title of the article|catagory
-     * @param int    $id    of new article|catagory
+     * @param string $title of the article|category
+     * @param int    $id    of new article|category
      * 
      * @return string $slug generted 
      * @throws \Exception
@@ -62,7 +62,7 @@ class Slug
      * Check for selected slug and fid its related slug
      * 
      * @param srting $slug  for checking collision
-     * @param int    $id    default 0 of new article|catagory
+     * @param int    $id    default 0 of new article|category
      * @param string $table default 'article' 
      * 
      * @return status if duplicate slug found or not
@@ -72,7 +72,7 @@ class Slug
         if ('article' === $table) {
             return self::getRelatedArticleSlugs($slug, $id);
         }
-        return self::getRelatedCatagorySlugs($slug, $id);
+        return self::getRelatedCategorySlugs($slug, $id);
 
     }
 
@@ -92,16 +92,16 @@ class Slug
     }
 
     /**
-     * Check for catagory name already present 
+     * Check for category name already present 
      * 
-     * @param string $slug of given catagory and check if it is already linked or not
+     * @param string $slug of given category and check if it is already linked or not
      * @param int    $id   default 0
      * 
      * @return boolean status of given present or not
      */
-    protected static function getRelatedCatagorySlugs($slug, $id = 0)
+    protected static function getRelatedCategorySlugs($slug, $id = 0)
     {
-        return Catagory::select('slug')->where('slug', 'like', $slug.'%')
+        return Category::select('slug')->where('slug', 'like', $slug.'%')
             ->where('id', '<>', $id)
             ->get();
     }

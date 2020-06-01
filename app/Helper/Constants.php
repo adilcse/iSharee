@@ -25,7 +25,7 @@ class Constants
     public static $SUCCESS_MSG="Success";
     public static $SUCCESS_UPDATED="updated";
     public static $SUCCESS_DELETE="deleted successfully";
-    public static $SUCCESS_CATAGORY_ADD="Catagory added successfully";
+    public static $SUCCESS_CATAGORY_ADD="Category added successfully";
     public static $SUCCESS_OTP_SENT="otp sent";
     public static $SUCCESS_PASSWORD_SET="Password set success";
     public static $SUCCESS_MOBILE_VERIFIED="Mobile number verified";
@@ -39,11 +39,11 @@ class Constants
     public static $ERROR_USER_NOT_FOUND="user not found";
     public static $ERROR_INVALID_USER="Invalid user";
     public static $ERROR_GETTING_USER="error in getting user";
-    public static $ERROR_GETTING_CATAGORY="error in getting catagory";
-    public static $ERROR_CREATING_CATAGORY="error in creating catagory";
-    public static $ERROR_UPDATING_CATAGORY="error in updating catagory";
-    public static $ERROR_DELETING_CATAGORY="error in deleting catagory";
-    public static $ERROR_INVALID_CATAGORY="Invalid catagory";
+    public static $ERROR_GETTING_CATAGORY="error in getting category";
+    public static $ERROR_CREATING_CATAGORY="error in creating category";
+    public static $ERROR_UPDATING_CATAGORY="error in updating category";
+    public static $ERROR_DELETING_CATAGORY="error in deleting category";
+    public static $ERROR_INVALID_CATAGORY="Invalid category";
     public static $ERROR_UNAUTHORIZED="you are not autherorized";
     public static $ERROR_SLUG_CREATE="can not create slug";
     public static $ERROR_EMAIL_UNVERIFIED="Email not verified";
@@ -51,7 +51,7 @@ class Constants
     public static $ERROR_OTP_INVALID="invalid otp"; 
     public static $ERROR_OTP_SEND="can not send otp"; 
     public static $ERROR_MOBILE_INVALID="invalid mobile number"; 
-    public static $ERROR_CATAGORY="Catagory view failed"; 
+    public static $ERROR_CATAGORY="Category view failed"; 
     public static $ERROR_PASSWORD_MATCH="Password not matched"; 
     public static $ERROR_PASSWORD_INVALID="invalid password"; 
     public static $ERROR_EMAIL_EXIST="Email address is already registered"; 

@@ -13,8 +13,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Article;
-use App\Model\Catagory;
-use App\Model\ArticleCatagory;
+use App\Model\Category;
+use App\Model\ArticleCategory;
 use App\Model\User;
 use App\Helper\Constants;
 use Auth;
@@ -63,23 +63,23 @@ class HomeController extends Controller
     }
     
     /**
-     * Catagory page.
-     * Display article belongs to a given catagory
+     * Category page.
+     * Display article belongs to a given category
      * 
-     * @param string $id name of the catagory to be displayed
+     * @param string $id name of the category to be displayed
      * 
-     * @return home view with artcles belongs to a catagory
+     * @return home view with artcles belongs to a category
      */
-    public function catagory($id)
+    public function category($id)
     {
         try{
-            //find the catagory
-            $catagory=Catagory::where('slug', $id)->first();
-            $articles=$catagory->articles()
+            //find the category
+            $category=Category::where('slug', $id)->first();
+            $articles=$category->articles()
                 ->where('articles.is_published', 1)
                 ->orderby('views', 'desc')
                 ->paginate($this->per_page);
-            return view('home', ['articles'=>$articles, 'catagory'=>$catagory]);
+            return view('home', ['articles'=>$articles, 'category'=>$category]);
         }
         catch(Exception $e){
             return view('error', ['message'=>Constants::$ERROR_CATAGORY]);

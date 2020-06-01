@@ -20,10 +20,10 @@ class Article extends Model
     {
         return $this
             ->belongsToMany(
-                'App\Model\Catagory', 
-                'article_catagory', 
+                'App\Model\Category', 
+                'article_category', 
                 'article_id',
-                'catagory_id'
+                'category_id'
             )
             ->withTimestamps();
     }

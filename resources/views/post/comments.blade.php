@@ -1,6 +1,6 @@
 @push('script') 
 <!-- Scripts -->
-<script src="{{ asset('js/post/comment.js') }}" defer></script>
+<script src="{{ asset('js/post/comment.min.js') }}" defer></script>
 @endpush
 <div class = 'row'>
 	<div class="col">

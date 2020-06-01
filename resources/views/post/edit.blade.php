@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @push('script')
 <!-- Scripts -->
-    <script src="{{ asset('js/post/edit.js') }}" defer></script>
+    <script src="{{ asset('js/post/edit.min.js') }}" defer></script>
 @endpush
 @section('content')
 @php
@@ -40,10 +40,10 @@
                             <input type="text" id="title" name="title" class="form-control" placeholder="Title" value="{{$article->title}}">
                         </div>
                         <div>
-                            <span>Catagory</span>
+                            <span>Category</span>
                             <div>
-                            <select id="multiple-selected" class="custom-select mdb-select" name='catagory[]' multiple="multiple">
-                                @foreach($catagory as $cat)
+                            <select id="multiple-selected" class="custom-select mdb-select" name='category[]' multiple="multiple">
+                                @foreach($category as $cat)
                                     <option value="{{$cat->id}}"  {{(in_array($cat->id,$catids))? 'selected' : ''}}> 
                                         {{$cat->name}}
                                     </option>

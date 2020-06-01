@@ -16,7 +16,7 @@
 - Can view 
     - all published articles in homepage.
     - articles published by different users.
-    - article by catagory.
+    - article by category.
 - Can add article and make payment for it.
 - Only articles approved by admin will be shown in artilce home page.
 - Ccan comment on any article.
@@ -26,7 +26,7 @@
 - Can view 
     - all published articles in homepage.
     - articles published by different users.
-    - article by catagory.
+    - article by category.
 - Can add articles and make payment for it.
 - After payment articles will be published.
 - He/She can like in any article.

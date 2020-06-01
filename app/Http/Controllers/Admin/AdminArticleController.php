@@ -50,10 +50,10 @@ class AdminArticleController extends Controller
                     404
                 );    
             }
-            $ip=intval($request->input('status'));
-            if (1 === $ip || 0 === $ip) {
+            $isPublished=intval($request->input('status'));
+            if (1 === $isPublished || 0 === $isPublished) {
                 //change article status if valid status given
-                $article->is_published = $ip;
+                $article->is_published = $isPublished;
                 $article->save();
                 return response(
                     ['status'=>true,'message'=>Constants::$SUCCESS_UPDATED], 

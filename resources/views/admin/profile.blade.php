@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('script')
-    <script src="{{ asset('js/admin/articleTable.js') }}" defer></script>
+    <script src="{{ asset('js/admin/articleTable.min.js') }}" defer></script>
 @endpush
 
 @section('content')
@@ -66,6 +66,11 @@
                                     <input type="text" id="mobile" class="form-control @error('mobile') is-invalid @enderror" name="mobile" requirded autocomolete="number" placeholder="{{ __('Mobile') }}" value="{{$profile->mobile}}">
                                     <input type="radio" name="mobileVerify" value="1" {{$profile->is_mobile_verified ? 'checked' : ''}}> Verifyed</input>
                                     <input type="radio" name="mobileVerify" value="0" {{!$profile->is_mobile_verified ? 'checked' : ''}}> Unverified</input>
+                                    @error('mobile')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>

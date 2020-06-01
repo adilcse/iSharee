@@ -33,15 +33,15 @@ Route::get('/login/google','Auth\GoogleLoginController@googleLoginCallback');
 Route::prefix('/admin')->namespace('Admin')->middleware('isAdmin')->group(function(){
     Route::get('/dashboard','AdminController@index')->name('admin.home');
     Route::get('/dashboard/{table}','AdminController@index')->name('admin.tables');
-    Route::get('/catagory/add','CatagoryController@add')->name('admin.catagory');
-    Route::get('/catagory/edit/{id}','CatagoryController@edit');
-    Route::get('/catagory/delete/{id}','CatagoryController@delete');
+    Route::get('/category/add','CategoryController@add')->name('admin.category');
+    Route::get('/category/edit/{id}','CategoryController@edit');
+    Route::get('/category/delete/{id}','CategoryController@delete');
     Route::get('/user/update/{id}','AdminUserController@userStatusUpdate');
     Route::get('/user/view/{id}','AdminUserController@userView')->name('admin.userView');
     Route::get('/article/update/{id}','AdminArticleController@articleUpdate')->name('admin.article.status');
     Route::get('/article/delete/{id}','AdminArticleController@articleDelete')->name('admin.article.delete');
-    Route::post('/catagory/add','CatagoryController@insert');
-    Route::post('/catagory/edit','CatagoryController@update');
+    Route::post('/category/add','CategoryController@insert');
+    Route::post('/category/edit','CategoryController@update');
     Route::post('/user/update','AdminUserController@userUpdate');
 });
 
@@ -51,7 +51,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/profile', function(){
         return view('user.profile',['profile'=>Auth::user()]);
     })->name('profile');
-    Route::get('/home/catagory/{id}', 'HomeController@catagory')->name('catagory');
+    Route::get('/home/category/{id}', 'HomeController@category')->name('category');
     Route::get('/myArticle','HomeController@myArticle')->name('myArticle');
     Route::get('/user/{id}/articles','HomeController@userArticles')->name('userArticles');
     Route::post('/user/update','HomeController@userUpdate');

@@ -3,7 +3,7 @@
 @section('content')
 @push('script') 
 <!-- Scripts -->
-<script src="{{ asset('js/post/add.js') }}" defer></script>
+<script src="{{ asset('js/post/add.min.js') }}" defer></script>
 @endpush
 <div class="container">
     <div class="row justify-content-center">
@@ -35,10 +35,10 @@
                                 <strong>{{ $errors->first('title')??'' }}</strong>
                             </span>
                         </div>
-                        <span>Catagory</span>
+                        <span>Category</span>
                         <div>
-                            <select id="multiple-selected" class="custom-select mdb-select" name='catagory[]' multiple="multiple">
-                                @foreach($catagory as $cat)
+                            <select id="multiple-selected" class="custom-select mdb-select" name='category[]' multiple="multiple">
+                                @foreach($category as $cat)
                                     <option value="{{$cat->id}}">{{$cat->name}}</option>
                                 @endforeach
                             </select>

@@ -2,11 +2,11 @@
 <!-- payment page not assigned -->
 @push('script')
     <script src="https://js.stripe.com/v3/" defer></script>
-    <script src="{{asset('js/post/payment.js')}}" defer></script>
+    <script src="{{asset('js/post/payment.min.js')}}" defer></script>
     
 @endpush
 @push('head')
-<link rel="stylesheet" href="{{asset('css/payment.css')}}"></link>
+<link rel="stylesheet" href="{{asset('css/payment.min.css')}}"></link>
 @endpush
 
 

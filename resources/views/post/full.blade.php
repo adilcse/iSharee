@@ -3,9 +3,13 @@
 @section('content')
 @push('script')
 <!-- Scripts -->
-	<script src="{{ asset('js/post/like.js') }}" defer></script>
-	
+	<script src="{{ asset('js/post/like.min.js') }}" defer></script>
 @endpush
+@if(Auth::user()->is_admin)
+	@push('script')
+		<script src="{{ asset('js/admin/articleTable.min.js') }}" defer></script>
+	@endpush
+@endif
 <div class="container">
 	<div class="row justify-content-center">
 		<div class="col-md-9">
@@ -34,7 +38,7 @@
 				<h6 class="text-secondary text-left"> {{$article->views}} views</h5>
 				<div class="row">
 					@foreach($article->catagories as $cat)
-						<a href="{{route('catagory',$cat->slug)}}">
+						<a href="{{route('category',$cat->slug)}}">
 							<span class="btn btn-outline-secondary btn-sm"> <strong>{{$cat->name}}</strong> </span>
 						</a>
 					@endforeach
