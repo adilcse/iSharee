@@ -93,9 +93,9 @@
 						<h4>
 							OR 
 						</h4>
-						<button class="btn btn-rounded btn-block wave-effect z-depth-0 btn-outline-warning text-black">
-							<a href="/guest">Login as guest</a>
-						</button>
+						<a href="/guest" class="btn btn-rounded btn-block wave-effect z-depth-0 btn-outline-warning text-black">
+							Login as guest
+						</a>
 					@endif
 				</form>
 				<!-- Form -->
