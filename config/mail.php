@@ -49,6 +49,9 @@ return [
         ],
 
         'mailgun' => [
+            'domain' => env('MAIL_DOMAIN'),
+            'secret' =>env('MAIL_API'),
+            'endpoint' => 'api.mailgun.net',
             'transport' => 'mailgun',
         ],
 

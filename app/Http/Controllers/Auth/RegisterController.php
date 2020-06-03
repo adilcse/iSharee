@@ -110,8 +110,11 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
-
-        event(new Registered($user = $this->create($request->all())));
+        try{
+            event(new Registered($user = $this->create($request->all())));
+        } catch(\GuzzleHttp\Exception\ClientException $e) {
+            //handle exception
+        }
         $email=urlencode($user->email);
         if (env('ALLOW_EMAIL', false)) {
             return $this->registered($request, $user)

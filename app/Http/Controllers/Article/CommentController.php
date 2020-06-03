@@ -61,7 +61,15 @@ class CommentController extends Controller
             if (Auth::user()->is_admin) {
                 $comment->is_published=1;
                 $comment->save();
-                event(new NewCommentAdded($comment));
+                try{
+                    event(new NewCommentAdded($comment));
+                } catch(\GuzzleHttp\Exception\ClientException $e) {
+                    $data = [
+                        'status'=>true,
+                        'message'=>'Email can not send',
+                    ];
+                    return response()->json($data, 200);
+                }
                 return response(
                     ['error'=>false,'message'=>Constants::$SUCCESS_DELETE],
                     200
@@ -142,7 +150,16 @@ class CommentController extends Controller
                     ]
                 );
                 $comment->save();
-                event(new NewCommentAdded($comment));
+                try{
+                    event(new NewCommentAdded($comment));
+                } catch(\GuzzleHttp\Exception\ClientException $e) {
+                    $data = [
+                        'status'=>true,
+                        'message'=>'Email can not send',
+                    ];
+                    return response()->json($data, 200);
+                }
+                
             }
             //return with success message
             $data = [
