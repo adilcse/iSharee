@@ -26,7 +26,7 @@
     <div class="row justify-content-center">
         <div class="col-md-9">
             @if(isset($category))
-                <h3>Category: {{$category->name}}</h3>
+                <h3>Category : {{$category->name}}</h3>
             @elseif(isset($name))
             <h3>User name : {{$name}}</h3>
             @endif
