@@ -69,8 +69,7 @@
             "@php artisan key:generate --ansi"
         ],
         "post-install-cmd": [
-            "chmod -R 775 storage/",
-            "npm install"
+            "chmod -R 775 storage/"
         ]
     }
 }
