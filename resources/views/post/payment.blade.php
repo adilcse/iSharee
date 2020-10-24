@@ -3,7 +3,7 @@
 @push('script')
     <script src="https://js.stripe.com/v3/" defer></script>
     <script src="{{asset('js/post/payment.js')}}" defer></script>
-    
+
 @endpush
 @push('head')
 <link rel="stylesheet" href="{{asset('css/payment.css')}}"></link>
@@ -35,11 +35,11 @@
                         {{$error}}
                     </div>
                     @endforeach
-                    <div class="display-td text-center" >                            
+                    <div class="display-td text-center" >
                         <img class="img-responsive pull-right" src="http://i76.imgup.net/accepted_c22e0.png">
                     </div>
                     <!-- Form -->
-                        <form action="{{route('stripe.post')}}" method="post" id="payment-form" data-stripe="{{env('STRIPE_P_KEY')}}">
+                        <form action="{{route('stripe.post')}}" method="post" id="payment-form" data-stripe="{{config('payment.stripe.publisher')}}">
                         @csrf
                         <input hidden name='orderId' value="{{$data['articleId']}}">
                         <div class="form-row">
@@ -52,7 +52,7 @@
                             <!-- Used to display form errors. -->
                             <div id="card-errors" role="alert"></div>
                         </div>
-                        <button class="btn btn-primary">Pay ₹99</button> 
+                        <button class="btn btn-primary">Pay ₹99</button>
                         <a href="{{route('article',$data['slug']??'1')}}" class="btn btn-warning">Cancel payment</a>
                     </form>
                     <!-- Form -->

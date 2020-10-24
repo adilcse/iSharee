@@ -29,7 +29,7 @@
                 <!-- Card -->
                 @foreach($articles as $article)
                     @include('post.viewCard')
-                @endforeach 
+                @endforeach
                 <!-- Card -->
                 <!-- navigate page links -->
                 <nav aria-label="Page navigation text-center">
